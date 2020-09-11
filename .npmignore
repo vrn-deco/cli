@@ -1,0 +1,11 @@
+.DS_Store
+*.map
+
+node_modules/
+src/
+tmp/
+
+tsconfig.json
+pkg-updater.json
+
+README.md
