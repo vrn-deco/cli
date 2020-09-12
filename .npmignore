@@ -7,5 +7,7 @@ tmp/
 
 tsconfig.json
 pkg-updater.json
+.vrnconfig
+.prettierrc
 
 README.md

@@ -3,4 +3,5 @@
  * @Author: Cphayim
  */
 const path = require('path')
-require(path.join(__dirname, '..', 'lib'))
+const { main } = require(path.join(__dirname, '..', 'lib'))
+main()

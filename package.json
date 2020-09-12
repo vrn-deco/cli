@@ -1,20 +1,54 @@
 {
-  "name": "vrn-cli",
-  "version": "1.0.0",
+  "name": "@vrn-deco/cli",
+  "version": "0.0.2",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "bin": {
+    "vrn-cli": "bin/vrn-cli",
+    "vrn": "bin/vrn-cli"
   },
-  "keywords": [],
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "ts-node src",
+    "build:watch": "npm run clean && tsc -w --sourcemap",
+    "build": "npm run clean && tsc",
+    "test": "exit 0",
+    "clean": "rm -rf lib/",
+    "prepublish": "npm run build",
+    "commit": "npx git-cz"
+  },
   "author": "Cphayim",
   "license": "MIT",
+  "keywords": [
+    "Cli",
+    "Command line tool",
+    "命令行工具"
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vrn-deco/vrn-cli.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vrn-deco/vrn-cli/issues"
+  },
+  "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
+  "gitHooks": {
+    "commit-msg": "commitlint -e --config commitlint.config.js"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
   "dependencies": {
     "@naughty/logger": "^1.0.1",
-    "axios": "^0.20.0",
+    "axios": "^0.19.0",
     "chalk": "^4.1.0",
     "cli-table2": "^0.2.0",
     "commander": "^6.1.0",
+    "compressing": "^1.5.1",
     "dotenv": "^8.2.0",
     "figlet": "^1.5.0",
     "inquirer": "^7.3.3",
@@ -34,20 +68,11 @@
     "@types/node": "^14.10.0",
     "@types/shelljs": "^0.8.8",
     "@types/source-map-support": "^0.5.3",
-    "@types/yaml": "^1.9.7",
     "@types/yargs": "^15.0.5",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2",
     "yorkie": "^2.0.0"
-  },
-  "gitHooks": {
-    "commit-msg": "commitlint -e --config commitlint.config.js"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }

@@ -5,3 +5,4 @@ lib/
 tmp/
 
 pkg-updater.json
+.vrnconfig
