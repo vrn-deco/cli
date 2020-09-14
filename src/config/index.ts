@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:09:50
- * @LastEditTime: 2020-09-13 01:41:26
+ * @LastEditTime: 2020-09-14 16:42:37
  * @Description: 配置文件
  */
 
@@ -35,7 +35,7 @@ const DEFAULT_VRN_CONFIG: VrnConfig = {
   npmrepo: 'https://registry.npm.taobao.org',
 }
 
-function getVrnConfig(): VrnConfig {
+export function getVrnConfig(): VrnConfig {
   if (!existsSync(VRN_CONFIG_FILE)) {
     writeFileSync(VRN_CONFIG_FILE, YAML.stringify(DEFAULT_VRN_CONFIG))
   }
@@ -47,6 +47,10 @@ function getVrnConfig(): VrnConfig {
     process.exit(1)
   }
   return config
+}
+
+export function setVrnConfig(config: VrnConfig) {
+  writeFileSync(VRN_CONFIG_FILE, YAML.stringify(config))
 }
 
 // vrn 配置项

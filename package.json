@@ -11,7 +11,7 @@
     "start": "ts-node src",
     "build:watch": "npm run clean && tsc -w --sourcemap",
     "build": "npm run clean && tsc",
-    "test": "exit 0",
+    "test": "jest",
     "clean": "rm -rf lib/",
     "prepublish": "npm run build",
     "commit": "npx git-cz"
@@ -64,6 +64,7 @@
     "@commitlint/config-conventional": "9.1.1",
     "@types/figlet": "^1.2.0",
     "@types/inquirer": "^7.3.1",
+    "@types/jest": "^26.0.13",
     "@types/module-alias": "^2.0.0",
     "@types/node": "^14.10.0",
     "@types/shelljs": "^0.8.8",
@@ -71,6 +72,8 @@
     "@types/yargs": "^15.0.5",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.2",
     "yorkie": "^2.0.0"

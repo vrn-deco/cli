@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-14 13:26:15
+ * @LastEditTime: 2020-09-14 16:52:56
  * @Description: Create 命令
  */
 import path, { join } from 'path'
@@ -64,11 +64,11 @@ export default class CreateCommand extends BaseCommand {
 
     try {
       // 1
-      const categories: Category[] = await this._fetchRemoteBoilerplateConfig()
+      const categories: Category[] = await this.fetchRemoteBoilerplateConfig()
       // 2
-      const creatorOptions: CreatorOptions = await this._interactiveGuide(projectName, categories)
+      const creatorOptions: CreatorOptions = await this.interactiveGuide(projectName, categories)
       // 3
-      await this._install(creatorOptions)
+      await this.install(creatorOptions)
     } catch (error) {
       Logger.error(error.message)
       process.exit(1)
@@ -78,7 +78,7 @@ export default class CreateCommand extends BaseCommand {
   /**
    * 拉取远端 boilerplate 配置
    */
-  private async _fetchRemoteBoilerplateConfig(): Promise<Category[]> {
+  async fetchRemoteBoilerplateConfig(): Promise<Category[]> {
     // 检查 vrnconfig 中是否配置了 registry
     if (!VRN_CONFIG.registry) throw Error('似乎还没有配置 registry，请先执行 vrn config')
     try {
@@ -93,10 +93,7 @@ export default class CreateCommand extends BaseCommand {
    * @param defaultName 默认项目名
    * @param categories boilerplate 配置表
    */
-  private async _interactiveGuide(
-    defaultName: string,
-    categories: Category[],
-  ): Promise<CreatorOptions> {
+  async interactiveGuide(defaultName: string, categories: Category[]): Promise<CreatorOptions> {
     try {
       const projectName = await this._getProjectName(defaultName)
       const categoryIndex = await this._getCategoryIndex(categories)
@@ -170,7 +167,7 @@ export default class CreateCommand extends BaseCommand {
    *
    * @param options
    */
-  private async _install(options: CreatorOptions): Promise<void> {
+  async install(options: CreatorOptions): Promise<void> {
     // 创建目录的绝对路径
     const absPath = path.join(PWD_DIR, options.projectName)
     if (existsSync(absPath) && statSync(absPath).isDirectory()) {

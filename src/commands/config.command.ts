@@ -1,16 +1,17 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-14 11:07:28
- * @Description: Create 命令
+ * @LastEditTime: 2020-09-14 16:51:15
+ * @Description: Config 命令
  */
+import { writeFileSync } from 'fs'
+
 import YAML from 'yaml'
 import { Command } from 'commander'
-
-import { CommandDecorator, BaseCommand } from './base'
 import { Logger } from '@naughty/logger'
-import { VRN_CONFIG, VRN_CONFIG_FILE } from '@/config'
-import { writeFileSync } from 'fs'
+
+import { VRN_CONFIG, VRN_CONFIG_FILE, setVrnConfig } from '@/config'
+import { CommandDecorator, BaseCommand } from './base'
 
 const examples = `
 Examples:
@@ -39,9 +40,9 @@ export default class ConfigCommand extends BaseCommand {
     try {
       switch (subCommand) {
         case 'get':
-          return this._handleGet(key)
+          return this.handleGet(key)
         case 'set':
-          return this._handleSet(key, value)
+          return this.handleSet(key, value)
         default:
           throw new Error(`${subCommand} 不是有效的子命令 <get|set>`)
       }
@@ -52,18 +53,18 @@ export default class ConfigCommand extends BaseCommand {
   }
 
   // 处理获取
-  private _handleGet(key: string) {
+  handleGet(key: string = '') {
     // 获取所有 .vrnconfig 配置
-    if (!key) throw new Error(`当前 .vrnconfig 配置如下 \n\n${YAML.stringify(VRN_CONFIG)}`)
+    if (!key) Logger.info(`当前 .vrnconfig 配置如下 \n\n${YAML.stringify(VRN_CONFIG)}`)
     // 获取单条 .vrnconfig 配置
     Logger.info(`${key} -> ${VRN_CONFIG[key]}`)
   }
 
   // 处理设置
-  private _handleSet(key: string, value: string) {
+  handleSet(key: string, value: string) {
     if (!key || !value) throw new Error('key 和 value 参数对于 set 子命令是必要的')
     VRN_CONFIG[key] = value
-    writeFileSync(VRN_CONFIG_FILE, YAML.stringify(VRN_CONFIG))
+    setVrnConfig(VRN_CONFIG)
     Logger.success(`${key} -> ${value}`)
   }
 }
