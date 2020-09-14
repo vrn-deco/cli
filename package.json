@@ -1,12 +1,12 @@
 {
   "name": "@vrn-deco/cli",
-  "version": "0.0.2",
-  "description": "",
+  "version": "0.1.6",
+  "description": "Project scaffolding with command line tools.",
   "bin": {
     "vrn-cli": "bin/vrn-cli",
     "vrn": "bin/vrn-cli"
   },
-  "main": "lib/index.js",
+  "main": "bin/vrn-cli",
   "scripts": {
     "start": "ts-node src",
     "build:watch": "npm run clean && tsc -w --sourcemap",

@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-14 11:06:14
+ * @LastEditTime: 2020-09-14 13:26:15
  * @Description: Create 命令
  */
 import path, { join } from 'path'
@@ -201,8 +201,8 @@ export default class CreateCommand extends BaseCommand {
 
     // 5
     if (hasGit()) {
-      const result = initGitRepository(options.projectName)
-      result && Logger.success(`Git 初始化完成...`)
+      initGitRepository(options.projectName, !this.cmd.debug)
+      Logger.success(`初始化 Git 完成...`)
     }
 
     // 6
