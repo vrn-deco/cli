@@ -1,11 +1,11 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-13 02:01:09
+ * @LastEditTime: 2020-09-14 11:07:28
  * @Description: Create 命令
  */
 import YAML from 'yaml'
-import { CommanderStatic, Command } from 'commander'
+import { Command } from 'commander'
 
 import { CommandDecorator, BaseCommand } from './base'
 import { Logger } from '@naughty/logger'
@@ -20,7 +20,7 @@ Examples:
 `
 
 @CommandDecorator({
-  name: 'config <get|set> [<key>] [<value>]',
+  name: 'config <get|set> [key] [value]',
   description: `查看/修改配置\n${examples}`,
   options: [],
   actionHandler(...args) {
@@ -31,8 +31,8 @@ export default class ConfigCommand extends BaseCommand {
   // 当前命令的 command 对象
   cmd: Command
 
-  // 注册命令的方法，由 Commander 装饰器实现
-  register(commander: CommanderStatic): void {}
+  // 注册当前命令到父命令，由 Commander 装饰器实现
+  registerTo(parent: Command): void {}
   // 启动器
   boot(subCommand: string, key: string, value: string, cmd: Command): void {
     this.cmd = cmd

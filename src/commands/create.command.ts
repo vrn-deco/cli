@@ -1,14 +1,14 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-13 01:51:30
+ * @LastEditTime: 2020-09-14 11:06:14
  * @Description: Create 命令
  */
 import path, { join } from 'path'
 import { existsSync, statSync } from 'fs'
 
 import sh from 'shelljs'
-import { CommanderStatic, Command } from 'commander'
+import { Command } from 'commander'
 import inquirer from 'inquirer'
 import { tgz } from 'compressing'
 import { Logger } from '@naughty/logger'
@@ -17,6 +17,7 @@ import { CommandDecorator, BaseCommand } from './base'
 import { VRN_CONFIG, PWD_DIR } from '@/config'
 import BoilerplateService from '@/ services/boilerplate.service'
 import { Category } from '@/models/boilerplate'
+import { hasGit, initGitRepository } from '@/utils/git'
 
 const examples = `Examples: vrn create my-project
 `
@@ -25,11 +26,6 @@ const examples = `Examples: vrn create my-project
   name: 'create <folder_name>',
   description: `创建项目骨架\n\n${examples}`,
   options: [
-    {
-      flags: '--dir <path>',
-      description: '指定路径，默认为当前终端路径',
-      default: '.',
-    },
     {
       flags: '-y, --auto-install',
       description: '自动安装依赖',
@@ -46,8 +42,8 @@ export default class CreateCommand extends BaseCommand {
   // 当前命令的 command 对象
   cmd: Command
 
-  // 注册命令的方法，由 Commander 装饰器实现
-  register(commander: CommanderStatic): void {}
+  // 注册当前命令到父命令，由 Commander 装饰器实现
+  registerTo(parent: Command): void {}
   // 启动器
   boot(folderName: string = '', cmd: Command): void {
     this.cmd = cmd
@@ -169,7 +165,8 @@ export default class CreateCommand extends BaseCommand {
    * 2. 解压样板压缩包
    * 3. 重命名项目目录
    * 4. 移除压缩包
-   * 5. 安装依赖 (可选，根据参数)
+   * 5. 创建 git 存储库（git init）
+   * 6. 安装 npm 依赖 (可选，根据参数)
    *
    * @param options
    */
@@ -193,25 +190,37 @@ export default class CreateCommand extends BaseCommand {
     try {
       await tgz.uncompress(join(PWD_DIR, options.boilerplate), PWD_DIR)
       Logger.success(`解压文件成功`)
-      // 重命名
-      sh.mv(join(PWD_DIR, options.boilerplate.split('.')[0]), join(PWD_DIR, options.projectName))
+      // 重命名目录
+      sh.mv(options.boilerplate.split('.')[0], options.projectName)
     } catch (error) {
       throw this.cmd.debug ? error : new Error(`解压文件失败`)
     } finally {
       // 清理压缩包
-      sh.rm('-f', join(PWD_DIR, options.boilerplate))
+      sh.rm('-f', options.boilerplate)
     }
 
     // 5
-    if (this.cmd.autoInstall) {
-      Logger.info(`正在安装依赖: npm install（可能需要一段时间，请耐心等待...）`)
-      const { code: npmInstallReturnCode } = sh
-        .cd(options.projectName)
-        .exec(`npm install ${VRN_CONFIG.npmrepo ? '--registry ' + VRN_CONFIG.npmrepo : ''}`, {
-          silent: !this.cmd.debug,
-        })
+    if (hasGit()) {
+      const result = initGitRepository(options.projectName)
+      result && Logger.success(`Git 初始化完成...`)
     }
+
+    // 6
+    if (this.cmd.autoInstall) {
+      this._autoNPMInstall(options.projectName)
+    }
+
     this._printSuccessInfo(options.projectName)
+  }
+
+  // 安装 npm 依赖
+  private _autoNPMInstall(path: string) {
+    Logger.info(`正在安装依赖: npm install（可能需要一段时间，请耐心等待...）`)
+    const { code: npmInstallReturnCode } = sh
+      .cd(path)
+      .exec(`npm install ${VRN_CONFIG.npmrepo ? '--registry ' + VRN_CONFIG.npmrepo : ''}`, {
+        silent: !this.cmd.debug,
+      })
   }
 
   /**
