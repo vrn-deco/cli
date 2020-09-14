@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2019-08-01 14:23:07
- * @LastEditTime: 2020-09-13 02:12:17
+ * @LastEditTime: 2020-09-14 13:25:42
  * @Description: 检查更新
  */
 
@@ -18,7 +18,7 @@ export function checkUpdate(): Promise<void> {
     // 自定义请求的 dist-tag，默认是 latest
     tag: 'latest',
     // 自定义检查间隔，默认是 1h
-    checkInterval: 60 * 1000, // 1分钟
+    checkInterval: 1,
     // 自定义更新提示信息
     updateMessage:
       `发现新版本: <%=colors.yellow(current + " -> " + latest) %> \n\n` +

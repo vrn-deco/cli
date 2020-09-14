@@ -1,4 +1,6 @@
-# vrn-cli
+# @vrn-deco/cli
+
+⚙️ Project scaffolding with command line tools. 🛠
 
 ## Install
 
