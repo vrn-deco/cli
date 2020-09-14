@@ -8,9 +8,9 @@ cache:
   directories:
     - node_modules
 
-# branches:
-#   only:
-#     - master
+branches:
+  only:
+    - master
 
 install: npm install
 
