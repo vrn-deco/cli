@@ -2,6 +2,9 @@
 
 ⚙️ Project scaffolding with command line tools. 🛠
 
+![ci-status](https://travis-ci.org/vrn-deco/vrn-cli.svg?branch=master)
+![npm package](https://badgen.net/npm/v/@vrn-deco/cli)
+
 ## Install
 
 ```sh
