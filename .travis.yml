@@ -1,0 +1,17 @@
+# CI 配置文件
+language: node_js
+
+node_js:
+  - '12'
+
+cache:
+  directories:
+    - node_modules
+
+# branches:
+#   only:
+#     - master
+
+install: npm install
+
+script: npm test
