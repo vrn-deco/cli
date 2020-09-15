@@ -9,3 +9,5 @@ tsconfig.json
 pkg-updater.json
 .vrnconfig
 .prettierrc
+
+__tests__

@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-14 16:51:15
+ * @LastEditTime: 2020-09-15 10:43:57
  * @Description: Config 命令
  */
 import { writeFileSync } from 'fs'
@@ -55,7 +55,7 @@ export default class ConfigCommand extends BaseCommand {
   // 处理获取
   handleGet(key: string = '') {
     // 获取所有 .vrnconfig 配置
-    if (!key) Logger.info(`当前 .vrnconfig 配置如下 \n\n${YAML.stringify(VRN_CONFIG)}`)
+    if (!key) return Logger.info(`当前 .vrnconfig 配置如下 \n\n${YAML.stringify(VRN_CONFIG)}`)
     // 获取单条 .vrnconfig 配置
     Logger.info(`${key} -> ${VRN_CONFIG[key]}`)
   }
