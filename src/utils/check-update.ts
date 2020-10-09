@@ -1,20 +1,21 @@
 /*
  * @Author: Cphayim
  * @Date: 2019-08-01 14:23:07
- * @LastEditTime: 2020-09-14 13:25:42
+ * @LastEditTime: 2020-10-03 02:41:27
  * @Description: 检查更新
  */
 
 import updater from 'pkg-updater'
-import { ROOT_DIR, VRN_CONFIG } from '@/config'
+import { ROOT_DIR } from '@/constants'
 import { join } from 'path'
+import ConfigService from '@/services/config.service'
 
 export function checkUpdate(): Promise<void> {
   const pkg = require('@/../package')
   return updater({
     pkg,
     // 自定义 registry
-    registry: VRN_CONFIG.npmrepo ?? 'https://registry.npmjs.org/',
+    registry: new ConfigService().getAll().npmrepo ?? 'https://registry.npmjs.org/',
     // 自定义请求的 dist-tag，默认是 latest
     tag: 'latest',
     // 自定义检查间隔，默认是 1h

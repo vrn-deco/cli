@@ -10,7 +10,7 @@ import './utils/register-alias'
 import { program } from 'commander'
 import { Logger } from '@naughty/logger'
 
-import { PACKAGE_NAME, PACKAGE_VERSION } from '@/config'
+import { PACKAGE_NAME, PACKAGE_VERSION } from '@/constants'
 import { registerCommanders } from '@/commands'
 import { printLogo } from '@/utils/tools'
 import { checkUpdate } from '@/utils/check-update'

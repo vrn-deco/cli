@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-09-14 16:52:56
+ * @LastEditTime: 2020-10-09 09:43:53
  * @Description: Create 命令
  */
 import path, { join } from 'path'
@@ -14,10 +14,11 @@ import { tgz } from 'compressing'
 import { Logger } from '@naughty/logger'
 
 import { CommandDecorator, BaseCommand } from './base'
-import { VRN_CONFIG, PWD_DIR } from '@/config'
-import BoilerplateService from '@/ services/boilerplate.service'
+import { PWD_DIR } from '@/constants'
+import BoilerplateService from '@/services/boilerplate.service'
 import { Category } from '@/models/boilerplate'
 import { hasGit, initGitRepository } from '@/utils/git'
+import ConfigService from '@/services/config.service'
 
 const examples = `Examples: vrn create my-project
 `
@@ -42,11 +43,17 @@ export default class CreateCommand extends BaseCommand {
   // 当前命令的 command 对象
   cmd: Command
 
+  // 配置服务
+  configService: ConfigService = new ConfigService()
+  // 样板服务
+  boilerplateService: BoilerplateService = new BoilerplateService()
+
   // 注册当前命令到父命令，由 Commander 装饰器实现
   registerTo(parent: Command): void {}
   // 启动器
   boot(folderName: string = '', cmd: Command): void {
     this.cmd = cmd
+
     this._handleCreate(folderName)
   }
 
@@ -80,9 +87,12 @@ export default class CreateCommand extends BaseCommand {
    */
   async fetchRemoteBoilerplateConfig(): Promise<Category[]> {
     // 检查 vrnconfig 中是否配置了 registry
-    if (!VRN_CONFIG.registry) throw Error('似乎还没有配置 registry，请先执行 vrn config')
+    if (!this.configService.getAll().registry) {
+      throw Error('似乎还没有配置 registry，请先执行 vrn config')
+    }
+
     try {
-      return await new BoilerplateService().fetchBoilerplateConfig()
+      return await this.boilerplateService.fetchBoilerplateConfig()
     } catch (error) {
       throw this.cmd.debug ? error : new Error('拉取远端 boilerplate 配置失败')
     }
@@ -176,7 +186,7 @@ export default class CreateCommand extends BaseCommand {
     // 1
     Logger.info(`开始下载样板压缩包: ${options.boilerplate}`)
     try {
-      await new BoilerplateService().downloadBoilerplate(options.boilerplate, PWD_DIR)
+      await this.boilerplateService.downloadBoilerplate(options.boilerplate, PWD_DIR)
       Logger.success(`下载样板压缩包成功`)
     } catch (error) {
       throw this.cmd.debug ? error : new Error('下载文件失败')
@@ -213,9 +223,10 @@ export default class CreateCommand extends BaseCommand {
   // 安装 npm 依赖
   private _autoNPMInstall(path: string) {
     Logger.info(`正在安装依赖: npm install（可能需要一段时间，请耐心等待...）`)
+    const npmrepo = this.configService.getAll().npmrepo
     const { code: npmInstallReturnCode } = sh
       .cd(path)
-      .exec(`npm install ${VRN_CONFIG.npmrepo ? '--registry ' + VRN_CONFIG.npmrepo : ''}`, {
+      .exec(`npm install ${npmrepo ? '--registry ' + npmrepo : ''}`, {
         silent: !this.cmd.debug,
       })
   }
@@ -231,10 +242,16 @@ export default class CreateCommand extends BaseCommand {
   }
 }
 
+/**
+ * 创建器选项
+ */
 class CreatorOptions {
   constructor(
+    // 项目名称
     public readonly projectName: string,
+    // 分类索引
     public readonly categoryIndex: number,
+    // 样板名称
     public readonly boilerplate: string,
   ) {}
 }

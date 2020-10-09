@@ -7,7 +7,7 @@
 import chalk from 'chalk'
 import figlet from 'figlet'
 
-import { APP_NAME } from '@/config'
+import { APP_NAME } from '@/constants'
 
 export function printLogo() {
   const LOGO = figlet.textSync(APP_NAME.toUpperCase())

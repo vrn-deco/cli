@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "Project scaffolding with command line tools.",
   "bin": {
     "vrn-cli": "bin/vrn-cli",
@@ -35,6 +35,7 @@
   },
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "gitHooks": {
+    "pre-commit": "npm test",
     "commit-msg": "commitlint -e --config commitlint.config.js"
   },
   "config": {
