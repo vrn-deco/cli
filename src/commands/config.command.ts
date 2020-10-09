@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-10-09 09:45:23
+ * @LastEditTime: 2020-10-09 10:38:27
  * @Description: Config 命令
  */
 
@@ -65,6 +65,7 @@ export default class ConfigCommand extends BaseCommand {
   }
 
   private handleSet(key: string, value: string) {
+    this.configService.set(key, value)
     Logger.success(`${key} -> ${value}`)
   }
 }

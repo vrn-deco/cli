@@ -1,10 +1,10 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-10-03 02:02:42
- * @LastEditTime: 2020-10-03 02:39:06
+ * @LastEditTime: 2020-10-09 13:59:10
  * @Description: 命令行配置存取服务
  */
-import { existsSync, readFileSync, writeFileSync } from 'fs'
+import { readFileSync, statSync, writeFileSync } from 'fs'
 
 import YAML from 'yaml'
 import { Logger } from '@naughty/logger'
@@ -21,7 +21,7 @@ export default class ConfigService {
   // 处理获取
   getAll(key: string = ''): VrnConfig {
     // 如果 .vrnconfig 文件不存在，创建一个
-    if (!existsSync(VRN_CONFIG_FILE)) {
+    if (!statSync(VRN_CONFIG_FILE).isFile()) {
       writeFileSync(VRN_CONFIG_FILE, YAML.stringify(this.DEFAULT_VRN_CONFIG))
     }
 
@@ -36,7 +36,7 @@ export default class ConfigService {
 
   // 处理设置
   set(key: string, value: string): void {
-    if (!key || !value) throw new Error('key 和 value 参数对于 set 子命令是必要的')
+    if (!key || !value) throw new Error('key 和 value 参数是必要的')
 
     const config: VrnConfig = this.getAll()
     config[key] = value
