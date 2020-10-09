@@ -1,10 +1,10 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-10-03 02:02:42
- * @LastEditTime: 2020-10-09 13:59:10
+ * @LastEditTime: 2020-10-09 14:31:32
  * @Description: 命令行配置存取服务
  */
-import { readFileSync, statSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 
 import YAML from 'yaml'
 import { Logger } from '@naughty/logger'
@@ -21,7 +21,7 @@ export default class ConfigService {
   // 处理获取
   getAll(key: string = ''): VrnConfig {
     // 如果 .vrnconfig 文件不存在，创建一个
-    if (!statSync(VRN_CONFIG_FILE).isFile()) {
+    if (!existsSync(VRN_CONFIG_FILE) || !statSync(VRN_CONFIG_FILE).isFile()) {
       writeFileSync(VRN_CONFIG_FILE, YAML.stringify(this.DEFAULT_VRN_CONFIG))
     }
 

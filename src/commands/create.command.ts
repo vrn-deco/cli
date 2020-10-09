@@ -1,11 +1,11 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-10-09 13:58:39
+ * @LastEditTime: 2020-10-09 14:30:38
  * @Description: Create 命令
  */
 import path, { join } from 'path'
-import { statSync } from 'fs'
+import { existsSync, statSync } from 'fs'
 
 import sh from 'shelljs'
 import { Command } from 'commander'
@@ -180,7 +180,7 @@ export default class CreateCommand extends BaseCommand {
   async install(options: CreatorOptions): Promise<void> {
     // 创建目录的绝对路径
     const absPath = path.join(PWD_DIR, options.projectName)
-    if (statSync(absPath).isDirectory()) {
+    if (existsSync(absPath) && statSync(absPath).isDirectory()) {
       throw new Error(`路径下已经存在同名目录，无法重复创建: ${absPath}`)
     }
     // 1

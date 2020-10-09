@@ -1,10 +1,10 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-14 16:10:43
- * @LastEditTime: 2020-10-09 13:55:48
+ * @LastEditTime: 2020-10-09 14:32:08
  * @Description:
  */
-import { readFileSync, statSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 
 import { VRN_CONFIG_FILE } from '@/constants'
 
@@ -15,7 +15,7 @@ describe('Test config.service', () => {
   const service = new ConfigService()
 
   beforeAll(() => {
-    if (statSync(VRN_CONFIG_FILE).isFile()) {
+    if (existsSync(VRN_CONFIG_FILE) && statSync(VRN_CONFIG_FILE).isFile()) {
       originConfigString = readFileSync(VRN_CONFIG_FILE, { encoding: 'utf8' })
     }
   })
