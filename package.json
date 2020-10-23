@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli",
-  "version": "0.2.10",
+  "version": "0.2.12",
   "description": "Project scaffolding with command line tools.",
   "bin": {
     "vrn-cli": "bin/vrn-cli",
