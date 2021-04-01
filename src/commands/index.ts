@@ -1,14 +1,14 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:56:37
- * @LastEditTime: 2020-09-14 10:21:41
+ * @LastEditTime: 2021-04-01 16:35:54
  * @Description:
  */
 import commander from 'commander'
 
 import { BaseCommand } from './base'
-import CreateCommand from './create.command'
 import ConfigCommand from './config.command'
+import CreateCommand from './create.command'
 
 /**
  * 注册所有命令

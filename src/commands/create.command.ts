@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2020-10-09 14:30:38
+ * @LastEditTime: 2021-04-01 16:34:58
  * @Description: Create 命令
  */
 import path, { join } from 'path'
@@ -15,10 +15,10 @@ import { Logger } from '@naughty/logger'
 
 import { CommandDecorator, BaseCommand } from './base'
 import { PWD_DIR } from '@/constants'
-import BoilerplateService from '@/services/boilerplate.service'
-import { Category } from '@/models/boilerplate'
 import { hasGit, initGitRepository } from '@/utils/git'
 import ConfigService from '@/services/config.service'
+import ResourceService from '@/services/resource.service'
+import { Boilerplate, Framework, Lang, Resource } from '@/models/resource'
 
 const examples = `Examples: vrn create my-project
 `
@@ -45,22 +45,23 @@ export default class CreateCommand extends BaseCommand {
 
   // 配置服务
   configService: ConfigService = new ConfigService()
-  // 样板服务
-  boilerplateService: BoilerplateService = new BoilerplateService()
+
+  // 资源服务
+  resourceService: ResourceService = new ResourceService()
 
   // 注册当前命令到父命令，由 Commander 装饰器实现
   registerTo(parent: Command): void {}
+
   // 启动器
   boot(folderName: string = '', cmd: Command): void {
     this.cmd = cmd
-
     this._handleCreate(folderName)
   }
 
   /**
    * 处理创建
    *
-   * 1. 拉取指定 registry 的配置文件 boilerplate.yml
+   * 1. 拉取指定 registry 的配置文件 resource.json
    * 2. 使用配置项生成交互式引导，根据用户交互结果返回创建配置 CreatorOptions
    * 3. 安装项目模板到指定目录
    *
@@ -71,28 +72,29 @@ export default class CreateCommand extends BaseCommand {
 
     try {
       // 1
-      const categories: Category[] = await this.fetchRemoteBoilerplateConfig()
+      const resource: Resource = await this.fetchRemoteResource()
       // 2
-      const creatorOptions: CreatorOptions = await this.interactiveGuide(projectName, categories)
+      const creatorOptions = await this.interactiveGuide(projectName, resource)
       // 3
       await this.install(creatorOptions)
     } catch (error) {
+      // 统一输出错误日志
       Logger.error(error.message)
       process.exit(1)
     }
   }
 
   /**
-   * 拉取远端 boilerplate 配置
+   * 拉取远端 resource 配置
    */
-  async fetchRemoteBoilerplateConfig(): Promise<Category[]> {
+  async fetchRemoteResource(): Promise<Resource> {
     // 检查 vrnconfig 中是否配置了 registry
     if (!this.configService.getAll().registry) {
       throw Error('似乎还没有配置 registry，请先执行 vrn config')
     }
 
     try {
-      return await this.boilerplateService.fetchBoilerplateConfig()
+      return await this.resourceService.fetchResource()
     } catch (error) {
       throw this.cmd.debug ? error : new Error('拉取远端 boilerplate 配置失败')
     }
@@ -103,62 +105,92 @@ export default class CreateCommand extends BaseCommand {
    * @param defaultName 默认项目名
    * @param categories boilerplate 配置表
    */
-  async interactiveGuide(defaultName: string, categories: Category[]): Promise<CreatorOptions> {
+  async interactiveGuide(defaultName: string, resource: Resource) {
     try {
-      const projectName = await this._getProjectName(defaultName)
-      const categoryIndex = await this._getCategoryIndex(categories)
-      const boilerplate = await this._getBoilerplate(categories, categoryIndex)
-      return new CreatorOptions(projectName, categoryIndex, boilerplate)
+      const projectName = await this._inputProjectName(defaultName)
+
+      const lang = await this._chooseLang(resource)
+      const framework = await this._chooseFramework(lang.frameworks)
+      const boilerplate = await this._chooseBoilerplate(framework.boilerplate)
+
+      return new CreatorOptions(projectName, boilerplate)
     } catch (error) {
       throw this.cmd.debug ? error : new Error('交互式引导发生异常')
     }
   }
 
-  // 交互式获取项目名
-  private async _getProjectName(defaultName: string): Promise<string> {
-    const { projectName } = await inquirer.prompt<CreatorOptions>([
-      {
-        type: 'input',
-        name: 'projectName',
-        message: '项目名称',
-        default: defaultName,
-        validate: (val: string) =>
-          /^[a-z\d-]+$/.test(val)
-            ? true
-            : `项目名称需要符合 npm package 命名规范，仅包含小写字母、数字与'-'`,
-      },
-    ])
+  // 交互式界面：输入项目名
+  private async _inputProjectName(defaultName: string): Promise<string> {
+    const { projectName } = await inquirer.prompt<{ projectName: string }>({
+      type: 'input',
+      name: 'projectName',
+      message: '项目名称',
+      default: defaultName,
+      validate: (val: string) =>
+        /^[a-z\d-]+$/.test(val)
+          ? true
+          : `项目名称需要符合 npm package 命名规范，仅包含小写字母、数字与'-'`,
+    })
     return projectName
   }
 
-  // 交互式获取分类索引
-  private async _getCategoryIndex(categories: Category[]): Promise<number> {
-    const { categoryIndex } = await inquirer.prompt<CreatorOptions>([
+  // 交互式界面：选择语言
+  private async _chooseLang(langs: Lang[]): Promise<Lang> {
+    if (!langs.length) {
+      Logger.error(`抱歉，没有可选资源`)
+      throw new Error()
+    }
+    const { lang } = await inquirer.prompt<{ lang: Lang }>([
       {
         type: 'list',
-        name: 'categoryIndex',
-        message: '技术选型',
-        choices: categories.map((item, index) => ({ name: item.title, value: index })),
+        name: 'lang',
+        message: '选择语言',
+        choices: langs.map((lang) => ({ name: lang.label, value: lang })),
         pageSize: 4,
       },
     ])
-    return categoryIndex
+    return lang
   }
 
-  // 获取模板名
-  private async _getBoilerplate(categories: Category[], categoryIndex: number): Promise<string> {
-    const { boilerplates } = categories[categoryIndex]
+  // 交互式界面：选择框架
+  private async _chooseFramework(frameworks: Framework[]): Promise<Framework> {
+    if (!frameworks.length) {
+      Logger.error(`抱歉，没有可选资源`)
+      throw new Error()
+    }
+    const { framework } = await inquirer.prompt<{ framework: Framework }>([
+      {
+        type: 'list',
+        name: 'framework',
+        message: '选择框架',
+        choices: frameworks.map((framework) => ({ name: framework.label, value: framework })),
+        pageSize: 4,
+      },
+    ])
+    return framework
+  }
+
+  // 交互式界面：获取模板
+  private async _chooseBoilerplate(boilerplateList: Boilerplate[]): Promise<Boilerplate> {
+    if (!boilerplateList.length) {
+      Logger.error(`抱歉，没有可选资源`)
+      throw new Error()
+    }
     const { boilerplate } = await inquirer.prompt<CreatorOptions>([
       {
         type: 'list',
         name: 'boilerplate',
-        message: '样板选型',
-        choices: boilerplates.map((item) => {
-          // xxx boilerplate v1.0.0 (aaa / bbb)
-          let name = `${item.title} boilerplate v${item.version} ${
-            item.tags && item.tags.length ? '(' + item.tags.join(' / ') + ')' : ''
-          }`
-          return { name, value: item.tgz }
+        message: '选择模板',
+        choices: boilerplateList.map((item) => {
+          // $flag $label boilerplate v$version ($tag1 / $tag2)
+          let name = `${item.label} boilerplate v${item.version}`
+          if (item.flag) {
+            name = item.flag + name
+          }
+          if (item.tags && item.tags.length) {
+            name += ' (' + item.tags.join(' / ') + ')'
+          }
+          return { name, value: item }
         }),
       },
     ])
@@ -184,9 +216,10 @@ export default class CreateCommand extends BaseCommand {
       throw new Error(`路径下已经存在同名目录，无法重复创建: ${absPath}`)
     }
     // 1
-    Logger.info(`开始下载样板压缩包: ${options.boilerplate}`)
+    Logger.info(`开始下载样板压缩包: ${options.boilerplate.key}`)
+    const tgzName = options.boilerplate.key + '.tgz' // 'a' -> 'a.tgz'
     try {
-      await this.boilerplateService.downloadBoilerplate(options.boilerplate, PWD_DIR)
+      await this.resourceService.downloadBoilerplate(tgzName, PWD_DIR)
       Logger.success(`下载样板压缩包成功`)
     } catch (error) {
       throw this.cmd.debug ? error : new Error('下载文件失败')
@@ -195,18 +228,20 @@ export default class CreateCommand extends BaseCommand {
     // 2 3 4
     Logger.info(`开始解压文件: ${options.boilerplate}`)
     try {
-      await tgz.uncompress(join(PWD_DIR, options.boilerplate), PWD_DIR)
+      // a.tgz -> a/
+      await tgz.uncompress(join(PWD_DIR, tgzName), PWD_DIR)
       Logger.success(`解压文件成功`)
       // 重命名目录
-      sh.mv(options.boilerplate.split('.')[0], options.projectName)
+      // a/ -> projectName/
+      sh.mv(options.boilerplate.key, options.projectName)
     } catch (error) {
       throw this.cmd.debug ? error : new Error(`解压文件失败`)
     } finally {
       // 清理压缩包
-      sh.rm('-f', options.boilerplate)
+      sh.rm('-f', tgzName)
     }
 
-    // 5
+    // // 5
     if (hasGit()) {
       initGitRepository(options.projectName, !this.cmd.debug)
       Logger.success(`初始化 Git 完成...`)
@@ -249,9 +284,7 @@ class CreatorOptions {
   constructor(
     // 项目名称
     public readonly projectName: string,
-    // 分类索引
-    public readonly categoryIndex: number,
-    // 样板名称
-    public readonly boilerplate: string,
+    // 模板
+    public readonly boilerplate: Boilerplate,
   ) {}
 }

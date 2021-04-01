@@ -1,30 +1,31 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-12 23:44:04
- * @LastEditTime: 2020-10-03 02:57:46
+ * @LastEditTime: 2021-04-01 15:44:39
  * @Description:
  */
 import { join } from 'path'
 import { createWriteStream } from 'fs'
 
-import { Category } from '@/models/boilerplate'
 import { fetch } from '@/utils/fetch'
 import { VrnConfig } from '@/models/vrn-config'
+import { Resource } from '@/models/resource'
 import ConfigService from './config.service'
 
-export default class BoilerplateService {
+export default class ResourceService {
   private config: VrnConfig
 
   constructor() {
     this.config = new ConfigService().getAll()
   }
+
   /**
-   * 获取样板配置
+   * 获取 resource.json
    * @param cache
    */
-  async fetchBoilerplateConfig(cache = true): Promise<any> {
+  async fetchResource(cache = true): Promise<any> {
     const params = cache ? {} : { t: ~~(Date.now() / 1000) }
-    const response = await fetch.get<Category[]>('boilerplate.json', {
+    const response = await fetch.get<Resource>('resource.json', {
       baseURL: this.config.registry,
       params,
     })

@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-10-03 02:02:42
- * @LastEditTime: 2020-10-09 14:31:32
+ * @LastEditTime: 2021-04-01 16:38:49
  * @Description: 命令行配置存取服务
  */
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
@@ -14,7 +14,7 @@ import { VrnConfig } from '@/models/vrn-config'
 
 export default class ConfigService {
   DEFAULT_VRN_CONFIG: VrnConfig = {
-    registry: '',
+    registry: 'http://boilerplate.vrndeco.cn',
     npmrepo: 'https://registry.npm.taobao.org',
   }
 
