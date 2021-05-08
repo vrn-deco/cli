@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2020-09-11 15:38:07
- * @LastEditTime: 2021-04-01 16:34:58
+ * @LastEditTime: 2021-05-08 10:23:54
  * @Description: Create 命令
  */
 import path, { join } from 'path'
@@ -226,7 +226,7 @@ export default class CreateCommand extends BaseCommand {
     }
 
     // 2 3 4
-    Logger.info(`开始解压文件: ${options.boilerplate}`)
+    Logger.info(`开始解压文件: ${tgzName}`)
     try {
       // a.tgz -> a/
       await tgz.uncompress(join(PWD_DIR, tgzName), PWD_DIR)
