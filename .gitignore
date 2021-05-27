@@ -4,5 +4,6 @@ node_modules/
 lib/
 tmp/
 
+lerna-debug.log
 pkg-updater.json
 .vrnconfig

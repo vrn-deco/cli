@@ -1,82 +1,23 @@
 {
-  "name": "@vrn-deco/cli",
-  "version": "0.3.4",
-  "description": "Project scaffolding with command line tools.",
-  "bin": {
-    "vrn-cli": "bin/vrn-cli",
-    "vrn": "bin/vrn-cli"
-  },
-  "main": "bin/vrn-cli",
-  "scripts": {
-    "start": "ts-node src",
-    "build:watch": "npm run clean && tsc -w --sourcemap",
-    "build": "npm run clean && tsc",
-    "test": "exit 0;",
-    "clean": "rm -rf lib/",
-    "prepublish": "npm run build",
-    "commit": "npx git-cz"
-  },
-  "author": "Cphayim",
+  "private": true,
+  "name": "vrn-cli",
   "license": "MIT",
-  "keywords": [
-    "Cli",
-    "Command line tool",
-    "命令行工具"
+  "author": "Cphayim <i@cphayim.me>",
+  "repository": "git@github.com:vrn-deco/vrn-cli.git",
+  "workspaces": [
+    "packages/*"
   ],
-  "directories": {
-    "lib": "lib"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/vrn-deco/vrn-cli.git"
-  },
-  "bugs": {
-    "url": "https://github.com/vrn-deco/vrn-cli/issues"
-  },
-  "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
-  "gitHooks": {
-    "pre-commit": "npm test",
-    "commit-msg": "commitlint -e --config commitlint.config.js"
+  "scripts": {
+    "commit": "git-cz"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-lerna-changelog"
     }
   },
-  "dependencies": {
-    "@naughty/logger": "^1.0.1",
-    "axios": "^0.19.0",
-    "chalk": "^4.1.0",
-    "cli-table2": "^0.2.0",
-    "commander": "^6.1.0",
-    "compressing": "^1.5.1",
-    "dotenv": "^8.2.0",
-    "figlet": "^1.5.0",
-    "inquirer": "^7.3.3",
-    "module-alias": "^2.2.2",
-    "pkg-updater": "^1.0.4",
-    "shelljs": "^0.8.4",
-    "source-map-support": "^0.5.19",
-    "yaml": "^1.10.0",
-    "yargs": "^16.0.3"
-  },
   "devDependencies": {
-    "@commitlint/cli": "9.1.1",
-    "@commitlint/config-conventional": "9.1.1",
-    "@types/figlet": "^1.2.0",
-    "@types/inquirer": "^7.3.1",
-    "@types/jest": "^26.0.13",
-    "@types/module-alias": "^2.0.0",
-    "@types/node": "^14.10.0",
-    "@types/shelljs": "^0.8.8",
-    "@types/source-map-support": "^0.5.3",
-    "@types/yargs": "^15.0.5",
-    "commitizen": "^4.2.1",
-    "cz-conventional-changelog": "^3.3.0",
-    "jest": "^26.4.2",
-    "ts-jest": "^26.3.0",
-    "ts-node": "^9.0.0",
-    "typescript": "^4.0.2",
-    "yorkie": "^2.0.0"
+    "commitizen": "^4.2.4",
+    "cz-lerna-changelog": "^2.0.3",
+    "lerna": "^4.0.0"
   }
 }
