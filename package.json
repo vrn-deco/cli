@@ -8,7 +8,9 @@
     "packages/*"
   ],
   "scripts": {
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "prepare": "husky install",
+    "test": "echo 'ok';"
   },
   "config": {
     "commitizen": {
@@ -18,6 +20,7 @@
   "devDependencies": {
     "commitizen": "^4.2.4",
     "cz-lerna-changelog": "^2.0.3",
-    "lerna": "^4.0.0"
+    "lerna": "^4.0.0",
+    "husky": "^6.0.0"
   }
 }
