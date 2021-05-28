@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "✨ vrn-cli",
+			"path": "."
+		},
+		{
+			"name": "📦 @vrn-deco/cli",
+			"path": "packages/cli"
+		},
+		{
+			"name": "📦 @vrn-deco/shared",
+			"path": "packages/shared"
+		},
+		{
+			"name": "📦 @vrn-deco/type",
+			"path": "packages/type"
+		}
+	],
+	"settings": {}
+}

@@ -1,5 +1,8 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm test
-npm test
+echo "🛠🛠🛠 run lint-staged"
+yarn lint-staged
+
+echo "🛠🛠🛠 run test"
+yarn test

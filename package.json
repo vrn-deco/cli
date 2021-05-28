@@ -8,19 +8,36 @@
     "packages/*"
   ],
   "scripts": {
+    "test": "echo 'ok';",
     "commit": "git-cz",
     "prepare": "husky install",
-    "test": "echo 'ok';"
+    "prettier": "prettier --write .",
+    "lint": "eslint \"packages/**/*.ts\""
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-lerna-changelog"
     }
   },
+  "lint-staged": {
+    "*.{js,ts,json}": [
+      "prettier --write",
+      "eslint --fix",
+      "git add"
+    ]
+  },
   "devDependencies": {
+    "@commitlint/cli": "^12.1.4",
+    "@commitlint/config-conventional": "^12.1.4",
+    "@typescript-eslint/eslint-plugin": "^4.25.0",
+    "@typescript-eslint/parser": "^4.25.0",
     "commitizen": "^4.2.4",
     "cz-lerna-changelog": "^2.0.3",
+    "eslint": "^7.27.0",
+    "eslint-config-prettier": "^8.3.0",
+    "husky": "^6.0.0",
     "lerna": "^4.0.0",
-    "husky": "^6.0.0"
+    "lint-staged": "^11.0.0",
+    "prettier": "2.3.0"
   }
 }
