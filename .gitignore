@@ -7,3 +7,5 @@ tmp/
 lerna-debug.log
 pkg-updater.json
 .vrnconfig
+
+tsconfig.tsbuildinfo
