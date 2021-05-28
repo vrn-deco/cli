@@ -5871,6 +5871,19 @@ yargs@^16.2.0:
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
 
+yargs@^17.0.1:
+  version "17.0.1"
+  resolved "https://registry.nlark.com/yargs/download/yargs-17.0.1.tgz?cache=0&sync_timestamp=1620086465147&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fyargs%2Fdownload%2Fyargs-17.0.1.tgz#6a1ced4ed5ee0b388010ba9fd67af83b9362e0bb"
+  integrity sha1-ahztTtXuCziAELqf1nr4O5Ni4Ls=
+  dependencies:
+    cliui "^7.0.2"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.0"
+    y18n "^5.0.5"
+    yargs-parser "^20.2.2"
+
 yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npm.taobao.org/yocto-queue/download/yocto-queue-0.1.0.tgz?cache=0&sync_timestamp=1606290282107&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fyocto-queue%2Fdownload%2Fyocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
