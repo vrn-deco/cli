@@ -1,13 +1,15 @@
 {
   "name": "@vrn-deco/cli",
   "version": "0.0.0",
-  "description": "> TODO: description",
+  "publishConfig": {
+    "access": "public"
+  },
+  "description": "🔧🔨🔩 Full stack engineering boilerplate.",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
   "bin": {
-    "vrn-cli": "lib/index.js",
-    "vrn": "lib/index.js"
+    "vrn-next": "bin/vrn-cli.js"
   },
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -23,20 +25,19 @@
     "url": "git+https://github.com/vrn-deco/vrn-cli.git"
   },
   "scripts": {
-    "dev": "tsc -b -w --verbose",
+    "dev": "tsc -b . -w --verbose",
     "build": "tsc -b",
-    "clean": "rimraf lib coverage tsconfig.tsbuildinfo",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/shared": "^0.0.0",
+    "@vrn-deco/shared-utils": "^0.0.0",
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
+    "@types/node": "^15.12.0",
     "typescript": "^4.3.2"
   }
 }

@@ -5,14 +5,18 @@
   "author": "Cphayim <i@cphayim.me>",
   "repository": "git@github.com:vrn-deco/vrn-cli.git",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "commands/*"
   ],
   "scripts": {
-    "test": "echo 'ok';",
+    "boot": "lerna bootstrap",
+    "clean": "lerna exec \"rimraf lib coverage tsconfig.tsbuildinfo\" && lerna clean --yes",
+    "build": "lerna run --stream --sort build",
+    "test": "exit 0;",
     "commit": "git-cz",
     "prepare": "husky install",
     "prettier": "prettier --write .",
-    "lint": "eslint \"packages/**/*.ts\""
+    "lint": "eslint \"packages/**/*.ts\" \"commands/**/*.ts\""
   },
   "config": {
     "commitizen": {
@@ -22,8 +26,7 @@
   "lint-staged": {
     "*.{js,ts,json}": [
       "prettier --write",
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ]
   },
   "devDependencies": {
@@ -38,6 +41,8 @@
     "husky": "^6.0.0",
     "lerna": "^4.0.0",
     "lint-staged": "^11.0.0",
-    "prettier": "2.3.0"
-  }
+    "prettier": "2.3.0",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {}
 }

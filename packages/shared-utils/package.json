@@ -1,6 +1,9 @@
 {
-  "name": "@vrn-deco/shared",
+  "name": "@vrn-deco/shared-utils",
   "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "> TODO: description",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
@@ -19,16 +22,13 @@
     "url": "git+https://github.com/vrn-deco/vrn-cli.git"
   },
   "scripts": {
-    "dev": "tsc -w",
-    "build": "tsc",
-    "clean": "rimraf lib coverage tsconfig.tsbuildinfo",
+    "build": "tsc -b",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "devDependencies": {
-    "rimraf": "^3.0.2",
     "typescript": "^4.3.2"
   }
 }

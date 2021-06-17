@@ -9,8 +9,8 @@
 			"path": "packages/cli"
 		},
 		{
-			"name": "📦 @vrn-deco/shared",
-			"path": "packages/shared"
+			"name": "📦 @vrn-deco/shared-utils",
+			"path": "packages/shared-utils"
 		},
 		{
 			"name": "📦 @vrn-deco/type",

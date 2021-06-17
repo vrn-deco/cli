@@ -1,6 +1,9 @@
 {
   "name": "@vrn-deco/type",
   "version": "0.0.0",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "vrn type definition",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
@@ -13,9 +16,6 @@
   "files": [
     "lib"
   ],
-  "publishConfig": {
-    "registry": "https://registry.npm.taobao.org/"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git"
