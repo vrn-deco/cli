@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "description": "> TODO: description",
+  "description": "vrn shared utils",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
