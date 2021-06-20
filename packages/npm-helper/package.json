@@ -1,10 +1,7 @@
 {
-  "name": "@vrn-deco/type",
+  "name": "@vrn-deco/npm-helper",
   "version": "1.0.0-alpha.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "vrn type definition",
+  "description": "vrn npm info query and tools",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
@@ -16,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git"
@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
-  "devDependencies": {
-    "typescript": "^4.3.3"
+  "dependencies": {
+    "axios": "^0.21.1"
   }
 }

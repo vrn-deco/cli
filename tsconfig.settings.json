@@ -3,10 +3,11 @@
     "target": "es2017",
     "module": "commonjs",
     "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "declarationMap": false,
+    "sourceMap": false,
     "strict": true,
     "composite": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "removeComments": true
   }
 }

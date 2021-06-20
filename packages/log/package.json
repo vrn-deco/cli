@@ -1,10 +1,7 @@
 {
-  "name": "@vrn-deco/type",
+  "name": "@vrn-deco/log",
   "version": "1.0.0-alpha.0",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "vrn type definition",
+  "description": "vrn log",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
@@ -16,6 +13,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git"
@@ -28,6 +28,16 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "devDependencies": {
+    "@types/dedent": "^0.7.0",
+    "@types/figlet": "^1.5.1",
+    "@types/npmlog": "^4.1.2",
     "typescript": "^4.3.3"
+  },
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "dedent": "^0.7.0",
+    "figlet": "^1.5.0",
+    "npmlog": "^4.1.2",
+    "ora": "^5.4.1"
   }
 }

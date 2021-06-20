@@ -9,6 +9,14 @@
 			"path": "packages/cli"
 		},
 		{
+			"name": "📦 @vrn-deco/log",
+			"path": "packages/log"
+		},
+		{
+			"name": "📦 @vrn-deco/npm-helper",
+			"path": "packages/npm-helper"
+		},
+		{
 			"name": "📦 @vrn-deco/shared-utils",
 			"path": "packages/shared-utils"
 		},

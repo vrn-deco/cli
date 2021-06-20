@@ -11,8 +11,7 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "lib": "lib"
   },
   "files": [
     "lib"
@@ -22,7 +21,7 @@
     "url": "git+https://github.com/vrn-deco/vrn-cli.git"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
