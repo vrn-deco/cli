@@ -9,20 +9,24 @@
 			"path": "packages/cli"
 		},
 		{
-			"name": "📦 @vrn-deco/log",
-			"path": "packages/log"
+			"name": "📦 @vrn-deco/executor",
+			"path": "packages/executor"
+		},
+		{
+			"name": "📦 @vrn-deco/logger",
+			"path": "packages/logger"
 		},
 		{
 			"name": "📦 @vrn-deco/npm-helper",
 			"path": "packages/npm-helper"
 		},
 		{
-			"name": "📦 @vrn-deco/shared-utils",
-			"path": "packages/shared-utils"
+			"name": "📦 @vrn-deco/shared-types",
+			"path": "packages/shared-types"
 		},
 		{
-			"name": "📦 @vrn-deco/type",
-			"path": "packages/type"
+			"name": "📦 @vrn-deco/shared-utils",
+			"path": "packages/shared-utils"
 		}
 	],
 	"settings": {}

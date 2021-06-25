@@ -3,7 +3,7 @@
  * @Date: 2020-07-17 21:52:39
  * @Description: 日志工具
  */
-export * from './log'
+export * as logger from './logger'
 
 export { default as figlet } from 'figlet'
 export { default as colors } from 'chalk'

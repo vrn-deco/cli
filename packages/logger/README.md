@@ -1,11 +1,11 @@
-# `@vrn-deco/type`
+# `@vrn-deco/logger`
 
 > TODO: description
 
 ## Usage
 
 ```
-const type = require('@vrn-deco/type');
+const log = require('@vrn-deco/logger');
 
 // TODO: DEMONSTRATE API
 ```

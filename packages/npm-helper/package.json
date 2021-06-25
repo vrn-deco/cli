@@ -6,7 +6,7 @@
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
   "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "types": "lib/index.d.ts",
   "directories": {
     "lib": "lib"
   },
@@ -29,5 +29,9 @@
   },
   "dependencies": {
     "axios": "^0.21.1"
+  },
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "typescript": "^4.3.4"
   }
 }

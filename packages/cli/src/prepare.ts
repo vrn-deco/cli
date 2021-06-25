@@ -12,11 +12,17 @@ import rootCheck from 'root-check'
 import userHome from 'user-home'
 import pathExists from 'path-exists'
 
+import '@vrn-deco/shared-types/lib/env'
 import { NPMQuerier, NPMRegistry } from '@vrn-deco/npm-helper'
-import { figlet, colors, dedent, ora, log } from '@vrn-deco/log'
+import { figlet, colors, dedent, ora, logger } from '@vrn-deco/logger'
 
-import { CLI_HOME_NAME, CLI_LOWEST_NODE_VERSION, CLI_NAME } from './constants'
-import pkg from '../package.json'
+import {
+  CLI_HOME_NAME,
+  CLI_LOWEST_NODE_VERSION,
+  CLI_NAME,
+  CLI_PACKAGE_NAME,
+  CLI_VERSION,
+} from './constants'
 
 export async function prepare(): Promise<void> {
   printLOGO()
@@ -29,7 +35,7 @@ export async function prepare(): Promise<void> {
 
 function printLOGO() {
   const logo = figlet.textSync(CLI_NAME.toUpperCase(), '3D Diagonal')
-  process.stdout.write(colors.green(logo) + '\n\n')
+  console.log(colors.green(logo))
 }
 
 function rootDemotion() {
@@ -40,15 +46,13 @@ function checkNodeVersion() {
   const current = process.version
   const lowest = CLI_LOWEST_NODE_VERSION
   if (semver.lt(current, lowest)) {
-    throw new Error(
-      colors.red(`请更新你的 Node.js 版本 \n最低要求: ${lowest}\n当前版本: ${current}`),
-    )
+    throw new Error(`请更新你的 Node.js 版本 \n最低要求: ${lowest}\n当前版本: ${current}`)
   }
 }
 
 function checkUserHome() {
   if (!userHome || !pathExists.sync(userHome)) {
-    throw new Error(colors.red(`当前计算机用户 ${os.userInfo().username} 主目录不存在`))
+    throw new Error(`当前计算机用户 ${os.userInfo().username} 主目录不存在`)
   }
 }
 
@@ -61,22 +65,26 @@ function checkEnv() {
 }
 
 function injectDefaultConfig() {
-  process.env.VRN_CLI_HOME_PATH = path.join(userHome, CLI_HOME_NAME)
+  process.env = {
+    ...process.env,
+    VRN_CLI_DEBUG_ENABLED: 'off',
+    VRN_CLI_NAME: CLI_NAME,
+    VRN_CLI_VERSION: CLI_VERSION,
+    VRN_CLI_HOME_PATH: path.join(userHome, CLI_HOME_NAME),
+  }
 }
 
 async function checkGlobalUpdate() {
   const spinner = ora('检查版本更新...').start()
-  const name = pkg.name
-  const currentVersion = pkg.version
+  const name = CLI_PACKAGE_NAME
+  const currentVersion = CLI_VERSION
   const querier = new NPMQuerier(name, NPMRegistry.NPM)
   try {
     const latestVersion = await querier.getLatestVersion()
     spinner.stop()
     if (latestVersion && semver.lt(currentVersion, latestVersion)) {
-      log.warn(
-        '',
-        colors.yellow(
-          dedent(`
+      logger.warn(
+        dedent(`
           --------------------------------------------
           发现新版本！
           请手动更新 ${name}
@@ -85,11 +93,9 @@ async function checkGlobalUpdate() {
           更新命令: npm install -g ${name}
           --------------------------------------------
       `),
-        ),
       )
     }
-  } catch (error) {
+  } finally {
     spinner.stop()
-    throw error
   }
 }

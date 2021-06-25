@@ -5,23 +5,25 @@
  */
 
 import { Command } from 'commander'
-import { log } from '@vrn-deco/log'
-import { CLI_VERSION } from './constants'
+import '@vrn-deco/shared-types/lib/env'
+import { logger } from '@vrn-deco/logger'
+
+import { CLI_PACKAGE_NAME, CLI_VERSION } from './constants'
 
 const program = new Command()
 
 export async function registerCommands(): Promise<void> {
   program
     .usage('<command> [options]')
-    .version(CLI_VERSION, '-v, --version', '查看版本号')
+    .version(`${CLI_PACKAGE_NAME} version: ${CLI_VERSION}`, '-v, --version', '查看版本号')
     .helpOption('-h, --help', '查看帮助信息')
     .option('-d, --debug', '是否开启调试模式', false)
     .option('-tp, --targetPath <targetPath>', '指定本地模块路径', '')
 
   program.on('option:debug', () => {
-    log.level = process.env.LOG_LEVEL = program.opts().debug ? 'verbose' : 'info'
-    process.env.VRN_CLI_DEBUG = 'enabled'
-    log.verbose('debug', '调试模式启动')
+    process.env.VRN_CLI_DEBUG_ENABLED = 'on'
+    logger.setLevelValue(program.opts().debug ? 'verbose' : 'info')
+    logger.verbose('调试模式启动')
   })
 
   program.on('option:targetPath', () => {
@@ -29,9 +31,9 @@ export async function registerCommands(): Promise<void> {
   })
 
   program.on('command:*', (args) => {
-    log.warn('', `无效命令: ${args[0]}`)
+    logger.warn(`无效命令: ${args[0]}`)
     const availableCommands = program.commands.map((cmd) => cmd.name())
-    log.info('', `可用命令: ${availableCommands.join(', ')}`)
+    logger.info(`可用命令: ${availableCommands.join(', ')}`)
   })
 
   await program.parseAsync(process.argv)

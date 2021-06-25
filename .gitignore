@@ -4,6 +4,7 @@ node_modules/
 lib/
 tmp/
 
+yarn-error.log
 lerna-debug.log
 pkg-updater.json
 .vrnconfig

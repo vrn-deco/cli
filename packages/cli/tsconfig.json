@@ -6,13 +6,19 @@
   },
   "references": [
     {
+      "path": "../shared-types"
+    },
+    {
       "path": "../shared-utils"
     },
     {
-      "path": "../log"
+      "path": "../logger"
     },
     {
       "path": "../npm-helper"
+    },
+    {
+      "path": "../executor"
     }
   ]
 }
