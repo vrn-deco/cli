@@ -2,7 +2,8 @@
   "version": "1.0.0-alpha.0",
   "packages": [
     "packages/*",
-    "commands/*"
+    "commands/*",
+    "services/*"
   ],
   "npmClient": "yarn",
   "useWorkspaces": true,

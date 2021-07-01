@@ -1,7 +1,7 @@
-export function sum(x: number, y: number): number {
-  return x + y
-}
+/*
+ * @Author: Cphayim
+ * @Date: 2021-06-26 01:20:21
+ * @Description: shared utils
+ */
 
-export function fn(): void {
-  //
-}
+export * from './type-helper'

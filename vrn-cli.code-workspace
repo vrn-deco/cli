@@ -1,33 +1,48 @@
 {
-	"folders": [
-		{
-			"name": "✨ vrn-cli",
-			"path": "."
-		},
-		{
-			"name": "📦 @vrn-deco/cli",
-			"path": "packages/cli"
-		},
-		{
-			"name": "📦 @vrn-deco/executor",
-			"path": "packages/executor"
-		},
-		{
-			"name": "📦 @vrn-deco/logger",
-			"path": "packages/logger"
-		},
-		{
-			"name": "📦 @vrn-deco/npm-helper",
-			"path": "packages/npm-helper"
-		},
-		{
-			"name": "📦 @vrn-deco/shared-types",
-			"path": "packages/shared-types"
-		},
-		{
-			"name": "📦 @vrn-deco/shared-utils",
-			"path": "packages/shared-utils"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "name": "✨ vrn-cli",
+      "path": "."
+    },
+    {
+      "name": "🚀@vrn-deco/command-create",
+      "path": "commands/command-create"
+    },
+    {
+      "name": "📦@vrn-deco/cli",
+      "path": "packages/cli"
+    },
+    {
+      "name": "📦@vrn-deco/executor",
+      "path": "packages/executor"
+    },
+    {
+      "name": "📦@vrn-deco/logger",
+      "path": "packages/logger"
+    },
+    {
+      "name": "📦@vrn-deco/npm-helper",
+      "path": "packages/npm-helper"
+    },
+    {
+      "name": "📦@vrn-deco/shared-types",
+      "path": "packages/shared-types"
+    },
+    {
+      "name": "📦@vrn-deco/shared-utils",
+      "path": "packages/shared-utils"
+    }
+  ],
+  "settings": {
+    "monorepoWorkspace.folders.custom": [
+      {
+        "regex": "packages",
+        "prefix": "📦"
+      },
+      {
+        "regex": "commands",
+        "prefix": "🚀"
+      }
+    ],
+  }
 }

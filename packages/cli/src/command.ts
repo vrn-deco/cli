@@ -17,13 +17,13 @@ export async function registerCommands(): Promise<void> {
     .usage('<command> [options]')
     .version(`${CLI_PACKAGE_NAME} version: ${CLI_VERSION}`, '-v, --version', '查看版本号')
     .helpOption('-h, --help', '查看帮助信息')
-    .option('-d, --debug', '是否开启调试模式', false)
-    .option('-tp, --targetPath <targetPath>', '指定本地模块路径', '')
+    .option('-d, --debug', '开启调试模式', false)
+    .option('-tp, --targetPath <targetPath>', '指定本地模块路径，用于调试', '')
 
   program.on('option:debug', () => {
     process.env.VRN_CLI_DEBUG_ENABLED = 'on'
     logger.setLevelValue(program.opts().debug ? 'verbose' : 'info')
-    logger.verbose('调试模式启动')
+    logger.debug('调试模式启动')
   })
 
   program.on('option:targetPath', () => {

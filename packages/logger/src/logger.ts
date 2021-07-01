@@ -37,7 +37,7 @@ function normalizeLevelValue(level: LevelKey) {
 function format(label: string, msg: string) {
   return msg
     .split('\n')
-    .map((line, i) => {
+    .map((line) => {
       // return i === 0 ? `${label} ${line}` : line.padStart(stripAnsi(label).length + line.length + 1)
       return `${label} ${line}`
     })
@@ -45,6 +45,7 @@ function format(label: string, msg: string) {
 }
 
 function log(level: LevelKey, message: string) {
+  // 低于 levelValue 级别的日志将不会打印
   if (normalizeLevelValue(level) < levelValue) return
   console.log(message)
 }
@@ -80,6 +81,7 @@ export function error(message: string, tag = ''): void {
 }
 
 export function clearConsole(title = ''): void {
+  // 仅在 tty 终端下清屏 (macOS/linux)
   if (!process.stdout.isTTY) return
   const blank = '\n'.repeat(process.stdout.rows)
   console.log(blank)

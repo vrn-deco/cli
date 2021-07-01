@@ -69,6 +69,7 @@ function injectDefaultConfig() {
     ...process.env,
     VRN_CLI_DEBUG_ENABLED: 'off',
     VRN_CLI_NAME: CLI_NAME,
+    VRN_CLI_PACKAGE_NAME: CLI_PACKAGE_NAME,
     VRN_CLI_VERSION: CLI_VERSION,
     VRN_CLI_HOME_PATH: path.join(userHome, CLI_HOME_NAME),
   }
@@ -76,21 +77,19 @@ function injectDefaultConfig() {
 
 async function checkGlobalUpdate() {
   const spinner = ora('检查版本更新...').start()
-  const name = CLI_PACKAGE_NAME
-  const currentVersion = CLI_VERSION
-  const querier = new NPMQuerier(name, NPMRegistry.NPM)
+  const querier = new NPMQuerier(CLI_PACKAGE_NAME, NPMRegistry.TAOBAO)
   try {
     const latestVersion = await querier.getLatestVersion()
     spinner.stop()
-    if (latestVersion && semver.lt(currentVersion, latestVersion)) {
+    if (latestVersion && semver.lt(CLI_VERSION, latestVersion)) {
       logger.warn(
         dedent(`
           --------------------------------------------
           发现新版本！
-          请手动更新 ${name}
-          当前版本: ${currentVersion}
+          请手动更新 ${CLI_PACKAGE_NAME}
+          当前版本: ${CLI_VERSION}
           最新版本: ${latestVersion}
-          更新命令: npm install -g ${name}
+          更新命令: npm install -g ${CLI_PACKAGE_NAME}
           --------------------------------------------
       `),
       )

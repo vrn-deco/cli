@@ -6,7 +6,8 @@
   "repository": "git@github.com:vrn-deco/vrn-cli.git",
   "workspaces": [
     "packages/*",
-    "commands/*"
+    "commands/*",
+    "services/*"
   ],
   "scripts": {
     "boot": "lerna bootstrap",
@@ -21,7 +22,7 @@
     "commit": "git-cz",
     "prepare": "husky install",
     "prettier": "prettier --write .",
-    "lint": "eslint \"packages/**/*.ts\" \"commands/**/*.ts\""
+    "lint": "eslint --fix \"**/*.ts\""
   },
   "config": {
     "commitizen": {
