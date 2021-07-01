@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2019-06-24 08:51:40
- * @LastEditTime: 2020-09-14 10:20:00
+ * @LastEditTime: 2021-07-01 09:00:47
  * @Description: 程序入口
  */
 import 'source-map-support/register'
@@ -19,7 +19,7 @@ export async function main(): Promise<void> {
   printLogo()
 
   try {
-    await checkUpdate()
+    // await checkUpdate()
 
     program
       .version(`${PACKAGE_NAME} version: ${PACKAGE_VERSION}.`, '-v')
