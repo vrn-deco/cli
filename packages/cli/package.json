@@ -21,7 +21,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vrn-deco/vrn-cli.git"
+    "url": "git+https://github.com/vrn-deco/vrn-cli.git",
+    "directory": "packages/cli"
   },
   "scripts": {
     "dev": "tsc -b . -w ",

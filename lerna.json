@@ -1,18 +1,17 @@
 {
   "version": "1.0.0-alpha.0",
-  "packages": [
-    "packages/*",
-    "commands/*",
-    "services/*"
-  ],
   "npmClient": "yarn",
   "useWorkspaces": true,
   "command": {
     "version": {
       "message": "chore(release): publish %s"
+    },
+    "publish": {
+      "registry": "https://registry.npmjs.org"
     }
   },
   "ignoreChanges": [
-    "**/*.md"
+    "**/*.md",
+    "**__tests__/**"
   ]
 }

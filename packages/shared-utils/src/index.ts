@@ -4,4 +4,5 @@
  * @Description: shared utils
  */
 
-export * from './type-helper'
+export * as typeHelper from './type-helper'
+export * from './detector'

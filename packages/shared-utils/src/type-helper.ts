@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-06-26 01:33:57
- * @Description: 类型守卫函数
+ * @Description: 类型辅助函数
  */
 
 function getType(o: unknown): string {
@@ -12,7 +12,7 @@ export function isObject<T extends Record<string, unknown>>(o: unknown): o is T 
   return getType(o) === 'Object'
 }
 
-export function isArray<T extends unknown>(o: unknown): o is Array<T> {
+export function isArray<T extends unknown>(o: unknown): o is T[] {
   return getType(o) === 'Array'
 }
 

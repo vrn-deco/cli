@@ -18,7 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vrn-deco/vrn-cli.git"
+    "url": "git+https://github.com/vrn-deco/vrn-cli.git",
+    "directory": "commands/command-create"
   },
   "scripts": {
     "build": "tsc",
