@@ -15,7 +15,7 @@ export async function boot(): Promise<void> {
     await registerCommands()
   } catch (error) {
     logger.error(error.message)
-    if (process.env.VRN_CLI_DEBUG) {
+    if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') {
       logger.error(error.stack)
     }
   }

@@ -35,7 +35,7 @@ function initialEnv() {
 function injectDefaultEnv() {
   process.env = {
     ...process.env,
-    VRN_CLI_DEBUG_ENABLED: 'off',
+    VRN_CLI_DEBUG_ENABLED: process.env.VRN_CLI_DEBUG_ENABLED ?? 'off',
     VRN_CLI_NAME: 'vrn-cli',
     VRN_CLI_PACKAGE_NAME: pkg.name,
     VRN_CLI_VERSION: pkg.version,
@@ -50,7 +50,7 @@ function printLOGO() {
 }
 
 function rootDemotion() {
-  rootCheck()
+  if (process.env.SUDO_USER) rootCheck()
 }
 
 function checkNodeVersion() {
@@ -74,7 +74,7 @@ async function checkGlobalUpdate() {
 
   const { VRN_CLI_PACKAGE_NAME, VRN_CLI_VERSION } = process.env
 
-  const querier = new NPMQuerier(VRN_CLI_PACKAGE_NAME, NPMRegistry.NPM)
+  const querier = new NPMQuerier(VRN_CLI_PACKAGE_NAME, config.NPMRegistry)
   let latestVersion: string
   try {
     logger.startLoading('检查版本更新...')

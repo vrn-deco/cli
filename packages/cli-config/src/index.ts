@@ -74,7 +74,7 @@ const npmCLientOptions: Option[] = [
 ]
 
 const defaultBaseConfigWithOptions: BaseConfigWithOptions = {
-  NPMRegistry: npmRegistryOptions[0].value,
+  NPMRegistry: npmRegistryOptions[1].value,
   NPMClient: NPMClient.NPM,
   NPMRegistryOptions: npmRegistryOptions,
   NPMClientOptions: npmCLientOptions,
