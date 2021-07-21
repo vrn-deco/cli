@@ -5,31 +5,35 @@
       "path": "."
     },
     {
-      "name": "🚀@vrn-deco/command-create",
+      "name": "🚀 @vrn-deco/command-create",
       "path": "commands/command-create"
     },
     {
-      "name": "📦@vrn-deco/cli",
+      "name": "📦 @vrn-deco/cli",
       "path": "packages/cli"
     },
     {
-      "name": "📦@vrn-deco/executor",
+      "name": "📦 @vrn-deco/cli-config",
+      "path": "packages/cli-config"
+    },
+    {
+      "name": "📦 @vrn-deco/executor",
       "path": "packages/executor"
     },
     {
-      "name": "📦@vrn-deco/logger",
+      "name": "📦 @vrn-deco/logger",
       "path": "packages/logger"
     },
     {
-      "name": "📦@vrn-deco/npm-helper",
+      "name": "📦 @vrn-deco/npm-helper",
       "path": "packages/npm-helper"
     },
     {
-      "name": "📦@vrn-deco/shared-types",
+      "name": "📦 @vrn-deco/shared-types",
       "path": "packages/shared-types"
     },
     {
-      "name": "📦@vrn-deco/shared-utils",
+      "name": "📦 @vrn-deco/shared-utils",
       "path": "packages/shared-utils"
     }
   ],
@@ -37,11 +41,11 @@
     "monorepoWorkspace.folders.custom": [
       {
         "regex": "packages",
-        "prefix": "📦"
+        "prefix": "📦 "
       },
       {
         "regex": "commands",
-        "prefix": "🚀"
+        "prefix": "🚀 "
       }
     ],
   }
