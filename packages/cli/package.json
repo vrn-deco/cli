@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "publishConfig": {
     "access": "public"
   },
@@ -34,11 +34,11 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-config": "^1.0.0-alpha.0",
-    "@vrn-deco/logger": "^1.0.0-alpha.0",
-    "@vrn-deco/npm-helper": "^1.0.0-alpha.0",
-    "@vrn-deco/shared-types": "^1.0.0-alpha.0",
-    "@vrn-deco/shared-utils": "^1.0.0-alpha.0",
+    "@vrn-deco/cli-config": "^1.0.0-alpha.1",
+    "@vrn-deco/logger": "^1.0.0-alpha.1",
+    "@vrn-deco/npm-helper": "^1.0.0-alpha.1",
+    "@vrn-deco/shared-types": "^1.0.0-alpha.1",
+    "@vrn-deco/shared-utils": "^1.0.0-alpha.1",
     "commander": "^7.2.0",
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",

@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli-config",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "maintenance vrn-config.json",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
@@ -29,8 +29,8 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/logger": "^1.0.0-alpha.0",
-    "@vrn-deco/shared-types": "^1.0.0-alpha.0",
+    "@vrn-deco/logger": "^1.0.0-alpha.1",
+    "@vrn-deco/shared-types": "^1.0.0-alpha.1",
     "fs-extra": "^10.0.0"
   },
   "devDependencies": {
