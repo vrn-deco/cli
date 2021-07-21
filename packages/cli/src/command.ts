@@ -5,24 +5,23 @@
  */
 
 import { Command } from 'commander'
-import '@vrn-deco/shared-types/lib/env'
 import { logger } from '@vrn-deco/logger'
-
-import { CLI_PACKAGE_NAME, CLI_VERSION } from './constants'
 
 const program = new Command()
 
 export async function registerCommands(): Promise<void> {
+  const { VRN_CLI_PACKAGE_NAME, VRN_CLI_VERSION } = process.env
+
   program
     .usage('<command> [options]')
-    .version(`${CLI_PACKAGE_NAME} version: ${CLI_VERSION}`, '-v, --version', '查看版本号')
+    .version(`${VRN_CLI_PACKAGE_NAME} version: ${VRN_CLI_VERSION}`, '-v, --version', '查看版本号')
     .helpOption('-h, --help', '查看帮助信息')
     .option('-d, --debug', '开启调试模式', false)
     .option('-tp, --targetPath <targetPath>', '指定本地模块路径，用于调试', '')
 
   program.on('option:debug', () => {
     process.env.VRN_CLI_DEBUG_ENABLED = 'on'
-    logger.setLevelValue(program.opts().debug ? 'verbose' : 'info')
+    logger.setLevel(program.opts().debug ? 'verbose' : 'info')
     logger.debug('调试模式启动')
   })
 

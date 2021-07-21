@@ -29,20 +29,9 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "devDependencies": {
-    "@types/dedent": "^0.7.0",
-    "@types/figlet": "^1.5.1",
-    "@types/node": "^15.12.4",
-    "@types/npmlog": "^4.1.2",
     "typescript": "^4.3.4"
   },
   "dependencies": {
-    "@vrn-deco/shared-types": "^1.0.0-alpha.0",
-    "chalk": "^4.1.1",
-    "dedent": "^0.7.0",
-    "figlet": "^1.5.0",
-    "npmlog": "^4.1.2",
-    "ora": "^5.4.1",
-    "readline": "^1.3.0",
-    "strip-ansi": "^6.0.0"
+    "@ombro/logger": "^1.2.0"
   }
 }

@@ -4,34 +4,45 @@
  * @Description: 环境变量和模块声明
  */
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-namespace NodeJS {
-  export interface ProcessEnv {
-    /**
-     * 日志等级
-     */
-    LOGGER_LEVEL: 'verbose' | 'info' | 'notice' | 'warn' | 'error' | 'silent'
-    /**
-     * 调试模式开关
-     */
-    VRN_CLI_DEBUG_ENABLED: 'on' | 'off'
-    /**
-     * 脚手架名称
-     */
-    VRN_CLI_NAME: string
-    /**
-     * 脚手架主包名
-     */
-    VRN_CLI_PACKAGE_NAME: string
-    /**
-     * 脚手架版本
-     */
-    VRN_CLI_VERSION: string
-    /**
-     * 脚手架主目录
-     */
-    VRN_CLI_HOME_PATH: string
+/**
+ * 环境变量: vrn-cli prepare 阶段注入
+ */
+type VRNEnv = {
+  /**
+   * 调试模式开关
+   */
+  VRN_CLI_DEBUG_ENABLED: 'on' | 'off'
+
+  /**
+   * 脚手架名称
+   */
+  VRN_CLI_NAME: string
+
+  /**
+   * 脚手架主包名
+   */
+  VRN_CLI_PACKAGE_NAME: string
+
+  /**
+   * 脚手架主包版本
+   */
+  VRN_CLI_VERSION: string
+
+  /**
+   * 脚手架主目录
+   */
+  VRN_CLI_HOME_PATH: string
+
+  /**
+   * 最低兼容的 Node.js 版本
+   */
+  VRN_CLI_LOWEST_NODE_VERSION: string
+}
+
+declare global {
+  namespace NodeJS {
+    interface ProcessEnv extends VRNEnv {}
   }
 }
 
-declare module '*.json'
+export {}

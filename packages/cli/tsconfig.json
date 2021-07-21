@@ -12,6 +12,9 @@
       "path": "../shared-utils"
     },
     {
+      "path": "../cli-config"
+    },
+    {
       "path": "../logger"
     },
     {
