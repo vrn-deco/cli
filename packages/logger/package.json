@@ -32,6 +32,6 @@
     "typescript": "^4.3.4"
   },
   "dependencies": {
-    "@ombro/logger": "^1.2.0"
+    "@ombro/logger": "^1.3.0"
   }
 }
