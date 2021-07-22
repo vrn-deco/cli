@@ -49,14 +49,6 @@ export type BaseConfig = {
    * 检查更新开关
    */
   CheckUpdate: 'on' | 'off'
-  /**
-   * 检查更新间隔时间（毫秒）
-   */
-  CheckUpdateInterval: number
-  /**
-   * 上一次检查的时间戳（毫秒）
-   */
-  CheckUpdateLastTime?: number
 }
 
 export type BaseConfigWithOptions = BaseConfig & {
@@ -79,7 +71,6 @@ const defaultBaseConfigWithOptions: BaseConfigWithOptions = {
   NPMRegistryOptions: npmRegistryOptions,
   NPMClientOptions: npmCLientOptions,
   CheckUpdate: 'on',
-  CheckUpdateInterval: 24 * 60 * 60 * 1000, // 1 天
 }
 
 let initialized = false

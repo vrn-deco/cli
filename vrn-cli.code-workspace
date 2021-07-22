@@ -13,6 +13,10 @@
       "path": "packages/cli"
     },
     {
+      "name": "📦 @vrn-deco/cli-check-update",
+      "path": "packages/cli-check-update"
+    },
+    {
       "name": "📦 @vrn-deco/cli-config",
       "path": "packages/cli-config"
     },

@@ -1,62 +1,43 @@
 {
-  "name": "@vrn-deco/cli",
+  "name": "@vrn-deco/cli-check-update",
   "version": "1.0.0-alpha.2",
-  "publishConfig": {
-    "access": "public"
-  },
-  "description": "🔧🔨🔩 Full stack engineering boilerplate.",
+  "description": "@vrn-deco/cli-check-update",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
-  "bin": {
-    "vrn-next": "bin/vrn-cli.js"
-  },
   "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "directories": {
-    "lib": "lib"
+    "lib": "lib",
+    "test": "__tests__"
   },
   "files": [
     "lib"
   ],
-  "engines": {
-    "node": ">=12.0.0"
+  "publishConfig": {
+    "access": "public"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git",
-    "directory": "packages/cli"
+    "directory": "packages/cli-check-update"
   },
   "scripts": {
-    "dev": "tsc -b . -w ",
     "build": "tsc",
-    "build:project": "tsc -b",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-check-update": "^1.0.0-alpha.2",
     "@vrn-deco/cli-config": "^1.0.0-alpha.2",
     "@vrn-deco/logger": "^1.0.0-alpha.2",
     "@vrn-deco/npm-helper": "^1.0.0-alpha.2",
     "@vrn-deco/shared-types": "^1.0.0-alpha.2",
-    "@vrn-deco/shared-utils": "^1.0.0-alpha.2",
-    "commander": "^7.2.0",
-    "dotenv": "^10.0.0",
-    "fs-extra": "^10.0.0",
-    "import-local": "^3.0.2",
-    "root-check": "^1.0.0",
-    "semver": "^7.3.5",
-    "user-home": "^3.0.0"
+    "semver": "^7.3.5"
   },
   "devDependencies": {
-    "@types/fs-extra": "^9.0.12",
-    "@types/node": "^15.12.0",
-    "@types/root-check": "^1.0.0",
+    "@types/node": "^15.12.4",
     "@types/semver": "^7.3.6",
-    "@types/user-home": "^2.0.0",
     "typescript": "^4.3.4"
   }
 }

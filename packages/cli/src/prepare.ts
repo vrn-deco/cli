@@ -11,9 +11,8 @@ import semver from 'semver'
 import rootCheck from 'root-check'
 import userHome from 'user-home'
 
-import { figlet, colors, dedent, logger } from '@vrn-deco/logger'
-import { NPMQuerier, NPMRegistry } from '@vrn-deco/npm-helper'
-import { readConfig, updateConfig } from '@vrn-deco/cli-config'
+import { figlet, colors } from '@vrn-deco/logger'
+import { checkUpdate } from '@vrn-deco/cli-check-update'
 
 const pkg = fs.readJsonSync(path.resolve(__dirname, '..', 'package.json'))
 
@@ -23,7 +22,7 @@ export async function prepare(): Promise<void> {
   rootDemotion()
   checkNodeVersion()
   checkUserHome()
-  await checkGlobalUpdate()
+  await checkUpdate()
 }
 
 function initialEnv() {
@@ -40,7 +39,8 @@ function injectDefaultEnv() {
     VRN_CLI_PACKAGE_NAME: pkg.name,
     VRN_CLI_VERSION: pkg.version,
     VRN_CLI_HOME_PATH: path.resolve(userHome, '.vrn-cli'),
-    VRN_CLI_LOWEST_NODE_VERSION: 'v12.0.0',
+    VRN_CLI_LOWEST_NODE_VERSION:
+      semver.valid(pkg?.engines?.node?.match(/(?<version>\d+\.\d+\.\d+)/).groups.version) ?? '12.0.0',
   }
 }
 
@@ -65,41 +65,4 @@ function checkUserHome() {
   if (!userHome || !fs.pathExistsSync(userHome)) {
     throw new Error(`当前计算机用户 ${os.userInfo().username} 主目录不存在`)
   }
-}
-
-// 检查更新
-async function checkGlobalUpdate() {
-  const config = readConfig()
-  if (config.CheckUpdate === 'off' || !isExpired(config.CheckUpdateInterval, config.CheckUpdateLastTime)) return
-
-  const { VRN_CLI_PACKAGE_NAME, VRN_CLI_VERSION } = process.env
-
-  const querier = new NPMQuerier(VRN_CLI_PACKAGE_NAME, config.NPMRegistry)
-  let latestVersion: string
-  try {
-    logger.startLoading('检查版本更新...')
-    latestVersion = await querier.getLatestVersion()
-  } finally {
-    logger.stopLoading()
-  }
-
-  if (latestVersion && semver.lt(VRN_CLI_VERSION, latestVersion)) {
-    logger.warn(
-      dedent(`
-        --------------------------------------------
-        发现新版本！
-        请手动更新 ${VRN_CLI_PACKAGE_NAME}
-        当前版本: ${VRN_CLI_VERSION}
-        最新版本: ${latestVersion}
-        更新命令: npm install -g ${VRN_CLI_PACKAGE_NAME}
-        --------------------------------------------
-    `),
-    )
-  }
-  updateConfig({ CheckUpdateLastTime: Date.now() })
-}
-
-function isExpired(interval: number, lastTime?: number): boolean {
-  if (!lastTime) return true
-  return Date.now() > lastTime + interval
 }
