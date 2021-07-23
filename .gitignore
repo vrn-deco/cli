@@ -6,7 +6,6 @@ tmp/
 
 yarn-error.log
 lerna-debug.log
-pkg-updater.json
-.vrnconfig
 
 tsconfig.tsbuildinfo
+*.code-workspace
