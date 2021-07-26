@@ -39,11 +39,13 @@
   "dependencies": {
     "@vrn-deco/cli-check-update": "^1.0.0-alpha.2",
     "@vrn-deco/cli-config": "^1.0.0-alpha.2",
+    "@vrn-deco/command": "^1.0.0-alpha.2",
+    "@vrn-deco/command-config": "^1.0.0-alpha.2",
+    "@vrn-deco/command-create": "^1.0.0-alpha.2",
     "@vrn-deco/logger": "^1.0.0-alpha.2",
     "@vrn-deco/npm-helper": "^1.0.0-alpha.2",
     "@vrn-deco/shared-types": "^1.0.0-alpha.2",
     "@vrn-deco/shared-utils": "^1.0.0-alpha.2",
-    "commander": "^7.2.0",
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",
     "import-local": "^3.0.2",
@@ -53,10 +55,8 @@
   },
   "devDependencies": {
     "@types/fs-extra": "^9.0.12",
-    "@types/node": "^15.12.0",
     "@types/root-check": "^1.0.0",
     "@types/semver": "^7.3.6",
-    "@types/user-home": "^2.0.0",
-    "typescript": "^4.3.4"
+    "@types/user-home": "^2.0.0"
   }
 }

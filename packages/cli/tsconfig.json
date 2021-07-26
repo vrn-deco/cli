@@ -5,6 +5,7 @@
     "rootDir": "src"
   },
   "references": [
+    // -------------------------------------------------
     {
       "path": "../shared-types"
     },
@@ -12,19 +13,31 @@
       "path": "../shared-utils"
     },
     {
-      "path": "../cli-config"
-    },
-    {
-      "path": "../cli-check-update"
-    },
-    {
       "path": "../logger"
     },
+    // -------------------------------------------------
     {
       "path": "../npm-helper"
     },
     {
       "path": "../executor"
+    },
+    {
+      "path": "../command"
+    },
+    // -------------------------------------------------
+    {
+      "path": "../cli-config"
+    },
+    {
+      "path": "../cli-check-update"
+    },
+    // -------------------------------------------------
+    {
+      "path": "../../commands/config"
+    },
+    {
+      "path": "../../commands/create"
     }
   ]
 }

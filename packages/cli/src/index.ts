@@ -7,12 +7,16 @@ import '@vrn-deco/shared-types'
 import { logger } from '@vrn-deco/logger'
 
 import { prepare } from './prepare'
-import { registerCommands } from './command'
+import { createCLI, registerCommands } from './cli'
 
-export async function boot(): Promise<void> {
+export async function main(): Promise<void> {
   try {
     await prepare()
-    await registerCommands()
+
+    const cli = createCLI()
+    registerCommands(cli)
+
+    await cli.parseAsync(process.argv)
   } catch (error) {
     logger.error(error.message)
     if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') {

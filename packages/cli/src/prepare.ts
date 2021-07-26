@@ -11,7 +11,7 @@ import semver from 'semver'
 import rootCheck from 'root-check'
 import userHome from 'user-home'
 
-import { figlet, colors } from '@vrn-deco/logger'
+import { figlet, colors, logger } from '@vrn-deco/logger'
 import { checkUpdate } from '@vrn-deco/cli-check-update'
 
 const pkg = fs.readJsonSync(path.resolve(__dirname, '..', 'package.json'))
@@ -45,6 +45,7 @@ function injectDefaultEnv() {
 }
 
 function printLOGO() {
+  logger.clearConsole()
   const logo = figlet.textSync(process.env.VRN_CLI_NAME.toUpperCase(), '3D Diagonal')
   console.log(colors.green(logo))
 }
