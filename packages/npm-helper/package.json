@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/npm-helper",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "vrn npm info query and tools",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",

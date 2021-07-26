@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/command-create",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "vrn create project boilerplate command",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
@@ -29,7 +29,7 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/command": "^1.0.0-alpha.2",
-    "@vrn-deco/logger": "^1.0.0-alpha.2"
+    "@vrn-deco/command": "^1.0.0-alpha.3",
+    "@vrn-deco/logger": "^1.0.0-alpha.3"
   }
 }

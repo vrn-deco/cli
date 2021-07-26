@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/shared-utils",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "publishConfig": {
     "access": "public"
   },
