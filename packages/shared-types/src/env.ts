@@ -37,6 +37,12 @@ type VRNEnv = {
    * 最低兼容的 Node.js 版本
    */
   VRN_CLI_LOWEST_NODE_VERSION: string
+
+  /**
+   * 本地模块映射
+   * jsonstr: Record<模块名, 绝对路径>
+   */
+  VRN_CLI_LOCAL_MAP: string
 }
 
 declare global {

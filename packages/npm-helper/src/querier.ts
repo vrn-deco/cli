@@ -4,25 +4,17 @@
  * @Description: npm 查询器
  */
 import axios, { AxiosInstance } from 'axios'
-import { NPMRegistry } from './common'
+import { DistTag, NPMRegistry } from './common'
 
 type PackageQueryInfo = {
   name: string
-  'dist-tags': DistTags
-}
-
-type DistTags = {
-  latest: string
-  next: string
-  legacy: string
+  'dist-tags': { [P in DistTag]: string }
 }
 
 export class NPMQuerier {
-  private name: string
-  private registry: string
-  private fetch: AxiosInstance
+  private readonly fetch: AxiosInstance
 
-  constructor(name: string, registry: string = NPMRegistry.NPM) {
+  constructor(private readonly name: string, private readonly registry: string = NPMRegistry.NPM) {
     this.name = name
     this.registry = registry
     this.fetch = axios.create({ baseURL: this.registry })
@@ -33,18 +25,20 @@ export class NPMQuerier {
     return data
   }
 
-  async getLatestVersion(): Promise<string> {
+  async getVersion(tag = DistTag.Latest): Promise<string> {
     const info = await this.getInfo()
-    return info['dist-tags'].latest
+    return info['dist-tags'][tag]
+  }
+
+  async getLatestVersion(): Promise<string> {
+    return this.getVersion(DistTag.Latest)
   }
 
   async getNextVersion(): Promise<string> {
-    const info = await this.getInfo()
-    return info['dist-tags'].next
+    return this.getVersion(DistTag.Next)
   }
 
   async getLegacyVersion(): Promise<string> {
-    const info = await this.getInfo()
-    return info['dist-tags'].legacy
+    return this.getVersion(DistTag.Legacy)
   }
 }

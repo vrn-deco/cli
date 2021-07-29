@@ -8,10 +8,12 @@ import { logger } from '@vrn-deco/logger'
 import { Command } from '@vrn-deco/command'
 
 import configCommand from '@vrn-deco/command-config'
+import boilerplateCommand, { createCommand } from '@vrn-deco/command-boilerplate'
+import { isObject } from '@vrn-deco/shared-utils'
 
 type CLIOptions = {
   debug: boolean
-  local?: string
+  local: string
 }
 
 export function createCLI(): Command {
@@ -28,12 +30,18 @@ export function createCLI(): Command {
   cli.on('option:debug', () => {
     process.env.VRN_CLI_DEBUG_ENABLED = 'on'
     logger.setLevel(cli.opts().debug ? 'verbose' : 'info')
-    logger.debug('调试模式启动')
+    logger.debug('启用调试模式')
   })
 
   cli.on('option:local', () => {
-    console.log(cli.opts<CLIOptions>().local)
-    process.env.VRN_CLI_LOCAL_MAP = ''
+    try {
+      const { local } = cli.opts<CLIOptions>()
+      isObject(JSON.parse(local))
+      process.env.VRN_CLI_LOCAL_MAP = local
+      logger.debug(`启用本地模块映射: ${local}`)
+    } catch (error) {
+      throw new Error('无效的映射对象')
+    }
   })
 
   cli.on('command:*', (args) => {
@@ -48,5 +56,8 @@ export function createCLI(): Command {
 }
 
 export function registerCommands(cli: Command): void {
-  cli.addCommand(configCommand)
+  cli
+    .addCommand(createCommand) //
+    .addCommand(boilerplateCommand) //
+    .addCommand(configCommand) //
 }

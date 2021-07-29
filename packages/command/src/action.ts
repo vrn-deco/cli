@@ -9,7 +9,7 @@ import { Command } from 'commander'
 import '@vrn-deco/shared-types'
 import { logger } from '@vrn-deco/logger'
 
-export type Arguments<T extends ReadonlyArray<unknown> = []> = T
+export type Arguments = ReadonlyArray<unknown>
 export type Options = { [key: string]: unknown }
 export type ActionArgs<A extends Arguments, O extends Options> = [...A, O, Command]
 
@@ -22,7 +22,7 @@ export class Action<A extends Arguments, O extends Options> extends EventEmitter
     super()
     this._cmd = args.pop() as Command
     this._opts = args.pop() as O
-    this._args = args.slice() as A
+    this._args = args.slice() as unknown as A
     this.verifyEnv()
   }
 
@@ -44,7 +44,12 @@ export class Action<A extends Arguments, O extends Options> extends EventEmitter
   }
 
   private verifyEnv() {
-    if (!process.env.VRN_CLI_NAME || !process.env.VRN_CLI_PACKAGE_NAME || !process.env.VRN_CLI_VERSION) {
+    if (
+      !process.env.VRN_CLI_NAME ||
+      !process.env.VRN_CLI_PACKAGE_NAME ||
+      !process.env.VRN_CLI_VERSION ||
+      !process.env.VRN_CLI_HOME_PATH
+    ) {
       throw new Error('command sub package can be invoked only through @vrn-deco/cli')
     }
   }

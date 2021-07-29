@@ -41,6 +41,7 @@ function injectDefaultEnv() {
     VRN_CLI_HOME_PATH: path.resolve(userHome, '.vrn-cli'),
     VRN_CLI_LOWEST_NODE_VERSION:
       semver.valid(pkg?.engines?.node?.match(/(?<version>\d+\.\d+\.\d+)/).groups.version) ?? '12.0.0',
+    VRN_CLI_LOCAL_MAP: '',
   }
 }
 

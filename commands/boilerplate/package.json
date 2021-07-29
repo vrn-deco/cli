@@ -1,7 +1,7 @@
 {
-  "name": "@vrn-deco/command-create",
+  "name": "@vrn-deco/command-boilerplate",
   "version": "1.0.0-alpha.3",
-  "description": "vrn create project boilerplate command",
+  "description": "vrn boilerplate command",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git",
-    "directory": "commands/create"
+    "directory": "commands/boilerplate"
   },
   "scripts": {
     "build": "tsc",
@@ -29,7 +29,17 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
+    "@vrn-deco/cli-config": "^1.0.0-alpha.3",
     "@vrn-deco/command": "^1.0.0-alpha.3",
-    "@vrn-deco/logger": "^1.0.0-alpha.3"
+    "@vrn-deco/executor": "^1.0.0-alpha.3",
+    "@vrn-deco/logger": "^1.0.0-alpha.3",
+    "@vrn-deco/npm-helper": "^1.0.0-alpha.3",
+    "@vrn-deco/protocol-boilerplate": "^1.0.0",
+    "@vrn-deco/shared-utils": "^1.0.0-alpha.3",
+    "fs-extra": "^10.0.0",
+    "yaml": "^1.10.2"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12"
   }
 }

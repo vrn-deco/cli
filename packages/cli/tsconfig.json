@@ -17,10 +17,10 @@
     },
     // -------------------------------------------------
     {
-      "path": "../npm-helper"
+      "path": "../executor"
     },
     {
-      "path": "../executor"
+      "path": "../npm-helper"
     },
     {
       "path": "../command"
@@ -37,7 +37,7 @@
       "path": "../../commands/config"
     },
     {
-      "path": "../../commands/create"
+      "path": "../../commands/boilerplate"
     }
   ]
 }

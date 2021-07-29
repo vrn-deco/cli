@@ -4,12 +4,15 @@
  * @Description:
  */
 
-export enum NPMClient {
-  NPM = 'npm',
-  YARN = 'yarn',
+export const DEP_FOLDER = 'node_modules'
+
+export const enum DistTag {
+  Latest = 'latest',
+  Next = 'next',
+  Legacy = 'legacy',
 }
 
-export enum NPMRegistry {
+export const enum NPMRegistry {
   NPM = 'https://registry.npmjs.org',
   TAOBAO = 'https://registry.npm.taobao.org',
 }

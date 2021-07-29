@@ -3,6 +3,4 @@
  * @Date: 2021-06-22 00:27:10
  * @Description: 执行器
  */
-export function exec(): void {
-  //
-}
+export { default as exec } from 'execa'

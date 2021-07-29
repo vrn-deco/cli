@@ -40,6 +40,7 @@
     "@vrn-deco/cli-check-update": "^1.0.0-alpha.3",
     "@vrn-deco/cli-config": "^1.0.0-alpha.3",
     "@vrn-deco/command": "^1.0.0-alpha.3",
+    "@vrn-deco/command-boilerplate": "^1.0.0-alpha.3",
     "@vrn-deco/command-config": "^1.0.0-alpha.3",
     "@vrn-deco/command-create": "^1.0.0-alpha.3",
     "@vrn-deco/logger": "^1.0.0-alpha.3",

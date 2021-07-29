@@ -4,8 +4,8 @@
  * @Description: shared utils
  */
 
-export * as typeHelper from './type-helper'
+export * from './type-helper'
 export * from './detector'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export const NOOP = (): void => {}
+export const noop = (): void => {}
