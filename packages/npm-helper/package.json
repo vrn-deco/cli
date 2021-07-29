@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/npm-helper",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "vrn npm info query and tools",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
@@ -29,9 +29,9 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/logger": "^1.0.0-alpha.3",
-    "@vrn-deco/shared-types": "^1.0.0-alpha.3",
-    "@vrn-deco/shared-utils": "^1.0.0-alpha.3",
+    "@vrn-deco/logger": "^1.0.0-alpha.4",
+    "@vrn-deco/shared-types": "^1.0.0-alpha.4",
+    "@vrn-deco/shared-utils": "^1.0.0-alpha.4",
     "axios": "^0.21.1",
     "npminstall": "^4.11.0"
   }

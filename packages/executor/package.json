@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/executor",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "vrn dynamic load and exec",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
@@ -30,7 +30,7 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/shared-types": "^1.0.0-alpha.3",
+    "@vrn-deco/shared-types": "^1.0.0-alpha.4",
     "execa": "^5.1.1"
   }
 }
