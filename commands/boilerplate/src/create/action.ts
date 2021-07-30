@@ -101,7 +101,7 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
    * 检查安装目录，存在询问用户是否覆盖
    */
   async veriryFolderDirectory(): Promise<void> {
-    if (this._opts.force) return
+    if (!fs.pathExistsSync(this.folderDiractory) || this._opts.force) return
     const { yes } = await prompt<{ yes: boolean }>({
       name: 'yes',
       message: `目录 '${this.folderDiractory}' 已经存在，是否覆盖安装？`,

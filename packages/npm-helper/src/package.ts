@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-27 15:31:50
- * @Description: 包管理器
+ * @Description: 包管理
  */
 import path from 'path'
 import fs from 'fs-extra'
@@ -82,7 +82,7 @@ export class NPMPackage {
   /**
    * 获取 package.json 的解析对象
    */
-  getPackageJSON(): Record<string, any> {
+  getPackageJSON(): Record<string, string> {
     return fs.readJsonSync(path.join(this.getDir(), 'package.json'))
   }
 
@@ -99,6 +99,9 @@ export class NPMPackage {
     }
   }
 
+  /**
+   * 加载 package
+   */
   async load(): Promise<this> {
     logger.verbose(`init package: ${this.name}@${this.version}`)
     if (this.mode === Mode.Local) {
@@ -115,27 +118,9 @@ export class NPMPackage {
    */
   private async loadExternal() {
     logger.verbose(`init external package...`)
-    if (!fs.pathExistsSync(this.depDir)) {
-      fs.mkdirpSync(this.depDir)
-    }
 
-    // 当传递的 version 是个 tag 时，获取对应的版本号替换 version
-    if (isDistTagVersion(this.version)) {
-      const version = await new NPMQuerier(this.name, this.registry).getVersion(this.version)
-      if (!version) throw new Error(`${this.name}@${this.version} not found at ${this.registry}`)
-      this.version = version
-    }
-
-    // 检查包是否存在缓存，不存在则安装
-    const packageDir = this.getSpecificCacheFilePath()
-    if (!fs.pathExistsSync(packageDir)) {
-      logger.info(`准备安装 ${this.name}@${this.version}`)
-      await new NPMInstaller({ baseDir: this.baseDir, depDir: this.depDir, registry: this.registry }).install([
-        { name: this.name, version: this.version },
-      ])
-      logger.done(`安装成功 ${this.name}@${this.version}`)
-    }
-    this.packageDir = packageDir
+    await this.standardizeVersion()
+    this.packageDir = await this.installOrUpdate()
   }
 
   /**
@@ -144,8 +129,49 @@ export class NPMPackage {
   private async loadLocal() {
     logger.verbose(`init local package...`)
     const packageDir = this.localMap[this.name]
+
     if (!isPackage(packageDir)) throw new Error(`path ${packageDir} is not a package`)
     this.packageDir = packageDir
+  }
+
+  /**
+   * 标准化版本号
+   */
+  private async standardizeVersion() {
+    const spinner = logger.createSpinner(`inspect package ${this.name} ...`)
+    try {
+      // 当传递的 version 是个 tag 时，获取对应的版本号替换 version
+      if (isDistTagVersion(this.version)) {
+        const version = await new NPMQuerier(this.name, this.registry).getVersion(this.version)
+        if (!version) throw new Error(`${this.name}@${this.version} not found at ${this.registry}`)
+        this.version = version
+      }
+    } finally {
+      spinner.stop()
+    }
+  }
+
+  /**
+   * 安装或更新
+   */
+  private async installOrUpdate() {
+    if (!fs.pathExistsSync(this.depDir)) {
+      fs.mkdirpSync(this.depDir)
+    }
+    // 检查包是否存在缓存，不存在则安装
+    const packageDir = this.getSpecificCacheFilePath()
+    if (!fs.pathExistsSync(packageDir)) {
+      const spinner = logger.createSpinner(`install package ${this.name}@${this.version} ...`)
+      try {
+        await new NPMInstaller({ baseDir: this.baseDir, depDir: this.depDir, registry: this.registry }).install(
+          [{ name: this.name, version: this.version }],
+          true,
+        )
+      } finally {
+        spinner.stop()
+      }
+    }
+    return packageDir
   }
 
   private requireLoaded(): void {

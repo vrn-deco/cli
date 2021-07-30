@@ -8,6 +8,7 @@ import path from 'path'
 import npminstall, { PKG } from 'npminstall'
 
 import { DEP_FOLDER, NPMRegistry } from './common'
+import { noop } from '../../shared-utils/lib'
 
 export type InstallerOptions = {
   /**
@@ -37,12 +38,28 @@ export class NPMInstaller {
     this.registry = registry
   }
 
-  async install(pkgs: PKG[]): Promise<void> {
-    return await npminstall({
-      pkgs: pkgs,
-      root: this.baseDir,
-      storeDir: this.depDir,
-      registry: this.registry,
-    })
+  async install(pkgs: PKG[], silent = false): Promise<void> {
+    const extraOptions = {
+      trace: silent,
+      console: silent ? { info: noop, log: noop, error: noop, warn: noop } : null,
+    }
+
+    const info = console.info
+    if (silent) console.info = noop
+
+    try {
+      await npminstall({
+        pkgs: pkgs,
+        root: this.baseDir,
+        storeDir: this.depDir,
+        registry: this.registry,
+        ...extraOptions,
+      })
+    } catch (error) {
+      if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') throw error
+      else throw new Error(`dependency installation failure`)
+    } finally {
+      console.info = info
+    }
   }
 }

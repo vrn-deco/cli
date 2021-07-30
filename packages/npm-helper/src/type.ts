@@ -25,6 +25,9 @@ declare module 'npminstall' {
      * registry, default is https://registry.npmjs.org
      */
     registry?: string
+
+    console?: unknown
+    trace?: boolean
   }
 
   export default function npminstall(options: InstallOptions): Promise<void>

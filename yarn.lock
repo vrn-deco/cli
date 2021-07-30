@@ -1092,10 +1092,10 @@
   dependencies:
     "@octokit/openapi-types" "^9.1.1"
 
-"@ombro/logger@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.npmjs.org/@ombro/logger/-/logger-1.3.0.tgz#9c4084219ed71fca55833c5b2a92082619f92f7b"
-  integrity sha512-OknkrYZtJ6ttXdLFZkzS2OpYhxNG4Dj1O35rjFkd/0Clqv1tsPWGLcvI2HI4ucb3E1jbt/d6hnAWg1u9sC4bvg==
+"@ombro/logger@^1.4.0":
+  version "1.4.0"
+  resolved "https://registry.npmjs.org/@ombro/logger/-/logger-1.4.0.tgz#6aaac5796f2f2bed3cc488ac6d1bc953d5f6db48"
+  integrity sha512-p7vejA6PfzUShnr5fuJnNiQI0jG4QfChsAFfStuvfVMP+rg76+lwm253a7VJ2f9oY6ovVaw8Ihc4t+LNlkJZdQ==
   dependencies:
     "@types/dedent" "^0.7.0"
     "@types/figlet" "^1.5.1"
