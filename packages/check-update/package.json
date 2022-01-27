@@ -1,7 +1,7 @@
 {
-  "name": "@vrn-deco/cli-command",
+  "name": "@vrn-deco/cli-check-update",
   "version": "1.0.0-next.5",
-  "description": "base command",
+  "description": "@vrn-deco/cli-check-update",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
@@ -16,7 +16,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git",
-    "directory": "packages/command"
+    "directory": "packages/check-update"
   },
   "scripts": {
     "build": "tsc --declarationMap false --sourceMap false",
@@ -26,11 +26,12 @@
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
+    "@vrn-deco/cli-config-helper": "workspace:1.0.0-next.5",
     "@vrn-deco/cli-log": "workspace:1.0.0-next.5",
-    "commander": "^8.3.0",
-    "inquirer": "^8.2.0"
+    "@vrn-deco/cli-npm-helper": "workspace:1.0.0-next.5",
+    "semver": "^7.3.5"
   },
   "devDependencies": {
-    "@types/inquirer": "^8.1.3"
+    "@types/semver": "^7.3.6"
   }
 }

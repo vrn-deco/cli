@@ -1,11 +1,8 @@
 .DS_Store
+*.log
+tsconfig.tsbuildinfo
+*.code-workspace
 
 node_modules/
 lib/
 tmp/
-
-yarn-error.log
-lerna-debug.log
-
-tsconfig.tsbuildinfo
-*.code-workspace

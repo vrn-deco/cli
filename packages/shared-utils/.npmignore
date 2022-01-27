@@ -1,7 +1,0 @@
-src
-__tests__
-__mocks__
-.version
-
-tsconfig.json
-tsconfig.tsbuildinfo

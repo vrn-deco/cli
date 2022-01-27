@@ -1,53 +1,56 @@
 {
+  "name": "vrn-cli-monorepo",
   "private": true,
-  "name": "vrn-cli",
-  "license": "MIT",
   "author": "Cphayim <i@cphayim.me>",
   "repository": "git@github.com:vrn-deco/vrn-cli.git",
-  "workspaces": [
-    "packages/*",
-    "commands/*",
-    "services/*"
-  ],
+  "license": "MIT",
+  "engines": {
+    "node": "^12.20.0 || ^14.13.1 || >=16.0.0",
+    "pnpm": "^6.26.0"
+  },
+  "packageManager": "pnpm@6.26.0",
   "scripts": {
-    "boot": "lerna bootstrap",
-    "clean": "yarn clean:build && yarn clean:dep",
-    "clean:build": "lerna exec \"rimraf lib coverage tsconfig.tsbuildinfo\"",
-    "clean:dep": "lerna clean --yes",
-    "prebuild": "yarn clean:build",
-    "build": "lerna run --stream --sort build",
-    "test": "exit 0;",
-    "commit": "git-cz",
+    "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "prettier": "prettier --write .",
-    "lint": "eslint --fix --ext .ts"
+    "clean": "pnpm clean:build && pnpm clean:dep",
+    "clean:build": "pnpm -r exec -- rimraf lib coverage tsconfig.tsbuildinfo",
+    "clean:dep": "pnpm -wr exec -- rimraf node_modules",
+    "build": "pnpm clean:build && pnpm -r build",
+    "test": "exit 0;",
+    "lint": "eslint --ext .ts packages/*/src/**.ts",
+    "format": "prettier --write --parser typescript \"packages/**/*.ts\"",
+    "commit": "cz"
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-lerna-changelog"
+      "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "lint-staged": {
-    "*.{ts,json}": [
-      "prettier --write",
-      "eslint --fix"
+    "*.{js,json}": [
+      "prettier --write"
+    ],
+    "*.ts": [
+      "eslint",
+      "prettier --write --parser typescript"
     ]
   },
   "devDependencies": {
+    "@changesets/cli": "^2.19.0",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
-    "@typescript-eslint/eslint-plugin": "^4.25.0",
-    "@typescript-eslint/parser": "^4.25.0",
+    "@types/node": "^17.0.10",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
     "commitizen": "^4.2.4",
-    "cz-lerna-changelog": "^2.0.3",
-    "eslint": "^7.27.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
+    "execa": "^6.0.0",
     "husky": "^6.0.0",
-    "lerna": "^4.0.0",
-    "lint-staged": "^11.0.0",
+    "lint-staged": "^11.2.6",
     "prettier": "2.3.0",
     "rimraf": "^3.0.2",
-    "typescript": "^4.3.4"
-  },
-  "dependencies": {}
+    "typescript": "^4.5.4"
+  }
 }

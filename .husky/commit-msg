@@ -2,4 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo "🛠🛠🛠 run commitlint"
-yarn commitlint --edit
+pnpm commitlint --edit

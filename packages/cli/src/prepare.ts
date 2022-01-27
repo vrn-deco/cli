@@ -9,19 +9,19 @@ import fs from 'fs-extra'
 import dotenv from 'dotenv'
 import semver from 'semver'
 import rootCheck from 'root-check'
-import userHome from 'user-home'
 
-import { figlet, colors, logger } from '@vrn-deco/logger'
+import { figlet, colors, logger } from '@vrn-deco/cli-log'
 import { checkUpdate } from '@vrn-deco/cli-check-update'
 
 const pkg = fs.readJsonSync(path.resolve(__dirname, '..', 'package.json'))
+const userHome = os.homedir()
 
 export async function prepare(): Promise<void> {
+  checkUserHome()
   initialEnv()
   printLOGO()
   rootDemotion()
   checkNodeVersion()
-  checkUserHome()
   await checkUpdate()
 }
 
@@ -34,14 +34,17 @@ function initialEnv() {
 function injectDefaultEnv() {
   process.env = {
     ...process.env,
-    VRN_CLI_DEBUG_ENABLED: process.env.VRN_CLI_DEBUG_ENABLED ?? 'off',
+    /**
+     * @see [[global.d.ts]]
+     */
+    VRN_CLI_DEBUG_ENABLED: process.env.VRN_CLI_DEBUG_ENABLED ?? SwitchStatus.Off,
     VRN_CLI_NAME: 'vrn-cli',
     VRN_CLI_PACKAGE_NAME: pkg.name,
     VRN_CLI_VERSION: pkg.version,
     VRN_CLI_HOME_PATH: path.resolve(userHome, '.vrn-cli'),
     VRN_CLI_LOWEST_NODE_VERSION:
-      semver.valid(pkg?.engines?.node?.match(/(?<version>\d+\.\d+\.\d+)/).groups.version) ?? '12.0.0',
-    VRN_CLI_LOCAL_MAP: '',
+      semver.valid(pkg?.engines?.node?.match(/(?<version>\d+\.\d+\.\d+)/).groups.version) ?? '12.20.0',
+    VRN_CLI_MODULE_MAP: '',
   }
 }
 

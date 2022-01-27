@@ -4,11 +4,12 @@
  * @Description: npm 安装器
  */
 import './type'
+
 import path from 'path'
 import npminstall, { PKG } from 'npminstall'
+import { noop } from '@vrn-deco/cli-shared'
 
 import { DEP_FOLDER, NPMRegistry } from './common'
-import { noop } from '../../shared-utils/lib'
 
 export type InstallerOptions = {
   /**

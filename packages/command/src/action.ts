@@ -1,28 +1,33 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-23 16:36:28
- * @Description:
+ * @Description: Action 抽象类与相关类型
  */
-import EventEmitter from 'events'
 import { Command } from 'commander'
+import { logger } from '@vrn-deco/cli-log'
 
-import '@vrn-deco/shared-types'
-import { logger } from '@vrn-deco/logger'
-
-export type Arguments = ReadonlyArray<unknown>
+export type Arguments = readonly unknown[]
 export type Options = { [key: string]: unknown }
 export type ActionArgs<A extends Arguments, O extends Options> = [...A, O, Command]
 
-export class Action<A extends Arguments, O extends Options> extends EventEmitter {
-  protected _args: A
-  protected _opts: O
-  protected _cmd: Command
+export abstract class Action<A extends Arguments, O extends Options> {
+  /**
+   * command arguments received
+   */
+  protected readonly arguments: A
+  /**
+   * command options received
+   */
+  protected readonly options: O
+  /**
+   * command instance
+   */
+  protected readonly command: Command
 
   constructor(...args: ActionArgs<A, O>) {
-    super()
-    this._cmd = args.pop() as Command
-    this._opts = args.pop() as O
-    this._args = args.slice() as unknown as A
+    this.command = args.pop() as Command
+    this.options = args.pop() as O
+    this.arguments = args.slice() as unknown as A
     this.verifyEnv()
   }
 
@@ -30,18 +35,22 @@ export class Action<A extends Arguments, O extends Options> extends EventEmitter
     return Object.getPrototypeOf(this).constructor.name
   }
 
-  async run(): Promise<void> {
+  async run() {
+    logger.debug(`<${this.className}> initialize...`)
     await this.initialize()
+
+    logger.debug(`<${this.className}> execute...`)
     await this.execute()
+
+    logger.debug(`<${this.className}> clear...`)
+    await this.clear()
   }
 
-  protected initialize(): void | Promise<void> {
-    logger.verbose(`${this.className} initialize...`)
-  }
+  protected abstract initialize(): void | Promise<void>
 
-  protected execute(): void | Promise<void> {
-    logger.verbose(`${this.className} execute...`)
-  }
+  protected abstract execute(): void | Promise<void>
+
+  protected abstract clear(): void | Promise<void>
 
   private verifyEnv() {
     if (

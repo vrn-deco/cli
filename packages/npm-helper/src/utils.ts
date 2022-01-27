@@ -1,9 +1,13 @@
+/*
+ * @Author: Cphayim
+ * @Date: 2022-01-16 23:52:32
+ * @Description:
+ */
 import path from 'path'
 import fs from 'fs-extra'
 
-import '@vrn-deco/shared-types'
-import { isObject } from '@vrn-deco/shared-utils'
-import { logger } from '@vrn-deco/logger'
+import { isObject } from '@vrn-deco/cli-shared'
+import { logger } from '@vrn-deco/cli-log'
 import { DistTag } from './common'
 
 export function isPackage(dir: string): boolean {
@@ -11,14 +15,16 @@ export function isPackage(dir: string): boolean {
   return fs.pathExistsSync(dir) && fs.existsSync(pkg) && fs.statSync(pkg).isFile()
 }
 
-// 从环境变量加载本地模块映射
-export function parseLocalMapping(): Record<string, string> {
-  if (!process.env.VRN_CLI_LOCAL_MAP) return {} // 没有传递不显示 warning
+/**
+ * 从 VRN_CLI_LOCAL_MAP 环境变量解析本地模块映射
+ */
+export function parseModuleMap(): Record<string, string> {
+  if (!process.env.VRN_CLI_MODULE_MAP) return {} // 没有传递不显示 warning
   let map
   try {
-    map = JSON.parse(process.env.VRN_CLI_LOCAL_MAP)
+    map = JSON.parse(process.env.VRN_CLI_MODULE_MAP)
   } catch (error) {
-    logger.warn(`invalid local_map: ${process.env.VRN_CLI_LOCAL_MAP}`)
+    logger.warn(`invalid local_map: ${process.env.VRN_CLI_MODULE_MAP}`)
   }
   return (isObject(map) ? map : {}) as Record<string, string>
 }

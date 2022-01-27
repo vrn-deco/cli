@@ -5,10 +5,10 @@
  */
 import path from 'path'
 import fs from 'fs-extra'
-import { logger } from '@vrn-deco/logger'
+import { logger } from '@vrn-deco/cli-log'
 
 import { DEP_FOLDER, DistTag, NPMRegistry } from './common'
-import { parseLocalMapping, isPackage, isDistTagVersion } from './utils'
+import { parseModuleMap, isPackage, isDistTagVersion } from './utils'
 import { NPMQuerier } from './querier'
 import { InstallerOptions, NPMInstaller } from './installer'
 
@@ -64,7 +64,7 @@ export class NPMPackage {
 
     this.registry = registry
 
-    this.localMap = parseLocalMapping()
+    this.localMap = parseModuleMap()
     // 包存在本地映射时使用本地模式
     if (this.localMap[this.name]) {
       this.mode = Mode.Local

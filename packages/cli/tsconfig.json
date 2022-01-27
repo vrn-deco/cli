@@ -1,23 +1,17 @@
 {
-  "extends": "../../tsconfig.settings.json",
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "outDir": "lib",
     "rootDir": "src"
   },
+  "include": ["./", "../global.d.ts"],
   "references": [
     // -------------------------------------------------
     {
-      "path": "../shared-types"
+      "path": "../shared"
     },
     {
-      "path": "../shared-utils"
-    },
-    {
-      "path": "../logger"
-    },
-    // -------------------------------------------------
-    {
-      "path": "../executor"
+      "path": "../log"
     },
     {
       "path": "../npm-helper"
@@ -27,17 +21,17 @@
     },
     // -------------------------------------------------
     {
-      "path": "../cli-config"
+      "path": "../config-helper"
     },
     {
-      "path": "../cli-check-update"
+      "path": "../check-update"
     },
     // -------------------------------------------------
     {
-      "path": "../../commands/config"
+      "path": "../command-config"
     },
     {
-      "path": "../../commands/boilerplate"
+      "path": "../command-boilerplate"
     }
   ]
 }

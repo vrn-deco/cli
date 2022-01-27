@@ -1,7 +1,7 @@
 {
-  "name": "@vrn-deco/cli-command",
+  "name": "@vrn-deco/cli-shared",
   "version": "1.0.0-next.5",
-  "description": "base command",
+  "description": "vrn shared utils",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
@@ -16,7 +16,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vrn-deco/vrn-cli.git",
-    "directory": "packages/command"
+    "directory": "packages/shared"
   },
   "scripts": {
     "build": "tsc --declarationMap false --sourceMap false",
@@ -24,13 +24,5 @@
   },
   "bugs": {
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
-  },
-  "dependencies": {
-    "@vrn-deco/cli-log": "workspace:1.0.0-next.5",
-    "commander": "^8.3.0",
-    "inquirer": "^8.2.0"
-  },
-  "devDependencies": {
-    "@types/inquirer": "^8.1.3"
   }
 }

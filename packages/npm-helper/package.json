@@ -1,15 +1,12 @@
 {
-  "name": "@vrn-deco/npm-helper",
-  "version": "1.0.0-alpha.4",
+  "name": "@vrn-deco/cli-npm-helper",
+  "version": "1.0.0-next.5",
   "description": "vrn npm info query and tools",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
   "license": "MIT",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
-  "directories": {
-    "lib": "lib"
-  },
   "files": [
     "lib"
   ],
@@ -22,17 +19,16 @@
     "directory": "packages/npm-helper"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --declarationMap false --sourceMap false",
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
     "url": "https://github.com/vrn-deco/vrn-cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/logger": "^1.0.0-alpha.4",
-    "@vrn-deco/shared-types": "^1.0.0-alpha.4",
-    "@vrn-deco/shared-utils": "^1.0.0-alpha.4",
+    "@vrn-deco/cli-log": "workspace:1.0.0-next.5",
+    "@vrn-deco/cli-shared": "workspace:1.0.0-next.5",
     "axios": "^0.21.1",
-    "npminstall": "^4.11.0"
+    "npminstall": "^5.4.0"
   }
 }
