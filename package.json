@@ -2,7 +2,7 @@
   "name": "vrn-cli-monorepo",
   "private": true,
   "author": "Cphayim <i@cphayim.me>",
-  "repository": "git@github.com:vrn-deco/vrn-cli.git",
+  "repository": "git@github.com:vrn-deco/cli.git",
   "license": "MIT",
   "engines": {
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0",
@@ -12,14 +12,14 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "clean": "pnpm clean:build && pnpm clean:dep",
-    "clean:build": "pnpm -r exec -- rimraf lib coverage tsconfig.tsbuildinfo",
-    "clean:dep": "pnpm -wr exec -- rimraf node_modules",
-    "build": "pnpm clean:build && pnpm -r build",
+    "clean": "esno scripts/clean.ts --build --deps",
+    "clean:build": "esno scripts/clean.ts --build",
+    "clean:deps": "esno scripts/clean.ts --deps",
+    "build": "esno scripts/build.ts --no-cache",
     "test": "exit 0;",
-    "lint": "eslint --ext .ts packages/*/src/**.ts",
+    "lint": "eslint packages/*/src/**.ts",
     "format": "prettier --write --parser typescript \"packages/**/*.ts\"",
-    "commit": "cz"
+    "commit": "git add . && cz"
   },
   "config": {
     "commitizen": {
@@ -39,6 +39,7 @@
     "@changesets/cli": "^2.19.0",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
+    "@ombro/logger": "^1.5.0",
     "@types/node": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.10.0",
     "@typescript-eslint/parser": "^5.10.0",
@@ -46,7 +47,8 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
-    "execa": "^6.0.0",
+    "esno": "^0.14.0",
+    "execa": "^5.1.1",
     "husky": "^6.0.0",
     "lint-staged": "^11.2.6",
     "prettier": "2.3.0",
