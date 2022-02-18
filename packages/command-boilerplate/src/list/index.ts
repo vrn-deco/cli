@@ -3,8 +3,8 @@
  * @Date: 2021-07-29 16:09:40
  * @Description: boilerplate list command
  */
-import { Command } from '@vrn-deco/cli-command'
-import { ListAction, ListActionArgs } from './action'
+import { Command, runAction } from '@vrn-deco/cli-command'
+import { ListAction } from './action'
 
 const listCommand = new Command('list')
 
@@ -22,8 +22,6 @@ listCommand
   .option('--json', 'print to json', false)
   .option('--yml, --yaml', 'print to yaml', false)
   .option('-o, --out-file <file>', 'output file')
-  .action(async (...args: ListActionArgs) => {
-    await new ListAction(...args).run()
-  })
+  .action(runAction(ListAction))
 
 export default listCommand

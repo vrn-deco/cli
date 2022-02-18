@@ -3,8 +3,8 @@
  * @Date: 2021-07-27 20:47:32
  * @Description: boilerplate create command
  */
-import { Command } from '@vrn-deco/cli-command'
-import { CreateAction, CreateActionArgs } from './action'
+import { Command, runAction } from '@vrn-deco/cli-command'
+import { CreateAction } from './action'
 
 const createCommand = new Command('create')
 
@@ -33,8 +33,6 @@ createCommand
   .option('-v, --version <version>', 'project version，need `--yes` options')
   .option('-a, --author <author>', 'project author，need `--yes` options')
   .option('--target, --target-boilerplate <boilerplate_name>', 'target boilerplate name，need `--yes` options')
-  .action(async (...args: CreateActionArgs) => {
-    await new CreateAction(...args).run()
-  })
+  .action(runAction(CreateAction))
 
 export default createCommand

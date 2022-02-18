@@ -3,12 +3,19 @@
  * @Date: 2021-07-23 16:36:28
  * @Description: Action abstract class, relevant types
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Command } from 'commander'
 import { logger } from '@vrn-deco/cli-log'
 
 export type Arguments = readonly unknown[]
 export type Options = { [key: string]: unknown }
 export type ActionArgs<A extends Arguments, O extends Options> = [...A, O, Command]
+
+export const runAction =
+  (C: Pick<typeof Action, keyof typeof Action> & (new (...args: any[]) => Action<Arguments, Options>)) =>
+  async (...args: any[]) => {
+    await new C(...args).run()
+  }
 
 export abstract class Action<A extends Arguments, O extends Options> {
   /**

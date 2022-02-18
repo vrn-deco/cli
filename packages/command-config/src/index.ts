@@ -3,8 +3,8 @@
  * @Date: 2021-06-26 00:58:09
  * @Description: config command
  */
-import { Command } from '@vrn-deco/cli-command'
-import { ConfigAction, ConfigActionArgs } from './action'
+import { Command, runAction } from '@vrn-deco/cli-command'
+import { ConfigAction } from './action'
 
 const configCommand = new Command('config')
 
@@ -16,8 +16,6 @@ const configCommand = new Command('config')
  * vrn config --read --yaml
  * vrn config --reset
  */
-configCommand.description('view or update configuration').action(async (...args: ConfigActionArgs) => {
-  await new ConfigAction(...args).run()
-})
+configCommand.description('view or update configuration').action(runAction(ConfigAction))
 
 export default configCommand
