@@ -1,21 +1,21 @@
 {
   "name": "@vrn-deco/cli-command-config",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0",
   "description": "vrn create project boilerplate command",
   "author": "Cphayim <i@cphayim.me>",
-  "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
+  "homepage": "https://github.com/vrn-deco/cli#readme",
   "license": "MIT",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vrn-deco/vrn-cli.git",
+    "url": "git+https://github.com/vrn-deco/cli.git",
     "directory": "packages/command-config"
   },
   "scripts": {
@@ -23,12 +23,12 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/vrn-deco/vrn-cli/issues"
+    "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-config-helper": "workspace:1.0.0-next.5",
-    "@vrn-deco/cli-command": "workspace:1.0.0-next.5",
-    "@vrn-deco/cli-log": "workspace:1.0.0-next.5",
-    "@vrn-deco/cli-shared": "workspace:1.0.0-next.5"
+    "@vrn-deco/cli-config-helper": "workspace:1.0.0",
+    "@vrn-deco/cli-command": "workspace:1.0.0",
+    "@vrn-deco/cli-log": "workspace:1.0.0",
+    "@vrn-deco/cli-shared": "workspace:1.0.0"
   }
 }

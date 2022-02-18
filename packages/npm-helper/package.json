@@ -1,21 +1,21 @@
 {
   "name": "@vrn-deco/cli-npm-helper",
-  "version": "1.0.0-next.5",
+  "version": "1.0.0",
   "description": "vrn npm helper",
   "author": "Cphayim <i@cphayim.me>",
-  "homepage": "https://github.com/vrn-deco/vrn-cli#readme",
+  "homepage": "https://github.com/vrn-deco/cli#readme",
   "license": "MIT",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vrn-deco/vrn-cli.git",
+    "url": "git+https://github.com/vrn-deco/cli.git",
     "directory": "packages/npm-helper"
   },
   "scripts": {
@@ -23,12 +23,17 @@
     "test": "echo \"Error: run tests from root\" && exit 1"
   },
   "bugs": {
-    "url": "https://github.com/vrn-deco/vrn-cli/issues"
+    "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-log": "workspace:1.0.0-next.5",
-    "@vrn-deco/cli-shared": "workspace:1.0.0-next.5",
-    "axios": "^0.21.1",
-    "npminstall": "^5.4.0"
+    "@vrn-deco/cli-log": "workspace:1.0.0",
+    "@vrn-deco/cli-shared": "workspace:1.0.0",
+    "execa": "^5.1.1",
+    "fs-extra": "^10.0.0",
+    "node-fetch": "^2.6.7"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.12",
+    "@types/node-fetch": "^2.5.12"
   }
 }

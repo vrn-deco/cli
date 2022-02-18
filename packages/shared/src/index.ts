@@ -5,7 +5,6 @@
  */
 
 export * from './type-helper'
-export * from './detector'
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 export const noop = (): void => {}

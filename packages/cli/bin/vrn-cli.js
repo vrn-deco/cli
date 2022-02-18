@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 if (require('import-local')(__filename)) {
-  require('@vrn-deco/logger').logger.info('vrn-cli 正在使用本地版本')
+  require('@vrn-deco/cli-log').logger.info('@vrn-deco/cli using local version...')
 } else {
-  require('../lib').main()
+  require('../dist').main()
 }

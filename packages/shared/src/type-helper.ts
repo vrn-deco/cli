@@ -1,76 +1,42 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-06-26 01:33:57
- * @Description: 类型辅助函数
+ * @Description: type helpers
  */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
-function getType(o: unknown): string {
-  return Object.prototype.toString.call(o).slice(8, -1)
-}
+const getType = (o: unknown): string => Object.prototype.toString.call(o).slice(8, -1)
 
-export function isObject<T extends Record<string, unknown>>(o: unknown): o is T {
-  return getType(o) === 'Object'
-}
+export const isObject = (o: unknown): o is Record<any, any> => getType(o) === 'Object'
 
-export function isArray<T>(o: unknown): o is T {
-  return getType(o) === 'Array'
-}
+export const isArray = Array.isArray
 
-export function isSet<T>(o: unknown): o is Set<T> {
-  return getType(o) === 'Set'
-}
+export const isSet = (o: unknown): o is Set<any> => getType(o) === 'Set'
 
-export function isMap<K, V>(o: unknown): o is Map<K, V> {
-  return getType(o) === 'Map'
-}
+export const isMap = (o: unknown): o is Map<any, any> => getType(o) === 'Map'
 
-export function isFunction<T extends (...args: never) => unknown>(o: unknown): o is T {
-  return getType(o) === 'Function'
-}
+export const isFunction = (o: unknown): o is (...args: never) => unknown => getType(o) === 'Function'
 
-export function isAsyncFunction<T extends (...args: never) => Promise<unknown>>(o: unknown): o is T {
-  return getType(o) === 'AsyncFunction'
-}
+export const isAsyncFunction = (o: unknown): o is (...args: never) => Promise<unknown> => getType(o) === 'AsyncFunction'
 
-export function isNumber(o: unknown): o is number {
-  return getType(o) === 'Number'
-}
-export function isInt(o: unknown): o is number {
-  return isNumber(o) && Math.floor(o) === o
-}
+export const isNumber = (o: unknown): o is number => getType(o) === 'Number'
 
-export function isString(o: unknown): o is string {
-  return getType(o) === 'String'
-}
+export const isInt = (o: unknown): o is number => isNumber(o) && Math.floor(o) === o
 
-export function isEmptyString(o: unknown): o is string {
-  return isString(o) && o.length === 0
-}
+export const isString = (o: unknown): o is string => getType(o) === 'String'
 
-export function isBoolean(o: unknown): o is boolean {
-  return getType(o) === 'Boolean'
-}
+export const isEmptyString = (o: unknown): o is string => isString(o) && o.length === 0
 
-export function isUndefined(o: unknown): o is undefined {
-  return getType(o) === 'Undefined'
-}
+export const isBoolean = (o: unknown): o is boolean => getType(o) === 'Boolean'
 
-export function isNull(o: unknown): o is null {
-  return getType(o) === 'Null'
-}
+export const isUndefined = (o: unknown): o is undefined => getType(o) === 'Undefined'
 
-export function isUndefinedOrNull(o: unknown): o is undefined | null {
-  return isUndefined(o) || isNull(o)
-}
+export const isNull = (o: unknown): o is null => getType(o) === 'Null'
 
-export function isSymbol(o: unknown): o is symbol {
-  return getType(o) === 'Symbol'
-}
+export const isUndefinedOrNull = (o: unknown): o is undefined | null => isUndefined(o) || isNull(o)
 
-export function isBigInt(o: unknown): o is bigint {
-  return getType(o) === 'BigInt'
-}
+export const isSymbol = (o: unknown): o is symbol => getType(o) === 'Symbol'
 
-export function isRegExp(o: unknown): o is RegExp {
-  return getType(o) === 'RegExp'
-}
+export const isBigInt = (o: unknown): o is bigint => getType(o) === 'BigInt'
+
+export const isRegExp = (o: unknown): o is RegExp => getType(o) === 'RegExp'

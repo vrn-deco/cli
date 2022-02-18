@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-23 16:36:28
- * @Description: Action 抽象类与相关类型
+ * @Description: Action abstract class, relevant types
  */
 import { Command } from 'commander'
 import { logger } from '@vrn-deco/cli-log'
@@ -25,31 +25,49 @@ export abstract class Action<A extends Arguments, O extends Options> {
   protected readonly command: Command
 
   constructor(...args: ActionArgs<A, O>) {
+    this.verifyEnv()
+
     this.command = args.pop() as Command
     this.options = args.pop() as O
     this.arguments = args.slice() as unknown as A
-    this.verifyEnv()
   }
 
-  get className(): string {
+  protected get className(): string {
     return Object.getPrototypeOf(this).constructor.name
   }
 
   async run() {
-    logger.debug(`<${this.className}> initialize...`)
+    logger.verbose(`<${this.className}> initialize...`)
     await this.initialize()
 
-    logger.debug(`<${this.className}> execute...`)
+    logger.verbose(`<${this.className}> execute...`)
     await this.execute()
 
-    logger.debug(`<${this.className}> clear...`)
+    logger.verbose(`<${this.className}> clear...`)
     await this.clear()
   }
 
+  /**
+   * initialize step
+   *
+   * do some preparatory work, including gathering command-line arguments,
+   * interactively interrogating, and generating temporary files
+   */
   protected abstract initialize(): void | Promise<void>
 
+  /**
+   * execute step
+   *
+   * execute specific tasks using the necessary parameters
+   * collected during the initialization step
+   */
   protected abstract execute(): void | Promise<void>
 
+  /**
+   * clear step
+   *
+   * clean up temporary data and files generated before
+   */
   protected abstract clear(): void | Promise<void>
 
   private verifyEnv() {

@@ -1,22 +1,38 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-27 20:47:32
- * @Description: boilerplate create 命令
+ * @Description: boilerplate create command
  */
 import { Command } from '@vrn-deco/cli-command'
 import { CreateAction, CreateActionArgs } from './action'
 
 const createCommand = new Command('create')
 
+/**
+ * e.g.
+ *
+ * Interactive creation
+ * vrn boi create myapp
+ * vrn boi create myapp ./packages
+ *
+ * Non-interactive creation, suitable for CI and automation tasks
+ * vrn boi create myapp --yes \
+ *    --name=myapp --version=1.0.0 --author=cphayim \
+ *    --target @vrn-deco/boilerplate-javascript-vue
+ *
+ * vrn boi create myapp ./packages --yes \
+ *    --name=@vrn-deco/myapp --version=1.0.0 --author=cphayim \
+ *    --target @vrn-deco/boilerplate-javascript-vue
+ */
 createCommand
-  .description('创建项目')
+  .description('create a new project with boilerplate service')
   .arguments('<folder_name> [base_directory]')
-  .option('-f, --force', '当目录存在时强制覆盖', false)
-  .option('-y, --yes', '无交互模式', false)
-  .option('-n, --name [name]', '项目名称，用于无交互模式')
-  .option('-v, --version [version]', '项目版本号，用于无交互模式')
-  .option('-a, --author [author]', '开发人员，用于无交互模式')
-  .option('-b, --boilerplate', '模板名，用于无交互模式')
+  .option('-f, --force', 'force overwrite when directory exists', false)
+  .option('-y, --yes', 'non-interactive creation, suitable for ci or automated tasks', false)
+  .option('-n, --name <name>', 'project name，need `--yes` options')
+  .option('-v, --version <version>', 'project version，need `--yes` options')
+  .option('-a, --author <author>', 'project author，need `--yes` options')
+  .option('--target, --target-boilerplate <boilerplate_name>', 'target boilerplate name，need `--yes` options')
   .action(async (...args: CreateActionArgs) => {
     await new CreateAction(...args).run()
   })

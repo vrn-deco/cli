@@ -7,7 +7,7 @@ import path from 'path'
 import { isString } from '@vrn-deco/cli-shared'
 
 export function getCacheDirectory(): string {
-  return path.resolve(process.env.VRN_CLI_HOME_PATH, 'cache')
+  return path.resolve(process.env.VRN_CLI_HOME_PATH, 'boilerplate')
 }
 
 export function isValidProjectName(name: string): boolean {

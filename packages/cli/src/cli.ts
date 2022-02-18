@@ -12,7 +12,7 @@ import { Command, registerCommands } from '@vrn-deco/cli-command'
 import { isObject } from '@vrn-deco/cli-shared'
 
 type CLIOptions = {
-  debug: boolean
+  // debug: boolean
   moduleMap: string
   moduleMapFile: string
 }
@@ -22,48 +22,34 @@ export function createCLI(commands?: Command[]): Command {
   const cli = new Command()
 
   cli
-    .usage('<command> [options]')
-    .option('--debug', '启用调试', false)
-    .option('--module-map <json>', '模块映射')
-    .option('--module-map-file <json-file>', '模块映射文件')
-    .version(`${VRN_CLI_PACKAGE_NAME} version: ${VRN_CLI_VERSION}`, '-v, --version', '查看版本号')
-    .helpOption('-h, --help', '查看帮助信息')
+    // .option('--debug', 'enable debug', false)
+    .option('--module-map <json>', 'local module mapping')
+    .option('--module-map-file <json-file>', 'local module mapping file')
+    .version(`${VRN_CLI_PACKAGE_NAME} version: ${VRN_CLI_VERSION}`, '-v, --version', 'display version')
 
-  // 启用调试
-  cli.on('option:debug', () => {
-    process.env.VRN_CLI_DEBUG_ENABLED = SwitchStatus.On
-    logger.setLevel(cli.opts().debug ? 'verbose' : 'info')
-    logger.debug('启用调试')
-  })
-
-  // 本地模块映射加载
   cli.on('option:module-map', () => {
-    logger.debug('接收 --module-map 选项', 'MODULE_MAP')
+    logger.verbose('received --module-map option', 'MODULE_MAP')
     injectModuleMapEnv(cli.opts<CLIOptions>().moduleMap)
   })
 
-  // 本地模块映射文件加载
   cli.on('option:module-map-file', () => {
     const { moduleMap, moduleMapFile } = cli.opts<CLIOptions>()
-    // moduleMap 的优先级更高
+    // moduleMap has higher priority
     if (moduleMap) return
 
-    logger.debug('接收 --module-map-file 选项', 'MODULE_MAP')
+    logger.verbose('received --module-map-file option', 'MODULE_MAP')
     const file = path.resolve(process.cwd(), moduleMapFile)
     if (!fs.existsSync(file) || !fs.statSync(file).isFile()) {
-      throw new Error(`本地模块映射文件不存在: ${file}`)
+      throw new Error(`moduleMapFile does not exist: ${file}`)
     }
     injectModuleMapEnv(fs.readFileSync(file, { encoding: 'utf-8' }))
   })
 
-  // 无效命令提示
   cli.on('command:*', (args) => {
-    logger.warn(`无效命令: ${args[0]}`)
+    logger.warn(`Invalid command: ${args[0]}`)
     const availableCommands = cli.commands.map((cmd) => cmd.name())
-    logger.info(`可用命令: ${availableCommands.join(', ')}`)
+    logger.info(`Available commands: ${availableCommands.join(', ')}`)
   })
-
-  // cli.action(() => cli.outputHelp())
 
   if (commands) {
     registerCommands(cli, commands)
@@ -74,13 +60,13 @@ export function createCLI(commands?: Command[]): Command {
 
 function injectModuleMapEnv(moduleMap: string) {
   try {
-    // 试解析
+    // try to parse json
     if (!isObject(JSON.parse(moduleMap))) {
       throw new Error()
     }
     process.env.VRN_CLI_MODULE_MAP = moduleMap
-    logger.debug(`启用本地模块映射: \n${process.env.VRN_CLI_MODULE_MAP}`, 'MODULE_MAP')
+    logger.verbose(`enabled local module mapping: \n${process.env.VRN_CLI_MODULE_MAP}`, 'MODULE_MAP')
   } catch (error) {
-    throw new Error('无效的本地模块映射，请检查格式')
+    throw new Error('invalid local module mapping, please check format')
   }
 }

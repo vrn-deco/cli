@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-29 16:12:23
- * @Description:
+ * @Description: boilerplate list command action
  */
 import path from 'path'
 import fs from 'fs-extra'
@@ -9,7 +9,7 @@ import YAML from 'yaml'
 
 import { colors } from '@vrn-deco/cli-log'
 import { Action, ActionArgs } from '@vrn-deco/cli-command'
-import { Manifest } from '@vrn-deco/protocol-boilerplate'
+import { Manifest } from '@vrn-deco/boilerplate-protocol'
 
 import { BoilerplateService } from '../services/boilerplate.service'
 
@@ -17,13 +17,13 @@ type ListArguments = []
 type ListOptions = {
   json: boolean
   yaml: boolean
-  outFile: string // 结果输出到文件
+  outFile: string // output file
 }
 
 export type ListActionArgs = ActionArgs<ListArguments, ListOptions>
 
 /**
- * 输出类型
+ * output type
  */
 const enum OutputType {
   Simple,
@@ -32,7 +32,7 @@ const enum OutputType {
 }
 
 export class ListAction extends Action<ListArguments, ListOptions> {
-  private boilerplateService = new BoilerplateService()
+  private boilerplateService = BoilerplateService.getInstance()
 
   private outputType = OutputType.Simple
   private manifest!: Manifest
@@ -46,7 +46,7 @@ export class ListAction extends Action<ListArguments, ListOptions> {
       this.outputFile = path.resolve(process.cwd(), this.options.outFile)
     }
 
-    this.manifest = await this.boilerplateService.getManifest()
+    this.manifest = await this.boilerplateService.loadManifest()
   }
 
   async execute(): Promise<void> {

@@ -11,8 +11,3 @@ export const enum DistTag {
   Next = 'next',
   Legacy = 'legacy',
 }
-
-export const enum NPMRegistry {
-  NPM = 'https://registry.npmjs.org',
-  TAOBAO = 'https://registry.npm.taobao.org',
-}

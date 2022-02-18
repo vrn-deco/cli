@@ -1,109 +1,133 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-27 15:31:50
- * @Description: 包管理
+ * @Description: package manager
  */
 import path from 'path'
 import fs from 'fs-extra'
+import execa from 'execa'
+
 import { logger } from '@vrn-deco/cli-log'
 
-import { DEP_FOLDER, DistTag, NPMRegistry } from './common'
+import { DistTag } from './common'
 import { parseModuleMap, isPackage, isDistTagVersion } from './utils'
-import { NPMQuerier } from './querier'
-import { InstallerOptions, NPMInstaller } from './installer'
+import { queryPackageVersion } from './querier'
+import { installPackage, InstallOptions } from './install'
 
-type PackageOptions = Omit<InstallerOptions, 'depDir'> & {
-  /**
-   * 依赖目录: 默认值 'node_modules'
-   */
-  depFolder?: string
+type PackageOptions = InstallOptions & {
+  //
 }
 
+/**
+ * Default:
+ * install modules via npm registry
+ * - if an exact version number is specified
+ *   - find the module in baseDir, install it if not found
+ * - if a dist tag is specified
+ *   - query the exact version corresponding to the dist tag
+ *   - find the module in baseDir, install it if not found
+ *
+ * Local:
+ * use the specified local module
+ */
 const enum Mode {
   Default,
   Local,
 }
 
-/**
- * 默认模式:
- * 模块通过 npm 源获取
- * 如果指定准确版本号，查找本地 cache 中是否存在模块，如果不存在进行下载
- * 如果指定 tag，查找 tag 对应的最新版本号模块在本地 cache 中是否存在，如果不存在进行下载
- *
- * 本地模式:
- * 模块在本地，忽略下载和更新检查
- */
 export class NPMPackage {
-  loaded = false
-
-  // 模式
-  mode = Mode.Default
-  // 基本目录
-  readonly baseDir: string
-  // 依赖安装目录
-  readonly depDir: string
-  // npm 源
-  readonly registry: string
-  // 本地模块映射
-  readonly localMap: Record<string, string>
+  private loaded = false
 
   /**
-   * 包所在目录
+   * mode
    */
-  packageDir!: string
+  private mode: Mode = Mode.Default
 
-  constructor(
-    // 包名
-    private readonly name: string,
-    // 版本号
-    private version: DistTag | string,
-    { baseDir = process.cwd(), depFolder = DEP_FOLDER, registry = NPMRegistry.NPM }: PackageOptions = {},
-  ) {
-    this.baseDir = baseDir
-    this.depDir = path.resolve(baseDir, depFolder)
+  /**
+   * package name
+   */
+  private name: string
 
-    this.registry = registry
+  /**
+   * package version or dist tag
+   */
+  private versionOrDistTag: string
+
+  /**
+   * base directory
+   *
+   * if the module is not installed, install it to `${baseDir}/node_modules/${name}`
+   */
+  private baseDir: string
+
+  /**
+   * npm registry
+   */
+  private registry: string
+
+  /**
+   * package manager
+   */
+  private packageManager: PackageManager
+
+  /**
+   * local modules mapping
+   */
+  private localMap: Record<string, string>
+
+  constructor(options: PackageOptions) {
+    this.name = options.name
+    this.versionOrDistTag = options.versionOrDistTag ?? DistTag.Latest
+    this.baseDir = options.baseDir ?? process.cwd()
+    this.registry = options.registry ?? NPMRegistry.NPM
+    this.packageManager = options.packageManager ?? PackageManager.NPM
 
     this.localMap = parseModuleMap()
-    // 包存在本地映射时使用本地模式
     if (this.localMap[this.name]) {
       this.mode = Mode.Local
     }
   }
 
   /**
-   * 获取包路径
+   * package directory absolute path
    */
-  getDir(): string {
+  get packageDir(): string {
     this.requireLoaded()
-    return this.packageDir
+    return this.mode === Mode.Local ? this.localMap[this.name] : this.cachePackageDir
+  }
+
+  private get cachePackageDir() {
+    return path.join(this.baseDir, 'node_modules', this.name)
   }
 
   /**
-   * 获取 package.json 的解析对象
+   * package.json parse object
    */
-  getPackageJSON(): Record<string, string> {
-    return fs.readJsonSync(path.join(this.getDir(), 'package.json'))
+  get packageJSON(): Record<string, string> {
+    return fs.readJsonSync(path.join(this.packageDir, 'package.json'))
   }
 
   /**
-   * 获取入口脚本路径
+   * package.json main field absolute path
    */
-  getMainScriptPath(): string {
-    const dir = this.getDir()
-    const pkgjson = this.getPackageJSON()
-    if (pkgjson && pkgjson.main) {
-      return path.join(dir, pkgjson.main)
+  get mainScript(): string {
+    const pkg = this.packageJSON
+    if (pkg && pkg.main) {
+      return path.join(this.packageDir, pkg.main)
     } else {
       throw new Error(`${this.name} package.main field not exists`)
     }
   }
 
   /**
-   * 加载 package
+   * load package
+   *
+   * must be called after create instance, it will check and install modules based on mode rules.
    */
   async load(): Promise<this> {
-    logger.verbose(`init package: ${this.name}@${this.version}`)
+    if (this.loaded) return this
+
+    logger.verbose(`init package: ${this.name}@${this.versionOrDistTag}`)
     if (this.mode === Mode.Local) {
       await this.loadLocal()
     } else {
@@ -114,37 +138,43 @@ export class NPMPackage {
   }
 
   /**
-   * 装载外部模块
+   * load external package
+   *
+   * check package on local cache. if not found, install it
    */
   private async loadExternal() {
     logger.verbose(`init external package...`)
-
+    if (!fs.pathExistsSync(this.baseDir)) {
+      fs.mkdirpSync(this.baseDir)
+    }
     await this.standardizeVersion()
-    this.packageDir = await this.installOrUpdate()
+    await this.installOrUpdate()
   }
 
   /**
-   * 装载本地模块
+   * load local package
    */
   private async loadLocal() {
     logger.verbose(`init local package...`)
-    const packageDir = this.localMap[this.name]
-
-    if (!isPackage(packageDir)) throw new Error(`path ${packageDir} is not a package`)
-    this.packageDir = packageDir
+    if (!isPackage(this.localMap[this.name])) {
+      throw new Error(`path ${this.localMap[this.name]} is not a package`)
+    }
   }
 
   /**
-   * 标准化版本号
+   * standardize version
+   *
+   * if version is a dist tag, query the corresponding version.
+   * it is a preparation to load external modules and should be used when Mode.Default.
    */
   private async standardizeVersion() {
     const spinner = logger.createSpinner(`inspect package ${this.name} ...`)
     try {
       // 当传递的 version 是个 tag 时，获取对应的版本号替换 version
-      if (isDistTagVersion(this.version)) {
-        const version = await new NPMQuerier(this.name, this.registry).getVersion(this.version)
-        if (!version) throw new Error(`${this.name}@${this.version} not found at ${this.registry}`)
-        this.version = version
+      if (isDistTagVersion(this.versionOrDistTag)) {
+        const version = await queryPackageVersion(this.name, this.versionOrDistTag, this.registry)
+        if (!version) throw new Error(`${this.name}@${this.versionOrDistTag} not found at ${this.registry}`)
+        this.versionOrDistTag = version
       }
     } finally {
       spinner.stop()
@@ -152,35 +182,31 @@ export class NPMPackage {
   }
 
   /**
-   * 安装或更新
+   * install or update package
    */
   private async installOrUpdate() {
-    if (!fs.pathExistsSync(this.depDir)) {
-      fs.mkdirpSync(this.depDir)
+    // here the unified use of `npm list`
+    const { stdout } = await execa(PackageManager.NPM, ['list', '--depth=0', '--json'], { cwd: this.baseDir })
+    const result = JSON.parse(stdout)
+    const installed =
+      result.dependencies?.[this.name] && result.dependencies[this.name].version === this.versionOrDistTag
+    if (installed) return
+
+    const spinner = logger.createSpinner(`install package ${this.name}@${this.versionOrDistTag} ...`)
+    try {
+      await installPackage({
+        name: this.name,
+        versionOrDistTag: this.versionOrDistTag,
+        baseDir: this.baseDir,
+        registry: this.registry,
+        packageManager: this.packageManager,
+      })
+    } finally {
+      spinner.stop()
     }
-    // 检查包是否存在缓存，不存在则安装
-    const packageDir = this.getSpecificCacheFilePath()
-    if (!fs.pathExistsSync(packageDir)) {
-      const spinner = logger.createSpinner(`install package ${this.name}@${this.version} ...`)
-      try {
-        await new NPMInstaller({ baseDir: this.baseDir, depDir: this.depDir, registry: this.registry }).install(
-          [{ name: this.name, version: this.version }],
-          true,
-        )
-      } finally {
-        spinner.stop()
-      }
-    }
-    return packageDir
   }
 
-  private requireLoaded(): void {
-    if (!this.loaded) throw new Error(`Please call or await the \`load\` is complete`)
-  }
-
-  private getSpecificCacheFilePath(): string {
-    // @vrn-deco/cli 1.1.2 -> _@vrn-deco_cli@1.1.2@@vrn-deco/cli
-    const prefix = this.name.replace(/\//g, '_')
-    return path.resolve(this.depDir, `_${prefix}@${this.version}@${this.name}`)
+  private requireLoaded() {
+    if (!this.loaded) throw new Error(`please call and await the \`load\` is complete`)
   }
 }

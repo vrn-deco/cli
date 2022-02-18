@@ -4,5 +4,5 @@ tsconfig.tsbuildinfo
 *.code-workspace
 
 node_modules/
-lib/
+dist/
 tmp/

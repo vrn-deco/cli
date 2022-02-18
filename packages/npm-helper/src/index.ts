@@ -5,5 +5,5 @@
  */
 export * from './common'
 export * from './querier'
-export * from './installer'
+export * from './install'
 export * from './package'

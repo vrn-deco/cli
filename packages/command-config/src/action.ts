@@ -1,18 +1,12 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-23 15:33:13
- * @Description:
+ * @Description: config command action
  */
 
 import { colors, logger } from '@vrn-deco/cli-log'
 import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
-import {
-  BaseConfig,
-  packageManagerOptions,
-  npmRegistryOptions,
-  readConfig,
-  updateConfig,
-} from '@vrn-deco/cli-config-helper'
+import { BaseConfig, readConfig, updateConfig } from '@vrn-deco/cli-config-helper'
 import { noop } from '@vrn-deco/cli-shared'
 
 export type ConfigArguments = []
@@ -37,7 +31,7 @@ export class ConfigAction extends Action<ConfigArguments, ConfigOptions> {
     const field = await this.selectField()
     logger.verbose(`selected field: ${field}`)
     await this.editItem(field)
-    logger.done('配置成功')
+    logger.done('cli configuration is updated!')
   }
 
   protected clear() {
@@ -47,23 +41,23 @@ export class ConfigAction extends Action<ConfigArguments, ConfigOptions> {
   private async selectField(): Promise<ConfigurableFields> {
     const { field } = await prompt<{ field: ConfigurableFields }>({
       name: 'field',
-      message: '选择要修改的配置项: ',
+      message: 'Select a configuration item to edit: ',
       type: 'list',
       choices: [
         {
-          name: `包管理器${this.currentValue(this.config.packageManager)}`,
+          name: `packageManager${this.currentValue(this.config.packageManager)}`,
           value: 'packageManager',
-          short: '包管理器',
+          short: 'packageManager',
         },
         {
-          name: `NPM 源${this.currentValue(this.config.npmRegistry)}`,
+          name: `npmRegistry${this.currentValue(this.config.npmRegistry)}`,
           value: 'npmRegistry',
-          short: 'NPM 源',
+          short: 'npmRegistry',
         },
         {
-          name: `检查更新${this.currentValue(this.config.checkUpdateEnabled)}`,
+          name: `checkUpdateEnabled${this.currentValue(this.config.checkUpdateEnabled)}`,
           value: 'checkUpdateEnabled',
-          short: '检查更新',
+          short: 'checkUpdateEnabled',
         },
       ],
     })
@@ -81,45 +75,54 @@ export class ConfigAction extends Action<ConfigArguments, ConfigOptions> {
   }
 
   private async handleNPMRegistryEdit() {
-    logger.verbose('edit NPMRegistry')
+    logger.verbose('editing field: npmRegistry')
     const { npmRegistry, custom } = await prompt<{ npmRegistry: string; custom: string | undefined }>([
       {
         name: 'npmRegistry',
-        message: '选择预设或自定义 NPM 源: ',
+        message: 'Select a preset NPM registry or custom registry: ',
         type: 'list',
-        choices: [...npmRegistryOptions, { name: 'custom', value: 'custom' }],
+        choices: [
+          { name: 'npm', value: NPMRegistry.NPM },
+          { name: 'taobao', value: NPMRegistry.TAOBAO },
+          { name: 'custom', value: 'custom' },
+        ],
         default: this.config.npmRegistry,
       },
       {
         when: ({ npmRegistry }) => npmRegistry === 'custom',
         name: 'custom',
-        message: '输入自定义的 NPM 源地址（自行确保有效可访问）:',
+        message: 'Please input your custom registry: (e.g. https://registry.npmjs.org)',
         type: 'input',
+        filter: (input: string) => (input.endsWith('/') ? input.slice(0, -1) : input),
       },
     ])
     updateConfig({ npmRegistry: custom ?? npmRegistry })
   }
 
   private async handlePackageManagerEdit() {
-    logger.verbose('edit NPMClient')
-    const { NPMClient } = await prompt<{ NPMClient: BaseConfig['packageManager'] }>([
+    logger.verbose('editing field: packageManager')
+    const { packageManager } = await prompt<{ packageManager: BaseConfig['packageManager'] }>([
       {
-        name: 'NPMClient',
-        message: '选择 NPM 包管理器: ',
+        name: 'packageManager',
+        message: 'Select a package manager: ',
         type: 'list',
-        choices: packageManagerOptions,
+        choices: [
+          { name: PackageManager.NPM, value: PackageManager.NPM },
+          { name: PackageManager.Yarn, value: PackageManager.Yarn },
+          { name: PackageManager.PNPM, value: PackageManager.PNPM },
+        ],
         default: this.config.packageManager,
       },
     ])
-    updateConfig({ packageManager: NPMClient })
+    updateConfig({ packageManager })
   }
 
   private async handleCheckUpdateEdit() {
-    logger.verbose('edit CheckUpdate')
+    logger.verbose('editing field: checkUpdateEnabled')
     const { yes } = await prompt<{ yes: boolean }>([
       {
         name: 'yes',
-        message: '是否启用检查更新: ',
+        message: 'whether to enable check update: ',
         type: 'confirm',
       },
     ])
@@ -127,6 +130,6 @@ export class ConfigAction extends Action<ConfigArguments, ConfigOptions> {
   }
 
   private currentValue(value?: unknown): string {
-    return colors.gray(`\t\t-> ${value}`)
+    return colors.gray(` -> ${value}`)
   }
 }

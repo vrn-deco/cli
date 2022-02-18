@@ -1,7 +1,7 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-06-18 01:03:57
- * @Description: 启动器
+ * @Description: entry
  */
 import { logger } from '@vrn-deco/cli-log'
 

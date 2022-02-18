@@ -1,44 +1,38 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-06-18 09:48:23
- * @Description: npm 查询器
+ * @Description: package query
  */
-import axios, { AxiosInstance } from 'axios'
-import { DistTag, NPMRegistry } from './common'
+import fetch from 'node-fetch'
+import { DistTag } from './common'
 
 type PackageQueryInfo = {
   name: string
   'dist-tags': { [P in DistTag]: string }
 }
 
-export class NPMQuerier {
-  private readonly fetch: AxiosInstance
-
-  constructor(private readonly name: string, private readonly registry: string = NPMRegistry.NPM) {
-    this.name = name
-    this.registry = registry
-    this.fetch = axios.create({ baseURL: this.registry })
+export async function queryPackageInfo(name: string, registry: string = NPMRegistry.NPM): Promise<PackageQueryInfo> {
+  const response = await fetch(`${registry}/${name}`)
+  const data = await response.json()
+  if (data.error) {
+    throw new Error(`NPMQuery failed: package ${name} ${data.error}`)
   }
+  return data as PackageQueryInfo
+}
 
-  async getInfo(): Promise<PackageQueryInfo> {
-    const { data } = await this.fetch.get<PackageQueryInfo>(`/${this.name}`)
-    return data
-  }
+export async function queryPackageVersion(name: string, tag = DistTag.Latest, registry?: string): Promise<string> {
+  const info = await queryPackageInfo(name, registry)
+  return info['dist-tags'][tag]
+}
 
-  async getVersion(tag = DistTag.Latest): Promise<string> {
-    const info = await this.getInfo()
-    return info['dist-tags'][tag]
-  }
+export async function queryPackageLatestVersion(name: string, registry?: string): Promise<string> {
+  return queryPackageVersion(name, DistTag.Latest, registry)
+}
 
-  async getLatestVersion(): Promise<string> {
-    return this.getVersion(DistTag.Latest)
-  }
+export async function queryPackageNextVersion(name: string, registry?: string): Promise<string> {
+  return queryPackageVersion(name, DistTag.Next, registry)
+}
 
-  async getNextVersion(): Promise<string> {
-    return this.getVersion(DistTag.Next)
-  }
-
-  async getLegacyVersion(): Promise<string> {
-    return this.getVersion(DistTag.Legacy)
-  }
+export async function queryPackageLegacyVersion(name: string, registry?: string): Promise<string> {
+  return queryPackageVersion(name, DistTag.Legacy, registry)
 }

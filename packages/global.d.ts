@@ -1,55 +1,84 @@
 /*
  * @Author: Cphayim
  * @Date: 2021-07-16 23:32:04
- * @Description: 全局类型定义
+ * @Description: global types
  */
 
-declare const enum SwitchStatus {
-  On = 'on',
-  Off = 'off',
-}
-
 /**
- * 环境变量
+ * process.env type
  */
 type VRNEnv = {
   /**
-   * 调试模式开关
+   * cli global debug mode swtich
    */
   VRN_CLI_DEBUG_ENABLED: SwitchStatus
 
   /**
-   * 显示名称
+   * cli display name
    */
   VRN_CLI_NAME: string
 
   /**
-   * 主包名
+   * cli main package name
    */
   VRN_CLI_PACKAGE_NAME: string
 
   /**
-   * 主包版本
+   * cli main package version
    */
   VRN_CLI_VERSION: string
 
   /**
-   * 应用主目录
+   * cli used home directory
    */
   VRN_CLI_HOME_PATH: string
 
   /**
-   * 最低兼容的 Node.js 版本
+   * lowest supported node version
    */
   VRN_CLI_LOWEST_NODE_VERSION: string
 
   /**
-   * 本地模块映射
-   * jsonstr: Record<模块名, 绝对路径>
+   * local module mapping
+   * jsonstr: Record<moduleName, localAbsolutePath>
    */
   VRN_CLI_MODULE_MAP: string
 }
 
 declare namespace NodeJS {
   interface ProcessEnv extends VRNEnv {}
+}
+
+/**
+ * config items switch status
+ */
+declare const enum SwitchStatus {
+  On = 'on',
+  Off = 'off',
+}
+
+/**
+ * supported package manager
+ */
+declare const enum PackageManager {
+  NPM = 'npm',
+  Yarn = 'yarn',
+  PNPM = 'pnpm',
+}
+
+/**
+ * package dist tag
+ */
+declare const enum DistTag {
+  Latest = 'latest',
+  Next = 'next',
+  Legacy = 'legacy',
+}
+
+/**
+ * build-in npm registry
+ */
+declare const enum NPMRegistry {
+  NPM = 'https://registry.npmjs.org',
+  TAOBAO = 'https://registry.npmmirror.com',
 }
