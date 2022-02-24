@@ -1,10 +1,12 @@
 {
   "name": "@vrn-deco/cli-command-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "vrn create project boilerplate command",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
   "license": "MIT",
+  "type": "module",
+  "exports": "./dist/index.js",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -26,9 +28,9 @@
     "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-config-helper": "workspace:1.0.0",
-    "@vrn-deco/cli-command": "workspace:1.0.0",
-    "@vrn-deco/cli-log": "workspace:1.0.0",
-    "@vrn-deco/cli-shared": "workspace:1.0.0"
+    "@vrn-deco/cli-config-helper": "workspace:1.0.1",
+    "@vrn-deco/cli-command": "workspace:1.0.1",
+    "@vrn-deco/cli-log": "workspace:1.0.1",
+    "@vrn-deco/cli-shared": "workspace:1.0.1"
   }
 }

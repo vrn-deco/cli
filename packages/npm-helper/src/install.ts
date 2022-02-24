@@ -3,9 +3,10 @@
  * @Date: 2021-06-21 01:25:57
  * @Description: package install
  */
-import execa from 'execa'
+import { execa } from 'execa'
+import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
 
-import { cmdExists } from './utils'
+import { cmdExists } from './utils.js'
 
 export type InstallOptions = {
   name: string

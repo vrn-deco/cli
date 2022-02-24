@@ -1,5 +1,22 @@
 # @vrn-deco/cli-command-config
 
+## 1.0.1
+
+### Patch Changes
+
+Embrace the pure esm
+
+#### Refactor:
+
+- Migrate all modules from cjs to esm
+
+#### Updated dependencies:
+
+- @vrn-deco/cli-command@1.0.1
+- @vrn-deco/cli-config-helper@1.0.1
+- @vrn-deco/cli-log@1.0.1
+- @vrn-deco/cli-shared@1.0.1
+
 ## 1.0.0
 
 ### Major Changes
@@ -18,8 +35,9 @@ Boilerplate related services are reimplemented using the `@vrn-deco/boilerplate-
 
 ### Patch Changes
 
-- Updated dependencies
-  - @vrn-deco/cli-command@1.0.0
-  - @vrn-deco/cli-config-helper@1.0.0
-  - @vrn-deco/cli-log@1.0.0
-  - @vrn-deco/cli-shared@1.0.0
+#### Updated dependencies:
+
+- @vrn-deco/cli-command@1.0.0
+- @vrn-deco/cli-config-helper@1.0.0
+- @vrn-deco/cli-log@1.0.0
+- @vrn-deco/cli-shared@1.0.0

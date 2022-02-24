@@ -5,4 +5,4 @@ echo "🛠🛠🛠 run lint-staged"
 pnpm lint-staged
 
 echo "🛠🛠🛠 run test"
-pnpm test
+pnpm test:unit

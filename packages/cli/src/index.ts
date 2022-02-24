@@ -5,19 +5,17 @@
  */
 import { logger } from '@vrn-deco/cli-log'
 
-import commands from './commands'
-import { prepare } from './prepare'
-import { createCLI } from './cli'
+import commands from './commands.js'
+import { prepare } from './prepare.js'
+import { createCLI } from './cli.js'
 
-export async function main(): Promise<void> {
-  try {
-    await prepare()
-    await createCLI(commands).parseAsync(process.argv)
-  } catch (error) {
-    if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') {
-      logger.error(error)
-    } else {
-      logger.error(error.message)
-    }
+try {
+  await prepare()
+  await createCLI(commands).parseAsync(process.argv)
+} catch (error) {
+  if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') {
+    logger.error(error)
+  } else {
+    logger.error(error.message)
   }
 }

@@ -4,7 +4,7 @@
  * @Description: boilerplate list command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
-import { ListAction } from './action'
+import { ListAction } from './action.js'
 
 const listCommand = new Command('list')
 

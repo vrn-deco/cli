@@ -3,8 +3,8 @@
  * @Date: 2021-07-26 12:35:27
  * @Description: boilerplate create command action
  */
-import path from 'path'
-import os from 'os'
+import path from 'node:path'
+import os from 'node:os'
 import fs from 'fs-extra'
 import { Boilerplate, Lang, PresetRunner } from '@vrn-deco/boilerplate-protocol'
 
@@ -12,8 +12,8 @@ import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { colors, logger } from '@vrn-deco/cli-log'
 import { NPMPackage } from '@vrn-deco/cli-npm-helper'
 
-import { BoilerplateService } from '../services/boilerplate.service'
-import { isValidProjectName, isValidVersion } from '../utils'
+import { BoilerplateService } from '../services/boilerplate.service.js'
+import { isValidProjectName, isValidVersion } from '../utils/index.js'
 
 type FolderName = string
 type BaseDirectory = string

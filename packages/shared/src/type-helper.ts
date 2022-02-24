@@ -25,7 +25,7 @@ export const isInt = (o: unknown): o is number => isNumber(o) && Math.floor(o) =
 
 export const isString = (o: unknown): o is string => getType(o) === 'String'
 
-export const isEmptyString = (o: unknown): o is string => isString(o) && o.length === 0
+export const isEmptyString = (o: unknown): o is string => isString(o) && o.trim().length === 0
 
 export const isBoolean = (o: unknown): o is boolean => getType(o) === 'Boolean'
 

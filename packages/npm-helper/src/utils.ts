@@ -3,15 +3,15 @@
  * @Date: 2022-01-16 23:52:32
  * @Description: utils
  */
-import path from 'path'
+import path from 'node:path'
+import os from 'node:os'
+import { execSync } from 'node:child_process'
 import fs from 'fs-extra'
-import os from 'os'
-import { execSync } from 'child_process'
 
 import { isObject } from '@vrn-deco/cli-shared'
 import { logger } from '@vrn-deco/cli-log'
 
-import { DistTag } from './common'
+import { DistTag } from './common.js'
 
 /**
  * check if dir is a package

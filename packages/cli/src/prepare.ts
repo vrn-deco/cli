@@ -3,8 +3,9 @@
  * @Date: 2021-06-18 01:28:41
  * @Description: prepare
  */
-import path from 'path'
-import os from 'os'
+import path from 'node:path'
+import os from 'node:os'
+import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
 import dotenv from 'dotenv'
 import semver from 'semver'
@@ -12,6 +13,11 @@ import rootCheck from 'root-check'
 
 import { figlet, colors, logger } from '@vrn-deco/cli-log'
 import { checkUpdate } from '@vrn-deco/cli-check-update'
+import { SwitchStatus } from '@vrn-deco/cli-shared'
+
+// ESM doesn't have __filename and __dirname
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const pkg = fs.readJsonSync(path.resolve(__dirname, '..', 'package.json'))
 const userHome = os.homedir()
@@ -39,18 +45,18 @@ function injectDefaultEnv() {
     /**
      * @see [[global.d.ts]]
      */
+    LOGGER_LEVEL: debugIndex !== -1 ? 'verbose' : 'info', // pass to the child process
     VRN_CLI_DEBUG_ENABLED: debugIndex !== -1 ? SwitchStatus.On : SwitchStatus.Off,
     VRN_CLI_NAME: 'vrn-cli',
     VRN_CLI_PACKAGE_NAME: pkg.name,
     VRN_CLI_VERSION: pkg.version,
     VRN_CLI_HOME_PATH: path.resolve(userHome, '.vrn-deco'),
-    VRN_CLI_LOWEST_NODE_VERSION:
-      semver.valid(pkg?.engines?.node?.match(/(?<version>\d+\.\d+\.\d+)/).groups.version) ?? '12.20.0',
+    VRN_CLI_LOWEST_NODE_VERSION: pkg['engines']['node'],
     VRN_CLI_MODULE_MAP: '',
   }
 
   // fix: remove --debug options to prevent commander.js parsing from being misaligned
-  process.argv.splice(debugIndex, debugIndex === -1 ? 0 : 1)
+  debugIndex !== -1 && process.argv.splice(debugIndex, 1)
 }
 
 function printLOGO() {
@@ -63,8 +69,8 @@ function setLogLevel() {
   if (process.env.VRN_CLI_DEBUG_ENABLED === SwitchStatus.On) {
     logger.setLevel('verbose')
     logger.verbose('enabled debug mode')
-    // passed to the child process
-    process.env.LOGGER_LEVEL = 'verbose'
+    logger.verbose(`System: ${os.type()}`)
+    logger.verbose(`Node.js: ${process.version}`)
   } else {
     logger.setLevel('info')
   }
@@ -77,7 +83,7 @@ function rootDemotion() {
 function checkNodeVersion() {
   const current = process.version
   const lowest = process.env.VRN_CLI_LOWEST_NODE_VERSION
-  if (semver.lt(process.version, lowest)) {
+  if (!semver.satisfies(process.version, lowest)) {
     throw new Error(`Please update your Node.js version\nLowest requirements: ${lowest}\nCurrent version: ${current}`)
   }
 }

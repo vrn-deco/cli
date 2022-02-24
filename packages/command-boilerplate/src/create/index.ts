@@ -4,7 +4,7 @@
  * @Description: boilerplate create command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
-import { CreateAction } from './action'
+import { CreateAction } from './action.js'
 
 const createCommand = new Command('create')
 

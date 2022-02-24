@@ -4,20 +4,22 @@
  * @Description: package query
  */
 import fetch from 'node-fetch'
-import { DistTag } from './common'
+import { NPMRegistry } from '@vrn-deco/cli-shared'
+import { DistTag } from './common.js'
 
 type PackageQueryInfo = {
+  error: string
   name: string
   'dist-tags': { [P in DistTag]: string }
 }
 
 export async function queryPackageInfo(name: string, registry: string = NPMRegistry.NPM): Promise<PackageQueryInfo> {
   const response = await fetch(`${registry}/${name}`)
-  const data = await response.json()
+  const data = (await response.json()) as PackageQueryInfo
   if (data.error) {
     throw new Error(`NPMQuery failed: package ${name} ${data.error}`)
   }
-  return data as PackageQueryInfo
+  return data
 }
 
 export async function queryPackageVersion(name: string, tag = DistTag.Latest, registry?: string): Promise<string> {

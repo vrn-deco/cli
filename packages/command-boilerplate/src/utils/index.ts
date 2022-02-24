@@ -3,7 +3,7 @@
  * @Date: 2021-07-26 21:14:00
  * @Description:
  */
-import path from 'path'
+import path from 'node:path'
 import { isString } from '@vrn-deco/cli-shared'
 
 export function getCacheDirectory(): string {

@@ -6,7 +6,7 @@
 
 export const DEP_FOLDER = 'node_modules'
 
-export const enum DistTag {
+export enum DistTag {
   Latest = 'latest',
   Next = 'next',
   Legacy = 'legacy',

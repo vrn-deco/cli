@@ -3,7 +3,7 @@
  * @Date: 2021-07-29 16:12:23
  * @Description: boilerplate list command action
  */
-import path from 'path'
+import path from 'node:path'
 import fs from 'fs-extra'
 import YAML from 'yaml'
 
@@ -11,7 +11,7 @@ import { colors } from '@vrn-deco/cli-log'
 import { Action, ActionArgs } from '@vrn-deco/cli-command'
 import { Manifest } from '@vrn-deco/boilerplate-protocol'
 
-import { BoilerplateService } from '../services/boilerplate.service'
+import { BoilerplateService } from '../services/boilerplate.service.js'
 
 type ListArguments = []
 type ListOptions = {
@@ -25,7 +25,7 @@ export type ListActionArgs = ActionArgs<ListArguments, ListOptions>
 /**
  * output type
  */
-const enum OutputType {
+enum OutputType {
   Simple,
   Json,
   Yaml,

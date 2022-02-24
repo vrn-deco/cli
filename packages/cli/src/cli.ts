@@ -4,7 +4,7 @@
  * @Description: cli
  */
 
-import path from 'path'
+import path from 'node:path'
 import fs from 'fs-extra'
 
 import { logger } from '@vrn-deco/cli-log'

@@ -3,16 +3,17 @@
  * @Date: 2021-07-27 15:31:50
  * @Description: package manager
  */
-import path from 'path'
+import path from 'node:path'
 import fs from 'fs-extra'
-import execa from 'execa'
+import { execa } from 'execa'
 
 import { logger } from '@vrn-deco/cli-log'
+import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
 
-import { DistTag } from './common'
-import { parseModuleMap, isPackage, isDistTagVersion } from './utils'
-import { queryPackageVersion } from './querier'
-import { installPackage, InstallOptions } from './install'
+import { DistTag } from './common.js'
+import { parseModuleMap, isPackage, isDistTagVersion } from './utils.js'
+import { queryPackageVersion } from './querier.js'
+import { installPackage, InstallOptions } from './install.js'
 
 type PackageOptions = InstallOptions & {
   //
@@ -30,7 +31,7 @@ type PackageOptions = InstallOptions & {
  * Local:
  * use the specified local module
  */
-const enum Mode {
+enum Mode {
   Default,
   Local,
 }
@@ -112,8 +113,8 @@ export class NPMPackage {
    */
   get mainScript(): string {
     const pkg = this.packageJSON
-    if (pkg && pkg.main) {
-      return path.join(this.packageDir, pkg.main)
+    if (pkg && pkg['main']) {
+      return path.join(this.packageDir, pkg['main'])
     } else {
       throw new Error(`${this.name} package.main field not exists`)
     }

@@ -4,10 +4,14 @@
  * @Description: command tools
  */
 import { Command } from 'commander'
+import inquirer from 'inquirer'
+
+// Commonjs to ESM named export
+const { prompt } = inquirer
+export { prompt }
 
 export * from 'commander'
-export { prompt } from 'inquirer'
-export * from './action'
+export * from './action.js'
 
 /**
  * register sub commands to parent command, return parent command

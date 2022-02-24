@@ -7,7 +7,7 @@
 import { colors, logger } from '@vrn-deco/cli-log'
 import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { BaseConfig, readConfig, updateConfig } from '@vrn-deco/cli-config-helper'
-import { noop } from '@vrn-deco/cli-shared'
+import { noop, NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
 
 export type ConfigArguments = []
 export type ConfigOptions = Record<string, never>

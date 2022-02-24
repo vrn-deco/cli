@@ -48,37 +48,3 @@ type VRNEnv = {
 declare namespace NodeJS {
   interface ProcessEnv extends VRNEnv {}
 }
-
-/**
- * config items switch status
- */
-declare const enum SwitchStatus {
-  On = 'on',
-  Off = 'off',
-}
-
-/**
- * supported package manager
- */
-declare const enum PackageManager {
-  NPM = 'npm',
-  Yarn = 'yarn',
-  PNPM = 'pnpm',
-}
-
-/**
- * package dist tag
- */
-declare const enum DistTag {
-  Latest = 'latest',
-  Next = 'next',
-  Legacy = 'legacy',
-}
-
-/**
- * build-in npm registry
- */
-declare const enum NPMRegistry {
-  NPM = 'https://registry.npmjs.org',
-  TAOBAO = 'https://registry.npmmirror.com',
-}

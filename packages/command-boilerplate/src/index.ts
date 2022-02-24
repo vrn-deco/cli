@@ -5,8 +5,8 @@
  */
 import { Command } from '@vrn-deco/cli-command'
 
-import createCommand from './create'
-import listCommand from './list'
+import createCommand from './create/index.js'
+import listCommand from './list/index.js'
 
 const boilerplateCommand = new Command('boilerplate')
 

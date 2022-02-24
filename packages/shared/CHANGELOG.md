@@ -1,5 +1,15 @@
 # @vrn-deco/cli-shared
 
+## 1.0.1
+
+### Patch Changes
+
+Embrace the pure esm
+
+#### Refactor:
+
+- Migrate all modules from cjs to esm
+
 ## 1.0.0
 
 ### Major Changes

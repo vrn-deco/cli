@@ -44,6 +44,8 @@ export abstract class Action<A extends Arguments, O extends Options> {
   }
 
   async run() {
+    logger.verbose(`dispatch command to <${this.className}>`)
+
     logger.verbose(`<${this.className}> initialize...`)
     await this.initialize()
 

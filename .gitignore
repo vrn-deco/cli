@@ -1,8 +1,10 @@
 .DS_Store
 *.log
-tsconfig.tsbuildinfo
+*.tsbuildinfo
 *.code-workspace
 
+.vscode/
 node_modules/
 dist/
 tmp/
+coverage/

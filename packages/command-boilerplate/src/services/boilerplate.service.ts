@@ -6,7 +6,8 @@
 import { Manifest } from '@vrn-deco/boilerplate-protocol'
 import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { readConfig } from '@vrn-deco/cli-config-helper'
-import { getCacheDirectory } from '../utils'
+
+import { getCacheDirectory } from '../utils/index.js'
 
 const BOILERPLATE_MANIFEST_PACKAGE = '@vrn-deco/boilerplate-manifest'
 
