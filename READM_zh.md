@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://github.com/vrn-deco/cli">
-<img src="./docs/images/cli-logo.png" width="500" alt="vrn-cli" />
+<img src="./docs/images/cli-logo.png" width="600" alt="vrn-cli" />
 </a>
 
 ![GitHub Actions Status](https://github.com/vrn-deco/cli/actions/workflows/ci.yml/badge.svg)
@@ -10,9 +10,11 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-f49033.svg)](https://pnpm.io/)
 
+[English](./READM.md)
+
 </div>
 
-> reference sindresorhus's [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c)
+<!-- > reference sindresorhus's [Pure ESM package](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c) -->
 
 ## 快速入门
 
