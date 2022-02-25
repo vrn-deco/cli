@@ -4,8 +4,6 @@
  * @Description: utils
  */
 import path from 'node:path'
-import os from 'node:os'
-import { execSync } from 'node:child_process'
 import fs from 'fs-extra'
 
 import { isObject } from '@vrn-deco/cli-shared'
@@ -36,22 +34,6 @@ export function parseModuleMap(): Record<string, string> {
     logger.warn(`invalid local_map: ${process.env.VRN_CLI_MODULE_MAP}`)
   }
   return result
-}
-
-/**
- * check if command is exists
- */
-export function cmdExists(cmd: string) {
-  try {
-    execSync(
-      os.platform() === 'win32'
-        ? `cmd /c "(help ${cmd} > nul || exit 0) && where ${cmd} > nul 2> nul"`
-        : `command -v ${cmd}`,
-    )
-    return true
-  } catch {
-    return false
-  }
 }
 
 /**
