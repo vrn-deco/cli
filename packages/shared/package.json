@@ -21,8 +21,7 @@
     "directory": "packages/shared"
   },
   "scripts": {
-    "build": "tsc --declarationMap false --sourceMap false",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "build": "tsc -p tsconfig.build.json"
   },
   "bugs": {
     "url": "https://github.com/vrn-deco/cli/issues"
