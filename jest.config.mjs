@@ -22,6 +22,7 @@ const config = {
   ],
   coverageDirectory: 'coverage',
   coverageProvider: 'v8',
+  collectCoverageFrom: ['packages/**/src/**.ts'],
 }
 
 export default config
