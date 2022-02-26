@@ -123,7 +123,7 @@ export class NPMPackage {
   /**
    * load package
    *
-   * must be called after create instance, it will check and install modules based on mode rules.
+   * must be called after create instance, it will inspect and install modules based on mode rules.
    */
   async load(): Promise<this> {
     if (this.loaded) return this
