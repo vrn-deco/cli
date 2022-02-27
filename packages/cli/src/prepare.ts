@@ -32,7 +32,7 @@ export async function prepare(): Promise<void> {
   await checkUpdate()
 }
 
-function initialEnv() {
+export function initialEnv() {
   const envPath = path.join(userHome, '.env')
   if (fs.existsSync(envPath) && fs.statSync(envPath).isFile()) dotenv.config({ path: envPath })
   injectDefaultEnv()
@@ -59,13 +59,13 @@ function injectDefaultEnv() {
   debugIndex !== -1 && process.argv.splice(debugIndex, 1)
 }
 
-function printLOGO() {
+export function printLOGO() {
   logger.clearConsole()
   const logo = figlet.textSync(process.env.VRN_CLI_NAME.toUpperCase(), '3D Diagonal')
   console.log(colors.green(logo))
 }
 
-function setLogLevel() {
+export function setLogLevel() {
   if (process.env.VRN_CLI_DEBUG_ENABLED === SwitchStatus.On) {
     logger.setLevel('verbose')
     logger.verbose('enabled debug mode')
@@ -76,11 +76,11 @@ function setLogLevel() {
   }
 }
 
-function rootDemotion() {
+export function rootDemotion() {
   if (process.env.SUDO_USER) rootCheck()
 }
 
-function checkNodeVersion() {
+export function checkNodeVersion() {
   const current = process.version
   const lowest = process.env.VRN_CLI_LOWEST_NODE_VERSION
   if (!semver.satisfies(process.version, lowest)) {
@@ -88,7 +88,7 @@ function checkNodeVersion() {
   }
 }
 
-function checkUserHome() {
+export function checkUserHome() {
   if (!userHome || !fs.pathExistsSync(userHome)) {
     throw new Error(`The current computer user ${os.userInfo().username} home directory does not exist`)
   }
