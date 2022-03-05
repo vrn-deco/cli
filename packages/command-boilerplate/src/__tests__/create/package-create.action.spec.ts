@@ -1,8 +1,6 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import fs from 'fs-extra'
 import { jest } from '@jest/globals'
-import { Boilerplate } from '@vrn-deco/boilerplate-protocol'
 
 import { Command, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'

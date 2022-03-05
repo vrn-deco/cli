@@ -1,5 +1,3 @@
-import path from 'node:path'
-import os from 'node:os'
 import { jest } from '@jest/globals'
 
 import { logger } from '@vrn-deco/cli-log'

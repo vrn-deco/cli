@@ -4,6 +4,7 @@
  * @Description: boilerplate list command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
+import { DEFAULT_MANIFEST_PACKAGE } from '../common.js'
 import { ListAction } from './list.action.js'
 
 const listCommand = new Command('list')
@@ -23,4 +24,5 @@ listCommand
   .option('--json', 'print to json', false)
   .option('--yml, --yaml', 'print to yaml', false)
   .option('-o, --out-file <file>', 'output file')
+  .option('--manifest-package <package_name>', 'specify manifest-package', DEFAULT_MANIFEST_PACKAGE)
   .action(runAction(ListAction))

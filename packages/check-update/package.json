@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli-check-update",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "@vrn-deco/cli-check-update",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
@@ -27,10 +27,10 @@
     "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-config-helper": "workspace:1.0.1",
-    "@vrn-deco/cli-log": "workspace:1.0.1",
-    "@vrn-deco/cli-npm-helper": "workspace:1.0.1",
-    "@vrn-deco/cli-shared": "workspace:1.0.1",
+    "@vrn-deco/cli-config-helper": "workspace:1.0.2",
+    "@vrn-deco/cli-log": "workspace:1.0.2",
+    "@vrn-deco/cli-npm-helper": "workspace:1.0.2",
+    "@vrn-deco/cli-shared": "workspace:1.0.2",
     "semver": "^7.3.5"
   },
   "devDependencies": {

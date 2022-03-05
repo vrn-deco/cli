@@ -17,6 +17,7 @@ type ListOptions = {
   json: boolean
   yaml: boolean
   outFile: string // output file
+  manifestPackage: string
 }
 
 export type ListActionArgs = ActionArgs<ListArguments, ListOptions>
@@ -38,7 +39,7 @@ export class ListAction extends Action<ListArguments, ListOptions> {
   private outputFile: string | undefined
 
   async initialize(): Promise<void> {
-    this.provider = new PackageBoilerplateService()
+    this.provider = new PackageBoilerplateService(this.options.manifestPackage)
     if (this.options.yaml) this.outputType = OutputType.Yaml
     else if (this.options.json) this.outputType = OutputType.Json
 

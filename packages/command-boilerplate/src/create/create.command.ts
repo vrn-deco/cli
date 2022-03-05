@@ -6,7 +6,7 @@
 import { Command, Option, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
 
-import { Mode } from '../common.js'
+import { DEFAULT_MANIFEST_PACKAGE, Mode } from '../common.js'
 import { CreateOptions } from './create.action.js'
 import { PackageCreateAction } from './package-create.action.js'
 
@@ -41,6 +41,7 @@ createCommand
   .option('-v, --version <version>', 'project version, need `--yes` options')
   .option('-a, --author <author>', 'project author, need `--yes` options')
   .option('--target, --target-boilerplate <boilerplate_name>', 'target boilerplate name, need `--yes` options')
+  .option('--manifest-package <package_name>', 'specify manifest-package', DEFAULT_MANIFEST_PACKAGE)
   .action(runActionByMode)
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

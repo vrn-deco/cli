@@ -28,7 +28,7 @@ export class PackageCreateAction extends CreateAction {
   override async initialize(): Promise<void> {
     await super.initialize()
 
-    this.boiService = new PackageBoilerplateService()
+    this.boiService = new PackageBoilerplateService(this.options.manifestPackage)
     this.boilerplate = await this.inquireBoilerplate()
     logger.verbose('boilerplate:')
     logger.verbose(this.boilerplate)
