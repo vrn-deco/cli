@@ -7,39 +7,35 @@ import { Manifest } from '@vrn-deco/boilerplate-protocol'
 import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { readConfig } from '@vrn-deco/cli-config-helper'
 
-import { getCacheDirectory } from '../utils/index.js'
+import { getCacheDirectory } from '../utils.js'
+import { DEFAULT_MANIFEST_PACKAGE } from '../common.js'
 
-const BOILERPLATE_MANIFEST_PACKAGE = '@vrn-deco/boilerplate-manifest'
+export interface BoilerplateProvider {
+  loadManifest(refresh?: boolean): Promise<Manifest>
+  loadBoilerplate(name: string): Promise<unknown>
+}
 
-export class BoilerplateService {
-  private static instance: BoilerplateService
-
-  private constructor() {
-    BoilerplateService.instance = this
-  }
-
-  static getInstance() {
-    if (BoilerplateService.instance) return BoilerplateService.instance
-    return new BoilerplateService()
-  }
-
+export class PackageBoilerplateService implements BoilerplateProvider {
   private config = readConfig()
+  private manifestPackage: string
   private manifest: Manifest | null = null
+
+  constructor(manifestPackage = DEFAULT_MANIFEST_PACKAGE) {
+    this.manifestPackage = manifestPackage
+  }
 
   async loadManifest(refresh = false): Promise<Manifest> {
     if (!refresh && this.manifest) return this.manifest
-    const pkg = await this.createPackage(BOILERPLATE_MANIFEST_PACKAGE, DistTag.Latest)
+    const pkg = await this.createPackage(this.manifestPackage, DistTag.Latest)
     this.manifest = (await import(pkg.mainScript)).getManifest() as Manifest
-
     return this.manifest
   }
 
-  async loadBoilerplate(name: string, versionOrDistTag: string) {
-    const pkg = await this.createPackage(name, versionOrDistTag)
-    return pkg
+  async loadBoilerplate(name: string, versionOrDistTag?: string) {
+    return this.createPackage(name, versionOrDistTag)
   }
 
-  private async createPackage(name: string, versionOrDistTag: string) {
+  private async createPackage(name: string, versionOrDistTag?: string) {
     return new NPMPackage({
       name,
       versionOrDistTag,

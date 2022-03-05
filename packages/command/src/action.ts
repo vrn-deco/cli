@@ -13,9 +13,8 @@ export type ActionArgs<A extends Arguments, O extends Options> = [...A, O, Comma
 
 export const runAction =
   (C: Pick<typeof Action, keyof typeof Action> & (new (...args: any[]) => Action<Arguments, Options>)) =>
-  async (...args: any[]) => {
-    await new C(...args).run()
-  }
+  async (...args: any[]) =>
+    new C(...args).run() as any // this is deliberate, to facilitate testing and circumvent the type checking of command.action
 
 export abstract class Action<A extends Arguments, O extends Options> {
   /**
@@ -43,7 +42,7 @@ export abstract class Action<A extends Arguments, O extends Options> {
     return Object.getPrototypeOf(this).constructor.name
   }
 
-  async run() {
+  async run(): Promise<this> {
     logger.verbose(`dispatch command to <${this.className}>`)
 
     logger.verbose(`<${this.className}> initialize...`)
@@ -54,6 +53,8 @@ export abstract class Action<A extends Arguments, O extends Options> {
 
     logger.verbose(`<${this.className}> clear...`)
     await this.clear()
+
+    return this
   }
 
   /**

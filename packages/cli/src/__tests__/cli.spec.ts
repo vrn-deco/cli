@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals'
 import { Command } from '@vrn-deco/cli-command'
 import commands from '../commands.js'
 import { initialEnv } from '../prepare.js'

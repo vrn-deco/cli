@@ -6,6 +6,8 @@
 import os from 'node:os'
 import { execSync } from 'node:child_process'
 
+export * as testShared from './test-shared.js'
+
 export * from './type-helper.js'
 export * from './enum.js'
 

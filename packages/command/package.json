@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@vrn-deco/cli-log": "workspace:1.0.1",
+    "@vrn-deco/cli-shared": "workspace:1.0.1",
     "commander": "^8.3.0",
     "inquirer": "^8.2.0"
   },

@@ -3,7 +3,7 @@ import os from 'node:os'
 import { jest } from '@jest/globals'
 
 import { logger } from '@vrn-deco/cli-log'
-import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
+import { NPMRegistry, PackageManager, testShared } from '@vrn-deco/cli-shared'
 import { BaseConfig } from '@vrn-deco/cli-config-helper'
 import { Command, runAction } from '@vrn-deco/cli-command'
 
@@ -36,13 +36,7 @@ jest.unstable_mockModule('@vrn-deco/cli-config-helper', () => ({
 const { ConfigAction } = await import('../action.js')
 
 beforeAll(() => {
-  process.env = {
-    ...process.env,
-    VRN_CLI_NAME: 'vrn-cli',
-    VRN_CLI_PACKAGE_NAME: '@vrn-deco/cli',
-    VRN_CLI_VERSION: '1.0.0',
-    VRN_CLI_HOME_PATH: path.resolve(os.homedir(), '.vrn-deco.test'),
-  }
+  testShared.injectTestEnv()
 })
 
 describe('@vrn-deco/cli-command-config -> action.ts', () => {

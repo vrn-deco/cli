@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals'
 import { logger } from '@vrn-deco/cli-log'
+import { testShared } from '@vrn-deco/cli-shared'
 
 // disabled logger
 logger.setLevel('silent')
@@ -25,6 +26,10 @@ const { checkUpdate } = await import('../index.js')
 
 const logSpy = jest.spyOn(console, 'log')
 
+beforeAll(() => {
+  testShared.injectTestEnv()
+})
+
 afterEach(() => {
   readConfig.mockReset()
   updateConfig.mockReset()
@@ -37,11 +42,6 @@ afterAll(() => {
 })
 
 describe('@vrn-deco/cli-check-update', () => {
-  beforeAll(() => {
-    process.env.VRN_CLI_PACKAGE_NAME = '@vrn-deco/cli'
-    process.env.VRN_CLI_VERSION = '1.0.0'
-  })
-
   test('When config.checkUpdateEnabled is disabled, not check upate', async () => {
     readConfig.mockReturnValueOnce({ checkUpdateEnabled: false })
     await expect(checkUpdate()).resolves.toBeUndefined()

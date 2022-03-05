@@ -4,9 +4,10 @@
  * @Description: boilerplate list command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
-import { ListAction } from './action.js'
+import { ListAction } from './list.action.js'
 
 const listCommand = new Command('list')
+export default listCommand
 
 /**
  * e.g.
@@ -23,5 +24,3 @@ listCommand
   .option('--yml, --yaml', 'print to yaml', false)
   .option('-o, --out-file <file>', 'output file')
   .action(runAction(ListAction))
-
-export default listCommand

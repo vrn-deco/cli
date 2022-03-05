@@ -1,5 +1,6 @@
-import { jest } from '@jest/globals'
 import { Command } from 'commander'
+import { jest } from '@jest/globals'
+import { testShared } from '@vrn-deco/cli-shared'
 import { Action, runAction } from '../action.js'
 
 type Name = string
@@ -32,10 +33,7 @@ describe('@vrn-deco/cli-command -> action.ts', () => {
   })
 
   test('Can run action', async () => {
-    process.env.VRN_CLI_NAME = 'vrn-cli'
-    process.env.VRN_CLI_PACKAGE_NAME = '@vrn-deco/cli'
-    process.env.VRN_CLI_VERSION = '1.0.0'
-    process.env.VRN_CLI_HOME_PATH = '/home/vrn'
+    testShared.injectTestEnv()
     await expect(runAction(HelloAction)('Hoyoe', { welcome: false }, new Command())).resolves.not.toThrow()
     expect(initFn).toBeCalled()
     expect(execFn).toBeCalledWith('Hoyoe', false)

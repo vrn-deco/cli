@@ -6,8 +6,6 @@ import { DistTag } from '../common.js'
 const execaMock = jest.fn().mockImplementation(async () => void 0)
 const cmdExistsMock = jest.fn().mockImplementation(() => true)
 
-const shared = await import('@vrn-deco/cli-shared')
-
 jest
   .unstable_mockModule('execa', () => ({
     execa: execaMock,

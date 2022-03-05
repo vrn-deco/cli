@@ -5,9 +5,10 @@
  */
 import path from 'node:path'
 import { isString } from '@vrn-deco/cli-shared'
+import { CACHE_DIR_NAME } from './common.js'
 
 export function getCacheDirectory(): string {
-  return path.resolve(process.env.VRN_CLI_HOME_PATH, 'boilerplate')
+  return path.resolve(process.env.VRN_CLI_HOME_PATH, CACHE_DIR_NAME)
 }
 
 export function isValidProjectName(name: string): boolean {

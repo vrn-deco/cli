@@ -10,8 +10,7 @@ import YAML from 'yaml'
 import { colors } from '@vrn-deco/cli-log'
 import { Action, ActionArgs } from '@vrn-deco/cli-command'
 import { Manifest } from '@vrn-deco/boilerplate-protocol'
-
-import { BoilerplateService } from '../services/boilerplate.service.js'
+import { BoilerplateProvider, PackageBoilerplateService } from '../services/boilerplate.service.js'
 
 type ListArguments = []
 type ListOptions = {
@@ -32,13 +31,14 @@ enum OutputType {
 }
 
 export class ListAction extends Action<ListArguments, ListOptions> {
-  private boilerplateService = BoilerplateService.getInstance()
+  private provider!: BoilerplateProvider
 
   private outputType = OutputType.Simple
   private manifest!: Manifest
   private outputFile: string | undefined
 
   async initialize(): Promise<void> {
+    this.provider = new PackageBoilerplateService()
     if (this.options.yaml) this.outputType = OutputType.Yaml
     else if (this.options.json) this.outputType = OutputType.Json
 
@@ -46,14 +46,14 @@ export class ListAction extends Action<ListArguments, ListOptions> {
       this.outputFile = path.resolve(process.cwd(), this.options.outFile)
     }
 
-    this.manifest = await this.boilerplateService.loadManifest()
+    this.manifest = await this.provider.loadManifest()
   }
 
   async execute(): Promise<void> {
     const handleMap = {
       [OutputType.Json]: this.getJSON,
       [OutputType.Yaml]: this.getYAML,
-      [OutputType.Simple]: this.getPure,
+      [OutputType.Simple]: this.getSimple,
     }
     const result = (handleMap[this.outputType] ?? handleMap[OutputType.Simple]).call(this)
     process.stdout.write(result + '\n')
@@ -77,7 +77,7 @@ export class ListAction extends Action<ListArguments, ListOptions> {
     return YAML.stringify(this.manifest)
   }
 
-  getPure(): string {
+  getSimple(): string {
     let str = ''
     this.manifest.forEach((lang) => {
       str += `- ${lang.name}\n`
