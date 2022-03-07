@@ -57,7 +57,7 @@ TODO
 
 ## 更新日志
 
-[CHANGELOG.md](./packages/cli/CHANGELOG.md)
+[CHANGELOG.md](./CHANGELOG.md)
 
 ## License
 

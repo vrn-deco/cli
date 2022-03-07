@@ -11,7 +11,7 @@
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 [![pnpm](https://img.shields.io/badge/maintained%20with-pnpm-f49033.svg)](https://pnpm.io/)
 
-[简体中文](./READM_zh.md)
+[简体中文](./README_zh.md)
 
 </div>
 
@@ -57,7 +57,7 @@ If you want to migrate to `v1.x` or keep the `v0.x` version, see [Migration Guid
 
 ## Changelogs
 
-[CHANGELOG.md](./packages/cli/CHANGELOG.md)
+[CHANGELOG.md](./CHANGELOG.md)
 
 ## License
 
