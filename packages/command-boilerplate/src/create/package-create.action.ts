@@ -3,8 +3,6 @@
  * @Date: 2022-02-28 21:49:05
  * @Description: create action for package mode
  */
-import path from 'node:path'
-
 import { Boilerplate, Lang, PresetRunner } from '@vrn-deco/boilerplate-protocol'
 import { logger } from '@vrn-deco/cli-log'
 import { prompt } from '@vrn-deco/cli-command'
@@ -27,7 +25,6 @@ export class PackageCreateAction extends CreateAction {
 
   override async initialize(): Promise<void> {
     await super.initialize()
-
     this.boiService = new PackageBoilerplateService(this.options.manifestPackage)
     this.boilerplate = await this.inquireBoilerplate()
     logger.verbose('boilerplate:')
@@ -35,12 +32,14 @@ export class PackageCreateAction extends CreateAction {
   }
 
   override async execute(): Promise<void> {
+    await super.execute()
     const pkg = await this.pullBoiPackage()
     await this.installBoilerplate(pkg)
+    logger.done(`Project created successfully, located at ${this.targetDirectory}\nHappy coding!`)
   }
 
   override async clear(): Promise<void> {
-    //
+    await super.clear()
   }
 
   async inquireBoilerplate(): Promise<SimplifiedBoilerpate> {
@@ -88,18 +87,16 @@ export class PackageCreateAction extends CreateAction {
   }
 
   async installBoilerplate(boiPackage: NPMPackage) {
-    const targetDir = path.join(this.baseDirectory, this.folderName)
     logger.info('Start creating a project with boilerplate package...')
 
     const { name, version, author } = this.baseInfo
 
     try {
       const runner: PresetRunner = (await import(boiPackage.mainScript)).default
-      await runner({ targetDir, boiPackageDir: boiPackage.packageDir, name, version, author })
-      logger.done(`Project created successfully, located at ${targetDir}\nHappy coding!`)
+      await runner({ targetDir: this.targetDirectory, boiPackageDir: boiPackage.packageDir, name, version, author })
     } catch (error) {
       logger.verbose(`PresetRunner Error: ${error.message}`)
-      throw new Error('boilerplate runner execution failed')
+      throw new Error('Boilerplate runner execution failed')
     }
   }
 }

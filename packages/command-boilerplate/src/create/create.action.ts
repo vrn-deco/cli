@@ -6,13 +6,13 @@
 import path from 'node:path'
 import os from 'node:os'
 import fs from 'fs-extra'
-import { Boilerplate } from '@vrn-deco/boilerplate-protocol'
+import { APIBoilerplate, Boilerplate } from '@vrn-deco/boilerplate-protocol'
 
 import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { colors, logger } from '@vrn-deco/cli-log'
 
 import { isValidProjectName, isValidVersion } from '../utils.js'
-import { ModeOptions } from '../common.js'
+import { ModeOptions, PostGit } from '../common.js'
 
 type FolderName = string
 type BaseDirectory = string
@@ -25,6 +25,8 @@ export type CreateOptions = ModeOptions & {
   author: string
   targetBoilerplate: string
   manifestPackage: string
+  apiUrl: string
+  postGit: PostGit
 }
 export type CreateActionArgs = ActionArgs<CreateArguments, CreateOptions>
 
@@ -46,6 +48,7 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
 
   folderName!: string
   baseDirectory!: string
+  targetDirectory!: string
   baseInfo!: ProjectBaseInfo
 
   /**
@@ -53,7 +56,7 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
    *
    * check and get all necessary parameters
    */
-  override async initialize(): Promise<void> {
+  override async initialize(requiredBaseInfo = true): Promise<void> {
     let [folderName, baseDirectory] = this.arguments
 
     this.folderName = folderName
@@ -64,10 +67,14 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
     }
 
     await this.verifyDirectory()
-    this.baseInfo = await this.inquireBaseInfo()
+    this.targetDirectory = path.join(this.baseDirectory, this.folderName)
 
-    logger.verbose('baseInfo:')
-    logger.verbose(this.baseInfo)
+    if (requiredBaseInfo) {
+      this.baseInfo = await this.inquireBaseInfo()
+
+      logger.verbose('baseInfo:')
+      logger.verbose(this.baseInfo)
+    }
   }
 
   override async execute(): Promise<void> {
@@ -125,7 +132,7 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
     return baseInfo
   }
 
-  getBoilerplateChoiceName(boilerplate: Boilerplate): string {
+  getBoilerplateChoiceName(boilerplate: Boilerplate | APIBoilerplate): string {
     let name = boilerplate.name
     if (boilerplate.desc) {
       name += ' ' + colors.gray(boilerplate.desc)

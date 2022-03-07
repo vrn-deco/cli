@@ -10,7 +10,7 @@ import YAML from 'yaml'
 import { colors } from '@vrn-deco/cli-log'
 import { Action, ActionArgs } from '@vrn-deco/cli-command'
 import { Manifest } from '@vrn-deco/boilerplate-protocol'
-import { BoilerplateProvider, PackageBoilerplateService } from '../services/boilerplate.service.js'
+import { IBoilerplateProvider, PackageBoilerplateService } from '../services/boilerplate.service.js'
 
 type ListArguments = []
 type ListOptions = {
@@ -32,7 +32,7 @@ enum OutputType {
 }
 
 export class ListAction extends Action<ListArguments, ListOptions> {
-  private provider!: BoilerplateProvider
+  private provider!: IBoilerplateProvider
 
   private outputType = OutputType.Simple
   private manifest!: Manifest
@@ -47,7 +47,7 @@ export class ListAction extends Action<ListArguments, ListOptions> {
       this.outputFile = path.resolve(process.cwd(), this.options.outFile)
     }
 
-    this.manifest = await this.provider.loadManifest()
+    this.manifest = (await this.provider.loadManifest()) as Manifest
   }
 
   async execute(): Promise<void> {
@@ -56,7 +56,7 @@ export class ListAction extends Action<ListArguments, ListOptions> {
       [OutputType.Yaml]: this.getYAML,
       [OutputType.Simple]: this.getSimple,
     }
-    const result = (handleMap[this.outputType] ?? handleMap[OutputType.Simple]).call(this)
+    const result = handleMap[this.outputType].call(this)
     process.stdout.write(result + '\n')
 
     if (this.outputFile) {

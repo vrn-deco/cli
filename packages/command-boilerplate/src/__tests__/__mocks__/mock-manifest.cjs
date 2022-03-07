@@ -40,3 +40,40 @@ exports.getManifest = () => [
     ],
   },
 ]
+
+exports.getAPIManifest = () => [
+  {
+    name: 'TypeScript',
+    boilerplate: [
+      {
+        name: 'Vue3 Varlet H5plus',
+        desc: '',
+        file: 'boilerplate-typescript-vue3-varlet-h5plus.tgz',
+        version: '0.0.4',
+        tags: ['app', 'vue3', 'varlet'],
+        sort: 100,
+      },
+    ],
+  },
+  {
+    name: 'JavaScript',
+    boilerplate: [
+      {
+        name: 'Vue2 VantUI',
+        desc: '',
+        file: 'boilerplate-javascript-vue2-vant.tgz',
+        version: '0.0.4',
+        tags: [],
+        sort: 31,
+      },
+      {
+        name: 'Vue2 VantUI H5Plus',
+        desc: '',
+        file: 'boilerplate-javascript-vue2-vant-h5plus.tgz',
+        version: '0.0.4',
+        tags: [],
+        sort: 32,
+      },
+    ],
+  },
+]

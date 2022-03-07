@@ -20,7 +20,9 @@
     "test:coverage": "esno scripts/test.ts --coverage",
     "lint": "eslint packages/*/src/**.ts",
     "format": "prettier --write --parser typescript \"packages/**/*.ts\"",
-    "commit": "git add . && cz"
+    "commit": "git add . && cz",
+    "ch:add": "esno scripts/changeset.ts --add",
+    "ch:version": "esno scripts/changeset.ts --version"
   },
   "config": {
     "commitizen": {

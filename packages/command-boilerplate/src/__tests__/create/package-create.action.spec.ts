@@ -38,6 +38,12 @@ jest.unstable_mockModule('../../services/boilerplate.service.js', () => ({
   PackageBoilerplateService,
 }))
 
+// mock runner
+const runner = jest.fn().mockImplementation(() => Promise.resolve())
+jest.unstable_mockModule(MOCK_BOI_PACKAGE_RUNNER_SCRIPT, () => ({
+  default: runner,
+}))
+
 // mock prompt
 const prompt = jest.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
 const cliCommandModule = await import('@vrn-deco/cli-command')
@@ -54,15 +60,17 @@ beforeAll(() => {
 beforeEach(() => {
   loadPackageManifest.mockClear()
   loadPackageBoilerplate.mockClear()
+  runner.mockClear()
 })
 afterAll(() => {
   loadPackageManifest.mockRestore()
   loadPackageBoilerplate.mockRestore()
+  runner.mockRestore()
 })
 
 // here we only test of PackageCreateAction, the parent CreateAction is the mock
 // the test case for CreateAction at . /create.action.spec.ts
-describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () => {
+describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.ts', () => {
   // non-interactive
   test('When the --yes options is passed, will check --target-boilerplate option, it is required', async () => {
     expect.assertions(1)
@@ -83,13 +91,44 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     // non-interactive, so not call loadManifest
     expect(loadPackageManifest).not.toBeCalled()
     expect(loadPackageBoilerplate).toBeCalled()
+    expect(runner).toBeCalled()
   })
 
   // interactive
   test('When user has selected the boilerplate by manifest, will exec creation', async () => {
-    prompt.mockReturnValueOnce(Promise.resolve({ boilerplate: '@vrn-deco/boilerplate-typescript-xxx' }))
+    prompt.mockReturnValueOnce(
+      Promise.resolve({ boilerplate: { package: '@vrn-deco/boilerplate-typescript-xxx', version: '1.0.0' } }),
+    )
     await runAction(PackageCreateAction)('my-project', undefined, {}, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(loadPackageBoilerplate).toBeCalled()
+    expect(runner).toBeCalled()
+  })
+
+  test('When manifest is a empty array, will throw a error', async () => {
+    expect.assertions(2)
+    try {
+      loadPackageManifest.mockReturnValueOnce(Promise.resolve([]))
+      await runAction(PackageCreateAction)('my-project', undefined, {}, new Command())
+    } catch (error) {
+      expect(loadPackageManifest).toBeCalled()
+      expect(error.message).toContain('boilerplate manifest is empty')
+    }
+  })
+
+  test('When runner exec failed, will throw a error', async () => {
+    expect.assertions(4)
+    try {
+      prompt.mockReturnValueOnce(
+        Promise.resolve({ boilerplate: { package: '@vrn-deco/boilerplate-typescript-xxx', version: '1.0.0' } }),
+      )
+      runner.mockRejectedValueOnce(new Error('Deliberate Mistakes'))
+      await runAction(PackageCreateAction)('my-project', undefined, {}, new Command())
+    } catch (error) {
+      expect(loadPackageManifest).toBeCalled()
+      expect(loadPackageBoilerplate).toBeCalled()
+      expect(runner).toBeCalled()
+      expect(error.message).toContain('Boilerplate runner execution failed')
+    }
   })
 })

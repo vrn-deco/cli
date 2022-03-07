@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli-config-helper",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "config maintenance",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
@@ -27,8 +27,8 @@
     "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-log": "workspace:1.0.2",
-    "@vrn-deco/cli-shared": "workspace:1.0.2",
+    "@vrn-deco/cli-log": "workspace:*",
+    "@vrn-deco/cli-shared": "workspace:*",
     "fs-extra": "^10.0.0"
   }
 }

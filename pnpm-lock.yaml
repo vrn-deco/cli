@@ -59,10 +59,10 @@ importers:
   packages/check-update:
     specifiers:
       '@types/semver': ^7.3.6
-      '@vrn-deco/cli-config-helper': workspace:1.0.2
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-npm-helper': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/cli-config-helper': workspace:*
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-npm-helper': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
       semver: ^7.3.5
     dependencies:
       '@vrn-deco/cli-config-helper': link:../config-helper
@@ -77,14 +77,14 @@ importers:
     specifiers:
       '@types/root-check': ^1.0.0
       '@types/semver': ^7.3.6
-      '@vrn-deco/cli-check-update': workspace:1.0.2
-      '@vrn-deco/cli-command': workspace:1.0.2
-      '@vrn-deco/cli-command-boilerplate': workspace:1.0.2
-      '@vrn-deco/cli-command-config': workspace:1.0.2
-      '@vrn-deco/cli-config-helper': workspace:1.0.2
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-npm-helper': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/cli-check-update': workspace:*
+      '@vrn-deco/cli-command': workspace:*
+      '@vrn-deco/cli-command-boilerplate': workspace:*
+      '@vrn-deco/cli-command-config': workspace:*
+      '@vrn-deco/cli-config-helper': workspace:*
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-npm-helper': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
       dotenv: ^10.0.0
       fs-extra: ^10.0.0
       import-local: ^3.0.2
@@ -111,8 +111,8 @@ importers:
   packages/command:
     specifiers:
       '@types/inquirer': ^8.1.3
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
       commander: ^8.3.0
       inquirer: ^8.2.0
     dependencies:
@@ -125,30 +125,36 @@ importers:
 
   packages/command-boilerplate:
     specifiers:
-      '@vrn-deco/boilerplate-protocol': ^1.1.0
-      '@vrn-deco/cli-command': workspace:1.0.2
-      '@vrn-deco/cli-config-helper': workspace:1.0.2
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-npm-helper': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/boilerplate-protocol': ^1.2.0
+      '@vrn-deco/cli-command': workspace:*
+      '@vrn-deco/cli-config-helper': workspace:*
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-npm-helper': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
+      compressing: ^1.5.1
+      execa: ^6.1.0
       fs-extra: ^10.0.0
+      node-fetch: ^3.2.0
       yaml: ^1.10.2
     dependencies:
-      '@vrn-deco/boilerplate-protocol': 1.1.0
+      '@vrn-deco/boilerplate-protocol': 1.2.0
       '@vrn-deco/cli-command': link:../command
       '@vrn-deco/cli-config-helper': link:../config-helper
       '@vrn-deco/cli-log': link:../log
       '@vrn-deco/cli-npm-helper': link:../npm-helper
       '@vrn-deco/cli-shared': link:../shared
+      compressing: 1.5.1
+      execa: 6.1.0
       fs-extra: 10.0.0
+      node-fetch: 3.2.0
       yaml: 1.10.2
 
   packages/command-config:
     specifiers:
-      '@vrn-deco/cli-command': workspace:1.0.2
-      '@vrn-deco/cli-config-helper': workspace:1.0.2
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/cli-command': workspace:*
+      '@vrn-deco/cli-config-helper': workspace:*
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
     dependencies:
       '@vrn-deco/cli-command': link:../command
       '@vrn-deco/cli-config-helper': link:../config-helper
@@ -157,8 +163,8 @@ importers:
 
   packages/config-helper:
     specifiers:
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
       fs-extra: ^10.0.0
     dependencies:
       '@vrn-deco/cli-log': link:../log
@@ -173,8 +179,8 @@ importers:
 
   packages/npm-helper:
     specifiers:
-      '@vrn-deco/cli-log': workspace:1.0.2
-      '@vrn-deco/cli-shared': workspace:1.0.2
+      '@vrn-deco/cli-log': workspace:*
+      '@vrn-deco/cli-shared': workspace:*
       execa: ^6.1.0
       fs-extra: ^10.0.0
       node-fetch: ^3.2.0
@@ -1702,8 +1708,8 @@ packages:
       eslint-visitor-keys: 3.2.0
     dev: true
 
-  /@vrn-deco/boilerplate-protocol/1.1.0:
-    resolution: {integrity: sha512-3vr3NsNa2CBoYX0zA7Kz3A37J/p+l6XeK3+V+uytBlTwSA9DoIHNiaJzLRE2tIrQfz6pyF9AbTGyGi5VfLQv1Q==}
+  /@vrn-deco/boilerplate-protocol/1.2.0:
+    resolution: {integrity: sha512-q6sVAzpnHRYVOB2KVLlCIyBn5cK7Tx7IqDznNGfdXdRL0EahRUD3PykJ66tO6WFs44XjZYqcTFM99Em7aPvucQ==}
     dependencies:
       ajv: 6.12.6
       fs-extra: 10.0.0
@@ -1981,6 +1987,13 @@ packages:
       is-windows: 1.0.2
     dev: true
 
+  /bl/1.2.3:
+    resolution: {integrity: sha512-pvcNpa0UU69UT341rO6AYy4FVAIkUHuZXRIWbq+zHnsVcRzDDjIAhGuuYoi0d//cwIwtt4pkpKycWEfjdV+vww==}
+    dependencies:
+      readable-stream: 2.3.7
+      safe-buffer: 5.2.1
+    dev: false
+
   /bl/4.1.0:
     resolution: {integrity: sha512-1W07cM9gS6DcLperZfFSj+bWLtaPGSOHWhPiGzXmvVJbRLdG82sH/Kn8EtW1VqWVA54AKf2h5k5BbnIbwF3h6w==}
     dependencies:
@@ -2055,6 +2068,25 @@ packages:
     dependencies:
       node-int64: 0.4.0
     dev: true
+
+  /buffer-alloc-unsafe/1.1.0:
+    resolution: {integrity: sha512-TEM2iMIEQdJ2yjPJoSIsldnleVaAk1oW3DBVUykyOLsEsFmEc9kn+SFFPz+gl54KQNxlDnAwCXosOS9Okx2xAg==}
+    dev: false
+
+  /buffer-alloc/1.2.0:
+    resolution: {integrity: sha512-CFsHQgjtW1UChdXgbyJGtnm+O/uLQeZdtbDo8mfUgYXCHSM1wgrVxXm6bSyrUuErEb+4sYVGCzASBRot7zyrow==}
+    dependencies:
+      buffer-alloc-unsafe: 1.1.0
+      buffer-fill: 1.0.0
+    dev: false
+
+  /buffer-crc32/0.2.13:
+    resolution: {integrity: sha1-DTM+PwDqxQqhRUq9MO+MKl2ackI=}
+    dev: false
+
+  /buffer-fill/1.0.0:
+    resolution: {integrity: sha1-+PeLdniYiO858gXNY39o5wISKyw=}
+    dev: false
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -2295,6 +2327,21 @@ packages:
       dot-prop: 5.3.0
     dev: true
 
+  /compressing/1.5.1:
+    resolution: {integrity: sha512-1AGBR4Vh0/rpPKSXHoV9cerLo0CUlAhZ/xsJqU3a9+2cbSaFjWT3fk2MIGkCnbpk//DGWrcWw03rhKFQrA9RQw==}
+    engines: {node: '>= 4.0.0'}
+    dependencies:
+      flushwritable: 1.0.0
+      get-ready: 1.0.0
+      iconv-lite: 0.5.2
+      mkdirp: 0.5.5
+      pump: 3.0.0
+      streamifier: 0.1.1
+      tar-stream: 1.6.2
+      yauzl: 2.10.0
+      yazl: 2.5.1
+    dev: false
+
   /concat-map/0.0.1:
     resolution: {integrity: sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=}
     dev: true
@@ -2338,6 +2385,10 @@ packages:
     dependencies:
       safe-buffer: 5.1.2
     dev: true
+
+  /core-util-is/1.0.3:
+    resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
+    dev: false
 
   /cosmiconfig-typescript-loader/1.0.3_a4505a02ed50ecaa6d295e0fea2266e5:
     resolution: {integrity: sha512-ARo21VjxdacJUcHxgVMEYNIoVPYiuKOEwWBIYej4M22+pEbe3LzKgmht2UPM+0u7/T/KnZf2r/5IzHv2Nwz+/w==}
@@ -2630,6 +2681,12 @@ packages:
 
   /emoji-regex/8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+
+  /end-of-stream/1.4.4:
+    resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
+    dependencies:
+      once: 1.4.0
+    dev: false
 
   /enquirer/2.3.6:
     resolution: {integrity: sha512-yjNnPr315/FjS4zIsUxYguYUPP2e1NK4d7E7ZOLiyYCcbFBiTMyID+2wvm2w6+pZ/odMA7cRkjhsPbltwBOrLg==}
@@ -3117,6 +3174,12 @@ packages:
       bser: 2.1.1
     dev: true
 
+  /fd-slicer/1.1.0:
+    resolution: {integrity: sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=}
+    dependencies:
+      pend: 1.2.0
+    dev: false
+
   /fetch-blob/3.1.4:
     resolution: {integrity: sha512-Eq5Xv5+VlSrYWEqKrusxY1C3Hm/hjeAsCGVG3ft7pZahlUAChpGZT/Ms1WmSLnEAisEXszjzu/s+ce6HZB2VHA==}
     engines: {node: ^12.20 || >= 14.13}
@@ -3212,6 +3275,10 @@ packages:
     resolution: {integrity: sha512-8/sOawo8tJ4QOBX8YlQBMxL8+RLZfxMQOif9o0KUKTNTjMYElWPE0r/m5VNFxTRd0NSw8qSy8dajrwX4RYI1Hw==}
     dev: true
 
+  /flushwritable/1.0.0:
+    resolution: {integrity: sha1-PjKNj95BKtR+c44751C00pAENJg=}
+    dev: false
+
   /form-data/3.0.1:
     resolution: {integrity: sha512-RHkBKtLWUVwd7SqRIvCZMEvAMoGUp0XU+seQiZejj0COz3RI3hWP4sCv3gZWWLjJTd7rGwcsF5eKZGii0r/hbg==}
     engines: {node: '>= 6'}
@@ -3226,6 +3293,10 @@ packages:
     engines: {node: '>=12.20.0'}
     dependencies:
       fetch-blob: 3.1.4
+    dev: false
+
+  /fs-constants/1.0.0:
+    resolution: {integrity: sha512-y6OAwoSIf7FyjMIv94u+b5rdheZEjzR63GTyZJm5qh4Bi+2YgwLCcI/fPFZkL5PSixOt6ZNKm+w+Hfp/Bciwow==}
     dev: false
 
   /fs-extra/10.0.0:
@@ -3303,6 +3374,10 @@ packages:
     resolution: {integrity: sha512-pjzuKtY64GYfWizNAJ0fr9VqttZkNiK2iS430LtIHzjBEr6bX8Am2zm4sW4Ro5wjWW5cAlRL1qAMTcXbjNAO2Q==}
     engines: {node: '>=8.0.0'}
     dev: true
+
+  /get-ready/1.0.0:
+    resolution: {integrity: sha1-+RgX8emt7P6hOlYq38jeiDqzR4I=}
+    dev: false
 
   /get-stream/3.0.0:
     resolution: {integrity: sha1-jpQ9E1jcN1VQVOy+LtsFqhdO3hQ=}
@@ -3513,6 +3588,13 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
+
+  /iconv-lite/0.5.2:
+    resolution: {integrity: sha512-kERHXvpSaB4aU3eANwidg79K8FlrN77m8G9V+0vOR3HYaRifrlwMEpT7ZBJqLSEIHnEgJTHcWK82wwLwwKwtag==}
+    engines: {node: '>=0.10.0'}
+    dependencies:
+      safer-buffer: 2.1.2
+    dev: false
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
@@ -3743,6 +3825,10 @@ packages:
     resolution: {integrity: sha512-eXK1UInq2bPmjyX6e3VHIzMLobc4J94i4AWn+Hpq3OU5KkrRC96OAcR3PRJ/pGu6m8TRnBHP9dkXQVsT/COVIA==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /isarray/1.0.0:
+    resolution: {integrity: sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=}
+    dev: false
 
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
@@ -4646,12 +4732,18 @@ packages:
 
   /minimist/1.2.5:
     resolution: {integrity: sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==}
-    dev: true
 
   /mixme/0.5.4:
     resolution: {integrity: sha512-3KYa4m4Vlqx98GPdOHghxSdNtTvcP8E0kkaJ5Dlh+h2DRzF7zpuVVcA8B0QpKd11YJeP9QQ7ASkKzOeu195Wzw==}
     engines: {node: '>= 8.0.0'}
     dev: true
+
+  /mkdirp/0.5.5:
+    resolution: {integrity: sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==}
+    hasBin: true
+    dependencies:
+      minimist: 1.2.5
+    dev: false
 
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -4743,7 +4835,6 @@ packages:
     resolution: {integrity: sha1-WDsap3WWHUsROsF9nFC6753Xa9E=}
     dependencies:
       wrappy: 1.0.2
-    dev: true
 
   /onetime/2.0.1:
     resolution: {integrity: sha1-BnQoIw/WdEOyeUsiu6UotoZ5YtQ=}
@@ -4921,6 +5012,10 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
+  /pend/1.2.0:
+    resolution: {integrity: sha1-elfrVQpng/kRUzH89GY9XI4AelA=}
+    dev: false
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: true
@@ -4993,6 +5088,10 @@ packages:
       react-is: 17.0.2
     dev: true
 
+  /process-nextick-args/2.0.1:
+    resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
+    dev: false
+
   /prompts/2.4.2:
     resolution: {integrity: sha512-NxNv/kLguCA7p3jE8oL2aEBsrJWgAakBpgmgK6lpPWV+WuOmY6r2/zbAVnP+T8bQlA0nzHXSJSJW0Hq7ylaD2Q==}
     engines: {node: '>= 6'}
@@ -5008,6 +5107,13 @@ packages:
   /psl/1.8.0:
     resolution: {integrity: sha512-RIdOzyoavK+hA18OGGWDqUTsCLhtA7IcZ/6NCs4fFJaHBDab+pDDmDIByWFRQJq2Cd7r1OoQxBGKOaztq+hjIQ==}
     dev: true
+
+  /pump/3.0.0:
+    resolution: {integrity: sha512-LwZy+p3SFs1Pytd/jYct4wpv49HiYCqd9Rlc5ZVdk0V+8Yzv6jR5Blk3TRmPL1ft69TxP0IMZGJ+WPFU2BFhww==}
+    dependencies:
+      end-of-stream: 1.4.4
+      once: 1.4.0
+    dev: false
 
   /punycode/2.1.1:
     resolution: {integrity: sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==}
@@ -5059,6 +5165,18 @@ packages:
       pify: 4.0.1
       strip-bom: 3.0.0
     dev: true
+
+  /readable-stream/2.3.7:
+    resolution: {integrity: sha512-Ebho8K4jIbHAxnuxi7o42OrZgF/ZTNcsZj6nRKyUmkhLFq8CHItp/fy6hQZuZmP/n3yZ9VBUbp4zz/mX8hmYPw==}
+    dependencies:
+      core-util-is: 1.0.3
+      inherits: 2.0.4
+      isarray: 1.0.0
+      process-nextick-args: 2.0.1
+      safe-buffer: 5.1.2
+      string_decoder: 1.1.1
+      util-deprecate: 1.0.2
+    dev: false
 
   /readable-stream/3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==}
@@ -5213,7 +5331,6 @@ packages:
 
   /safe-buffer/5.1.2:
     resolution: {integrity: sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==}
-    dev: true
 
   /safe-buffer/5.2.1:
     resolution: {integrity: sha512-rp3So07KcdmmKbGvgaNxQSJr7bGVSVk5S9Eq1F+ppbRo70+YeaDxkw5Dd8NPN+GD6bjnYm2VuPuCXmpuYvmCXQ==}
@@ -5394,6 +5511,11 @@ packages:
       mixme: 0.5.4
     dev: true
 
+  /streamifier/0.1.1:
+    resolution: {integrity: sha1-l+mNj6TRBdYqJpHR3AfoINuN/E8=}
+    engines: {node: '>=0.10'}
+    dev: false
+
   /string-argv/0.3.1:
     resolution: {integrity: sha512-a1uQGz7IyVy9YwhqjZIZu1c8JO8dNIe20xBmSS6qu9kv++k3JGzCVmprbNN5Kn+BgzD5E7YYwg1CcjuJMRNsvg==}
     engines: {node: '>=0.6.19'}
@@ -5422,6 +5544,12 @@ packages:
       emoji-regex: 8.0.0
       is-fullwidth-code-point: 3.0.0
       strip-ansi: 6.0.1
+
+  /string_decoder/1.1.1:
+    resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
+    dependencies:
+      safe-buffer: 5.1.2
+    dev: false
 
   /string_decoder/1.3.0:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
@@ -5544,6 +5672,19 @@ packages:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: true
 
+  /tar-stream/1.6.2:
+    resolution: {integrity: sha512-rzS0heiNf8Xn7/mpdSVVSMAWAoy9bfb1WOTYC78Z0UQKeKa/CWS8FOq0lKGNa8DWKAn9gxjCvMLYc5PGXYlK2A==}
+    engines: {node: '>= 0.8.0'}
+    dependencies:
+      bl: 1.2.3
+      buffer-alloc: 1.2.0
+      end-of-stream: 1.4.4
+      fs-constants: 1.0.0
+      readable-stream: 2.3.7
+      to-buffer: 1.1.1
+      xtend: 4.0.2
+    dev: false
+
   /term-size/1.2.0:
     resolution: {integrity: sha1-RYuDiH8oj8Vtb/+/rSYuJmOO+mk=}
     engines: {node: '>=4'}
@@ -5604,6 +5745,10 @@ packages:
   /tmpl/1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
     dev: true
+
+  /to-buffer/1.1.1:
+    resolution: {integrity: sha512-lx9B5iv7msuFYE3dytT+KE5tap+rNYw+K4jVkb9R/asAb+pbBSM17jtunHplhBe6RRJdZx3Pn2Jph24O32mOVg==}
+    dev: false
 
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha1-3F5pjL0HkmW8c+A3doGk5Og/YW4=}
@@ -5917,7 +6062,6 @@ packages:
 
   /wrappy/1.0.2:
     resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}
-    dev: true
 
   /write-file-atomic/3.0.3:
     resolution: {integrity: sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q==}
@@ -5948,6 +6092,11 @@ packages:
   /xmlchars/2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
     dev: true
+
+  /xtend/4.0.2:
+    resolution: {integrity: sha512-LKYU1iAXJXUgAXn9URjiu+MWhyUXHsvfp7mcuYm9dSUKK0/CjtrUwFAxD82/mCWbtLsGjFIad0wIsod4zrTAEQ==}
+    engines: {node: '>=0.4'}
+    dev: false
 
   /y18n/4.0.3:
     resolution: {integrity: sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ==}
@@ -6011,6 +6160,19 @@ packages:
       y18n: 5.0.8
       yargs-parser: 20.2.9
     dev: true
+
+  /yauzl/2.10.0:
+    resolution: {integrity: sha1-x+sXyT4RLLEIb6bY5R+wZnt5pfk=}
+    dependencies:
+      buffer-crc32: 0.2.13
+      fd-slicer: 1.1.0
+    dev: false
+
+  /yazl/2.5.1:
+    resolution: {integrity: sha512-phENi2PLiHnHb6QBVot+dJnaAZ0xosj7p3fWl+znIjBDlnMI2PsZCJZ306BPTFOaHf5qdDEI8x5qFrSOBN5vrw==}
+    dependencies:
+      buffer-crc32: 0.2.13
+    dev: false
 
   /yn/3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}

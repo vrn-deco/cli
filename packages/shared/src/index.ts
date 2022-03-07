@@ -11,7 +11,9 @@ export * as testShared from './test-shared.js'
 export * from './type-helper.js'
 export * from './enum.js'
 
-export const noop = (): void => void 0
+export const noop = function () {
+  //
+}
 
 /**
  * check if command is exists

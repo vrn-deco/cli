@@ -7,7 +7,7 @@ function unitTest() {
     execaSync('jest', process.argv.slice(2), {
       stdio: 'inherit',
       cwd: path.resolve(__dirname, '../'),
-      env: { ...process.env, NODE_OPTIONS: '--experimental-vm-modules' },
+      env: { ...process.env, NODE_OPTIONS: '--experimental-vm-modules', NODE_NO_WARNINGS: '1' },
     })
     logger.done('Passed test!')
   } catch (error) {

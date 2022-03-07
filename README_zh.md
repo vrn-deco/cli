@@ -45,7 +45,7 @@ vrn create my-app
 npx @vrn-deco/cli create my-app
 ```
 
-## 详细说明
+## 进阶指南
 
 TODO
 

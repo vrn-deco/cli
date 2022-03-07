@@ -3,19 +3,24 @@
  * @Date: 2021-07-27 23:48:59
  * @Description:
  */
-import { Manifest } from '@vrn-deco/boilerplate-protocol'
+import path from 'node:path'
+import fetch from 'node-fetch'
+import { pipeline } from 'node:stream/promises'
+import fs from 'fs-extra'
+
+import { Manifest, APIManifest } from '@vrn-deco/boilerplate-protocol'
 import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { readConfig } from '@vrn-deco/cli-config-helper'
+import { logger } from '@vrn-deco/cli-log'
 
 import { getCacheDirectory } from '../utils.js'
-import { DEFAULT_MANIFEST_PACKAGE } from '../common.js'
+import { DEFAULT_API_BASE_URL, DEFAULT_MANIFEST_PACKAGE } from '../common.js'
 
-export interface BoilerplateProvider {
-  loadManifest(refresh?: boolean): Promise<Manifest>
-  loadBoilerplate(name: string): Promise<unknown>
+export interface IBoilerplateProvider {
+  loadManifest(refresh?: boolean): Promise<Manifest | APIManifest>
 }
 
-export class PackageBoilerplateService implements BoilerplateProvider {
+export class PackageBoilerplateService implements IBoilerplateProvider {
   private config = readConfig()
   private manifestPackage: string
   private manifest: Manifest | null = null
@@ -31,8 +36,8 @@ export class PackageBoilerplateService implements BoilerplateProvider {
     return this.manifest
   }
 
-  async loadBoilerplate(name: string, versionOrDistTag?: string) {
-    return this.createPackage(name, versionOrDistTag)
+  async loadBoilerplate(packageName: string, versionOrDistTag?: string) {
+    return this.createPackage(packageName, versionOrDistTag)
   }
 
   private async createPackage(name: string, versionOrDistTag?: string) {
@@ -43,5 +48,63 @@ export class PackageBoilerplateService implements BoilerplateProvider {
       registry: this.config.npmRegistry,
       packageManager: this.config.packageManager,
     }).load()
+  }
+}
+
+export class HTTPBoilerplateService implements IBoilerplateProvider {
+  private apiUrl: string
+  private manifest: APIManifest | null = null
+
+  constructor(apiUrl = DEFAULT_API_BASE_URL) {
+    this.apiUrl = apiUrl
+  }
+
+  async loadManifest(refresh?: boolean): Promise<APIManifest> {
+    if (!refresh && this.manifest) return this.manifest
+    try {
+      logger.startLoading('fetching boilerplate manifest...')
+      this.manifest = await this.fetchManifest()
+      return this.manifest
+    } catch (error) {
+      logger.verbose(error)
+      throw new Error(`Failed to fetch boilerplate manifest: ${this.apiUrl}/manifest.json`)
+    } finally {
+      logger.stopLoading()
+    }
+  }
+
+  async downloadBoilerplate(file: string, dir: string): Promise<string> {
+    const savename = path.basename(file)
+    try {
+      logger.startLoading(`downloading boilerplate ${savename}...`)
+      const stream = await this.fetchBoilerplate(file)
+      if (!stream) throw new Error('Failed to fetch boilerplate stream')
+      // write stream
+      await pipeline(stream, fs.createWriteStream(path.join(dir, savename)))
+      return savename
+    } catch (error) {
+      logger.verbose(error)
+      throw new Error(`Failed to download boilerplate: ${file}`)
+    } finally {
+      logger.stopLoading()
+    }
+  }
+
+  private async fetchManifest(): Promise<APIManifest> {
+    const response = await fetch(`${this.apiUrl}/manifest.json`)
+    const data = (await response.json()) as APIManifest
+    return data
+  }
+
+  private async fetchBoilerplate(file: string): Promise<NodeJS.ReadableStream | null> {
+    const url = /^https?:\/\//.test(file) ? file : `${this.apiUrl}/${file}`
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/octet-stream' },
+    })
+    if (!response.ok) {
+      throw new Error(`unexpected response ${response.statusText}`)
+    }
+    return response.body
   }
 }

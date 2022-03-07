@@ -13,6 +13,7 @@ export class CreateActionMock extends Action {
 
   folderName
   baseDirectory
+  targetDirectory
   baseInfo
 
   async initialize() {
@@ -20,6 +21,7 @@ export class CreateActionMock extends Action {
 
     this.folderName = folderName
     this.baseDirectory = path.resolve(process.cwd(), baseDirectory ?? this.DEFAULT_BASE_DIRECTORY)
+    this.targetDirectory = path.resolve(this.baseDirectory, this.folderName)
 
     this.baseInfo = {
       name: this.options.name ?? 'my-project',

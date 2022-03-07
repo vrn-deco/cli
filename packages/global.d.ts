@@ -11,7 +11,7 @@ type VRNEnv = {
   /**
    * cli global debug mode swtich
    */
-  VRN_CLI_DEBUG_ENABLED: SwitchStatus
+  VRN_CLI_DEBUG_ENABLED: 'on' | 'off'
 
   /**
    * cli display name

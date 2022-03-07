@@ -1,14 +1,91 @@
 # @vrn-deco/cli
 
-## 1.0.2
+## 1.1.0
 
-### Patch Changes
+Two other creation modes from the [1.x Features](https://github.com/vrn-deco/cli/wiki/Features) concept are implemented
+
+#### Features
+
+- Implements the `http` creation mode
+
+  - Support interactive and non-interactive creation
+  - Support specify the `apiURL`
+
+- Implements the `git` creation mode
+  - Support `HTTPS` and `SSH`
+  - Support handle original records after `git clone`
+
+The `http` mode is similar to the `v0.x`, fetching the `manifest` data from a `manifest.json` interface, which contains all the optional `boilerplate` compressed files, selecting one of the `boilerplates` interactively based on the command line prompts, and then downloading and decompressing it
+
+##### HTTP Mode creation
+
+Interactive creation:
+
+```sh
+# You need to pass `--mode=http` to enable it, as 'package' mode is default
+vrn boi create myapp --mode=http
+# You can pass `--api-url` to specify the baseURL, default https://vrndeco.cn/boilerplate
+vrn boi create myapp --mode=http --api-url=https://yoursite.com/boilerplate
+```
+
+Non-interactive creation:
+
+```sh
+# As with the `package` mode, you need to pass `--yes`, `--name`, `--version`, `--author`, `--target`
+# here `--target` is packed file name, not the package name
+# this means that it will download from the default `--api-url`
+# https://vrndeco.cn/boilerplate/boilerplate-typescript-vue3-varlet.tgz
+vrn boi create myapp --mode=http --yes \
+  --name=myapp --version=1.0.0 --author=cphayim \
+  --target boilerplate-typescript-vue3-varlet.tgz
+
+# You can pass the full url directly to `—target`
+vrn boi create myapp --mode=http --yes \
+  --name=myapp --version=1.0.0 --author=cphayim \
+  --target https://yoursite.com/boilerplate/boilerplate-typescript-vue3-varlet.tgz
+
+# Equivalent to
+vrn boi create myapp --mode=http --yes \
+  --name=myapp --version=1.0.0 --author=cphayim \
+  --api-url= https://yoursite.com/boilerplate \
+  --target boilerplate-typescript-vue3-varlet.tgz
+```
+
+> The `http` mode exists to complement specific scenarios, we still recommend that you use the `package` mode.
+
+##### Git Mode creation
+
+The `git` mode is created by cloning the specified repository
+
+```sh
+# You need to pass `--mode=git` to enable it, as 'package' mode is default
+# `--target` is repository url, support `HTTPS` and `SSH`
+vrn boi create --mode=git --target=https://github.com/vrn-deco/xxx.git
+vrn boi create --mode=git --target=git@github.com:vrn-deco/xxx.git
+```
+
+You can pass `—post-git` handle original records after `git clone`
+
+```sh
+# keep origin record
+vrn boi create --mode=git --post-git=retain --target=git@github.com:vrn-deco/xxx.git
+# rm -rf .git
+vrn boi create --mode=git --post-git=remove --target=git@github.com:vrn-deco/xxx.git
+# rm -rf .git && git init && git add . && git commit -m "chore: init repository"
+vrn boi create --mode=git --post-git=rebuild --target=git@github.com:vrn-deco/xxx.git
+```
+
+## 1.0.2
 
 The `boi create` and `boi list` commands now support specifying manifest-package
 
+#### Features:
+
+- `boi create` & `boi list` support specifying `--manifest-package`
+
 ```sh
 # Interactive creation, pulling the manifest from `@your-scope/your-manifest-package`
-vrn boi create ooo --manifest-package @your-scope/your-manifest-package
+vrn boi create myapp --manifest-package @your-scope/your-manifest-package
 
 # Non-nteractive creation
 # can specify a boilerplate that is not in the manifest as the target
@@ -18,44 +95,24 @@ vrn boi create myapp --yes \
     --target @your-scope/boilerplate-xxx
 
 # Will list the available boilerplate in `@your-scope/your-manifest-package`
-vrn boi list --manifest-package @your-scope/your-manifest-package
+vrn boi ls --manifest-package @your-scope/your-manifest-package
 ```
 
-#### Updated dependencies:
-
-- @vrn-deco/cli-check-update@1.0.2
-- @vrn-deco/cli-command@1.0.2
-- @vrn-deco/cli-command-boilerplate@1.0.2
-- @vrn-deco/cli-command-config@1.0.2
-- @vrn-deco/cli-config-helper@1.0.2
-- @vrn-deco/cli-log@1.0.2
-- @vrn-deco/cli-npm-helper@1.0.2
-- @vrn-deco/cli-shared@1.0.2
-
 ## 1.0.1
-
-### Patch Changes
 
 Embrace the `Pure ESM`, need Node.js `v14.13.1` above
 
 #### Refactor:
 
-- Migrate all modules from cjs to esm
+- Migrate all modules from CJS to ESM
 
-#### Updated dependencies::
+- Change the test case to ESM
 
-- @vrn-deco/cli-check-update@1.0.1
-- @vrn-deco/cli-command@1.0.1
-- @vrn-deco/cli-command-boilerplate@1.0.1
-- @vrn-deco/cli-command-config@1.0.1
-- @vrn-deco/cli-config-helper@1.0.1
-- @vrn-deco/cli-log@1.0.1
-- @vrn-deco/cli-npm-helper@1.0.1
-- @vrn-deco/cli-shared@1.0.1
+#### Bug Fixes:
+
+- Possible command parsing errors when passing `debug`
 
 ## 1.0.0
-
-### Major Changes
 
 Completely refactored with new architectural designs and specifications
 
@@ -65,14 +122,18 @@ Completely refactored with new architectural designs and specifications
 - Support for multiple Package manager: npm, yarn, pnpm
 - `boilerplate create` implements the `package` mode, creates projects by fetching `boilerplate-package` from `manifest-package`
 
-`boilerplate create`:
+##### Package Mode creation
+
+Interactive creation:
 
 ```sh
-# Interactive creation
 vrn boi create myapp
 vrn boi create myapp ./packages
+```
 
-# Non-interactive creation, suitable for CI and automation tasks
+Non-interactive creation, suitable for CI and automation tasks:
+
+```sh
 vrn boi create myapp --yes \
    --name=myapp --version=1.0.0 --author=cphayim \
    --target @vrn-deco/boilerplate-javascript-vue
@@ -82,60 +143,42 @@ vrn boi create myapp ./packages --yes \
    --target @vrn-deco/boilerplate-javascript-vue
 ```
 
-`boilerplate list`:
+##### Boilerplate list
+
+list available boilerplate, can specify format and output file
 
 ```sh
-# list available boilerplate
-vrn boilerplate list
-vrn boilerplate list --json
-vrn boilerplate list --json --out-file ./boilerplate.json
-vrn boilerplate list --yaml
-vrn boilerplate list --yaml --out-file ./boilerplate.yaml
+vrn boi ls
+vrn boi ls --json
+vrn boi ls --json --out-file ./boilerplate.json
+vrn boi ls --yaml
+vrn boi ls --yaml --out-file ./boilerplate.yaml
 ```
 
-`config`:
+##### Global config
+
+Interactively edit configuration items, you can modify `npmRegistry`, `packageManager`, `checkUpdateEnabled`
 
 ```sh
-# Interactively edit configuration items
-# you can modify `npmRegistry`, `packageManager`, `checkUpdateEnabled`
 vrn config
 ```
 
-#### BREAKING CHANGE:
+### BREAKING CHANGE:
 
 Boilerplate related services are reimplemented using the `@vrn-deco/boilerplate-protocol` specification. If you are using `v0.x` and use a custom network interface to distribute boilerplate, please refer to the migration guide
 
-### Patch Changes
-
-#### Updated dependencies::
-
-- @vrn-deco/cli-check-update@1.0.0
-- @vrn-deco/cli-command@1.0.0
-- @vrn-deco/cli-command-boilerplate@1.0.0
-- @vrn-deco/cli-command-config@1.0.0
-- @vrn-deco/cli-config-helper@1.0.0
-- @vrn-deco/cli-log@1.0.0
-- @vrn-deco/cli-npm-helper@1.0.0
-- @vrn-deco/cli-shared@1.0.0
-
 ## 0.3.4
-
-### Patch Changes
 
 Automatic check for updates turned off
 
 ## 0.3.0
 
-### Minor Changes
-
-#### Fetures:
+#### Features:
 
 - Replacing the `tar` command with the built-in decompressor
 - Adapt to new `vrn-boilerplate` rules
 
 ## 0.2.12
-
-### Patch Changes
 
 #### Bug Fixes:
 
@@ -144,8 +187,6 @@ Automatic check for updates turned off
 
 ## 0.2.10
 
-### Patch Changes
-
 #### Bug Fixes:
 
 - Rebuild the missing config file
@@ -153,18 +194,19 @@ Automatic check for updates turned off
 
 ## 0.2.4
 
-### Patch Changes
-
 #### Bug Fixes:
 
 - User directory write permission problem
 
 ## 0.2.0
 
-### Minor Changes
-
-#### Fetures:
+#### Features:
 
 - Support for custom `registry`
 - Now you can distribute `boilerplate` using your own web interface
 - Automatic new version check and prompt
+
+```sh
+vrn config set registry https://boilerplate.vrndeco.cn
+vrn create app
+```

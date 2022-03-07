@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli-npm-helper",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "vrn npm helper",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
@@ -27,8 +27,8 @@
     "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/cli-log": "workspace:1.0.2",
-    "@vrn-deco/cli-shared": "workspace:1.0.2",
+    "@vrn-deco/cli-log": "workspace:*",
+    "@vrn-deco/cli-shared": "workspace:*",
     "execa": "^6.1.0",
     "fs-extra": "^10.0.0",
     "node-fetch": "^3.2.0"

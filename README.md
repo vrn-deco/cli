@@ -45,7 +45,7 @@ Of course, it is possible to use `npx` to execute commands directly without inst
 npx @vrn-deco/cli create my-app
 ```
 
-## Essentials
+## Advanced Guide
 
 TODO
 

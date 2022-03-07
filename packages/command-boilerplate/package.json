@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli-command-boilerplate",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "vrn boilerplate command",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
@@ -27,13 +27,16 @@
     "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@vrn-deco/boilerplate-protocol": "^1.1.0",
-    "@vrn-deco/cli-command": "workspace:1.0.2",
-    "@vrn-deco/cli-config-helper": "workspace:1.0.2",
-    "@vrn-deco/cli-log": "workspace:1.0.2",
-    "@vrn-deco/cli-npm-helper": "workspace:1.0.2",
-    "@vrn-deco/cli-shared": "workspace:1.0.2",
+    "@vrn-deco/boilerplate-protocol": "^1.2.0",
+    "@vrn-deco/cli-command": "workspace:*",
+    "@vrn-deco/cli-config-helper": "workspace:*",
+    "@vrn-deco/cli-log": "workspace:*",
+    "@vrn-deco/cli-npm-helper": "workspace:*",
+    "@vrn-deco/cli-shared": "workspace:*",
+    "compressing": "^1.5.1",
+    "execa": "^6.1.0",
     "fs-extra": "^10.0.0",
+    "node-fetch": "^3.2.0",
     "yaml": "^1.10.2"
   }
 }
