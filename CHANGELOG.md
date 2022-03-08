@@ -2,9 +2,9 @@
 
 ## 1.1.1
 
-### Fixes:
+### Bug Fixes:
 
-- Dynamic import ESM error in Windows terminal [#5]
+- Dynamic import ESM error in Windows terminal ([#5](https://github.com/vrn-deco/cli/issues/5))
 
 ## 1.1.0
 
