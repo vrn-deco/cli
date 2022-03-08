@@ -1,7 +1,12 @@
+import path from 'node:path'
 import os from 'node:os'
+import { fileURLToPath } from 'node:url'
 import { jest } from '@jest/globals'
 
-import { isFunction, noop, cmdExists } from '../index.js'
+import { isFunction, noop, cmdExists, dynamicImport } from '../index.js'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 describe('@vrn-deco/cli-shared -> index.ts', () => {
   it('noop is a function', () => {
@@ -18,5 +23,11 @@ describe('@vrn-deco/cli-shared -> index.ts', () => {
     const spy = jest.spyOn(os, 'platform').mockImplementation(() => 'win32')
     expect(cmdExists('nnnnpm')).toBe(false)
     spy.mockRestore()
+  })
+
+  it('can dynamic import a esm file', async () => {
+    const file = path.join(__dirname, 'test-import.js')
+    const { test } = await dynamicImport(file)
+    expect(test).toBeInstanceOf(Function)
   })
 })

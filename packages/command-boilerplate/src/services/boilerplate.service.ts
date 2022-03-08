@@ -12,6 +12,7 @@ import { Manifest, APIManifest } from '@vrn-deco/boilerplate-protocol'
 import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { readConfig } from '@vrn-deco/cli-config-helper'
 import { logger } from '@vrn-deco/cli-log'
+import { dynamicImport } from '@vrn-deco/cli-shared'
 
 import { getCacheDirectory } from '../utils.js'
 import { DEFAULT_API_BASE_URL, DEFAULT_MANIFEST_PACKAGE } from '../common.js'
@@ -32,7 +33,7 @@ export class PackageBoilerplateService implements IBoilerplateProvider {
   async loadManifest(refresh = false): Promise<Manifest> {
     if (!refresh && this.manifest) return this.manifest
     const pkg = await this.createPackage(this.manifestPackage, DistTag.Latest)
-    this.manifest = (await import(pkg.mainScript)).getManifest() as Manifest
+    this.manifest = (await dynamicImport(pkg.mainScript)).getManifest() as Manifest
     return this.manifest
   }
 

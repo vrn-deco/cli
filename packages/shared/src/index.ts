@@ -5,6 +5,7 @@
  */
 import os from 'node:os'
 import { execSync } from 'node:child_process'
+import { pathToFileURL } from 'node:url'
 
 export * as testShared from './test-shared.js'
 
@@ -30,4 +31,12 @@ export function cmdExists(cmd: string) {
   } catch {
     return false
   }
+}
+
+/**
+ * ESM dynamic import compatible with Windows
+ * Only file and data URLs are supported by the default ESM loader. On Windows, absolute paths must be valid file:// URLs.
+ */
+export async function dynamicImport(path: string) {
+  return import(pathToFileURL(path).href)
 }

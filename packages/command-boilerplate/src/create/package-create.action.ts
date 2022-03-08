@@ -7,6 +7,7 @@ import { Boilerplate, Lang, PresetRunner } from '@vrn-deco/boilerplate-protocol'
 import { logger } from '@vrn-deco/cli-log'
 import { prompt } from '@vrn-deco/cli-command'
 import { NPMPackage } from '@vrn-deco/cli-npm-helper'
+import { dynamicImport } from '@vrn-deco/cli-shared'
 
 import { CreateAction } from './create.action.js'
 import { PackageBoilerplateService } from '../services/boilerplate.service.js'
@@ -92,7 +93,7 @@ export class PackageCreateAction extends CreateAction {
     const { name, version, author } = this.baseInfo
 
     try {
-      const runner: PresetRunner = (await import(boiPackage.mainScript)).default
+      const runner: PresetRunner = (await dynamicImport(boiPackage.mainScript)).default
       await runner({ targetDir: this.targetDirectory, boiPackageDir: boiPackage.packageDir, name, version, author })
     } catch (error) {
       logger.verbose(`PresetRunner Error: ${error.message}`)
