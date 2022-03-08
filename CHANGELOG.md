@@ -1,10 +1,16 @@
 # @vrn-deco/cli
 
+## 1.1.1
+
+### Fixes:
+
+- Dynamic import ESM error in Windows terminal [#5]
+
 ## 1.1.0
 
 Two other creation modes from the [1.x Features](https://github.com/vrn-deco/cli/wiki/Features) concept are implemented
 
-#### Features
+### Features:
 
 - Implements the `http` creation mode
 
@@ -79,7 +85,7 @@ vrn boi create --mode=git --post-git=rebuild --target=git@github.com:vrn-deco/xx
 
 The `boi create` and `boi list` commands now support specifying manifest-package
 
-#### Features:
+### Features:
 
 - `boi create` & `boi list` support specifying `--manifest-package`
 
@@ -102,13 +108,13 @@ vrn boi ls --manifest-package @your-scope/your-manifest-package
 
 Embrace the `Pure ESM`, need Node.js `v14.13.1` above
 
-#### Refactor:
+### Refactor:
 
 - Migrate all modules from CJS to ESM
 
 - Change the test case to ESM
 
-#### Bug Fixes:
+### Bug Fixes:
 
 - Possible command parsing errors when passing `debug`
 
@@ -116,7 +122,7 @@ Embrace the `Pure ESM`, need Node.js `v14.13.1` above
 
 Completely refactored with new architectural designs and specifications
 
-#### Features:
+### Features:
 
 - Dynamic dependency package management
 - Support for multiple Package manager: npm, yarn, pnpm
@@ -173,34 +179,34 @@ Automatic check for updates turned off
 
 ## 0.3.0
 
-#### Features:
+### Features:
 
 - Replacing the `tar` command with the built-in decompressor
 - Adapt to new `vrn-boilerplate` rules
 
 ## 0.2.12
 
-#### Bug Fixes:
+### Bug Fixes:
 
 - Rebuild the missing config file
 - Compatibility with `non-tty` terminals (Windows)
 
 ## 0.2.10
 
-#### Bug Fixes:
+### Bug Fixes:
 
 - Rebuild the missing config file
 - Compatibility with `non-tty` terminals (Windows)
 
 ## 0.2.4
 
-#### Bug Fixes:
+### Bug Fixes:
 
 - User directory write permission problem
 
 ## 0.2.0
 
-#### Features:
+### Features:
 
 - Support for custom `registry`
 - Now you can distribute `boilerplate` using your own web interface
