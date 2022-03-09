@@ -1,5 +1,9 @@
 # @vrn-deco/cli
 
+## 1.1.2
+
+Change welcome LOGO
+
 ## 1.1.1
 
 ### Bug Fixes:
@@ -29,9 +33,9 @@ Interactive creation:
 
 ```sh
 # You need to pass `--mode=http` to enable it, as 'package' mode is default
-vrn boi create myapp --mode=http
+vrn boi create my-app --mode=http
 # You can pass `--api-url` to specify the baseURL, default https://vrndeco.cn/boilerplate
-vrn boi create myapp --mode=http --api-url=https://yoursite.com/boilerplate
+vrn boi create my-app --mode=http --api-url=https://yoursite.com/boilerplate
 ```
 
 Non-interactive creation:
@@ -41,18 +45,18 @@ Non-interactive creation:
 # here `--target` is packed file name, not the package name
 # this means that it will download from the default `--api-url`
 # https://vrndeco.cn/boilerplate/boilerplate-typescript-vue3-varlet.tgz
-vrn boi create myapp --mode=http --yes \
-  --name=myapp --version=1.0.0 --author=cphayim \
+vrn boi create my-app --mode=http --yes \
+  --name=my-app --version=1.0.0 --author=cphayim \
   --target boilerplate-typescript-vue3-varlet.tgz
 
 # You can pass the full url directly to `—target`
-vrn boi create myapp --mode=http --yes \
-  --name=myapp --version=1.0.0 --author=cphayim \
+vrn boi create my-app --mode=http --yes \
+  --name=my-app --version=1.0.0 --author=cphayim \
   --target https://yoursite.com/boilerplate/boilerplate-typescript-vue3-varlet.tgz
 
 # Equivalent to
-vrn boi create myapp --mode=http --yes \
-  --name=myapp --version=1.0.0 --author=cphayim \
+vrn boi create my-app --mode=http --yes \
+  --name=my-app --version=1.0.0 --author=cphayim \
   --api-url= https://yoursite.com/boilerplate \
   --target boilerplate-typescript-vue3-varlet.tgz
 ```
@@ -66,19 +70,19 @@ The `git` mode is created by cloning the specified repository
 ```sh
 # You need to pass `--mode=git` to enable it, as 'package' mode is default
 # `--target` is repository url, support `HTTPS` and `SSH`
-vrn boi create --mode=git --target=https://github.com/vrn-deco/xxx.git
-vrn boi create --mode=git --target=git@github.com:vrn-deco/xxx.git
+vrn boi create my-app --mode=git --target=https://github.com/vrn-deco/xxx.git
+vrn boi create my-app --mode=git --target=git@github.com:vrn-deco/xxx.git
 ```
 
-You can pass `—post-git` handle original records after `git clone`
+You can pass `--post-git` handle original records after `git clone`
 
 ```sh
 # keep origin record
-vrn boi create --mode=git --post-git=retain --target=git@github.com:vrn-deco/xxx.git
+vrn boi create my-app --mode=git --post-git=retain --target=git@github.com:vrn-deco/xxx.git
 # rm -rf .git
-vrn boi create --mode=git --post-git=remove --target=git@github.com:vrn-deco/xxx.git
+vrn boi create my-app --mode=git --post-git=remove --target=git@github.com:vrn-deco/xxx.git
 # rm -rf .git && git init && git add . && git commit -m "chore: init repository"
-vrn boi create --mode=git --post-git=rebuild --target=git@github.com:vrn-deco/xxx.git
+vrn boi create my-app --mode=git --post-git=rebuild --target=git@github.com:vrn-deco/xxx.git
 ```
 
 ## 1.0.2
@@ -91,13 +95,13 @@ The `boi create` and `boi list` commands now support specifying manifest-package
 
 ```sh
 # Interactive creation, pulling the manifest from `@your-scope/your-manifest-package`
-vrn boi create myapp --manifest-package @your-scope/your-manifest-package
+vrn boi create my-app --manifest-package @your-scope/your-manifest-package
 
 # Non-nteractive creation
 # can specify a boilerplate that is not in the manifest as the target
 # without specifying --manifest-package
-vrn boi create myapp --yes \
-    --name=myapp --version=1.0.0 --author=cphayim \
+vrn boi create my-app --yes \
+    --name=my-app --version=1.0.0 --author=cphayim \
     --target @your-scope/boilerplate-xxx
 
 # Will list the available boilerplate in `@your-scope/your-manifest-package`
@@ -133,19 +137,19 @@ Completely refactored with new architectural designs and specifications
 Interactive creation:
 
 ```sh
-vrn boi create myapp
-vrn boi create myapp ./packages
+vrn boi create my-app
+vrn boi create my-app ./packages
 ```
 
 Non-interactive creation, suitable for CI and automation tasks:
 
 ```sh
-vrn boi create myapp --yes \
-   --name=myapp --version=1.0.0 --author=cphayim \
+vrn boi create my-app --yes \
+   --name=my-app --version=1.0.0 --author=cphayim \
    --target @vrn-deco/boilerplate-javascript-vue
 
-vrn boi create myapp ./packages --yes \
-   --name=@vrn-deco/myapp --version=1.0.0 --author=cphayim \
+vrn boi create my-app ./packages --yes \
+   --name=@vrn-deco/my-app --version=1.0.0 --author=cphayim \
    --target @vrn-deco/boilerplate-javascript-vue
 ```
 

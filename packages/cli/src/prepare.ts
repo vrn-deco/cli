@@ -61,7 +61,7 @@ function injectDefaultEnv() {
 
 export function printLOGO() {
   logger.clearConsole()
-  const logo = figlet.textSync(process.env.VRN_CLI_NAME.toUpperCase(), '3D Diagonal')
+  const logo = figlet.textSync(process.env.VRN_CLI_NAME.toUpperCase(), 'Isometric1')
   console.log(colors.green(logo))
 }
 
