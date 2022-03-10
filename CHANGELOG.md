@@ -1,5 +1,11 @@
 # @vrn-deco/cli
 
+## 1.1.3
+
+### Bug Fixes:
+
+- node:stream/promises compatibility on node 14 ([#6](https://github.com/vrn-deco/cli/issues/6))
+
 ## 1.1.2
 
 Change welcome LOGO

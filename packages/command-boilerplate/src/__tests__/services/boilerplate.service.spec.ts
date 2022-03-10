@@ -43,8 +43,8 @@ jest.unstable_mockModule('node-fetch', () => ({ default: fetch }))
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore-next-line
 const createWriteStreamSpy = jest.spyOn(fs, 'createWriteStream').mockImplementation(() => void 0)
-const pipeline = jest.fn().mockImplementation(() => Promise.resolve())
-jest.unstable_mockModule('node:stream/promises', () => ({
+const pipeline = jest.fn<void, [string, string, () => void]>().mockImplementation((_a, _b, c) => c())
+jest.unstable_mockModule('node:stream', () => ({
   pipeline,
 }))
 

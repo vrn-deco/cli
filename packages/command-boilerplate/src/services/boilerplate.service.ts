@@ -5,7 +5,8 @@
  */
 import path from 'node:path'
 import fetch from 'node-fetch'
-import { pipeline } from 'node:stream/promises'
+import { pipeline as _pipeline } from 'node:stream'
+import { promisify } from 'node:util'
 import fs from 'fs-extra'
 
 import { Manifest, APIManifest } from '@vrn-deco/boilerplate-protocol'
@@ -16,6 +17,8 @@ import { dynamicImport } from '@vrn-deco/cli-shared'
 
 import { getCacheDirectory } from '../utils.js'
 import { DEFAULT_API_BASE_URL, DEFAULT_MANIFEST_PACKAGE } from '../common.js'
+
+const pipeline = promisify(_pipeline)
 
 export interface IBoilerplateProvider {
   loadManifest(refresh?: boolean): Promise<Manifest | APIManifest>
