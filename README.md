@@ -232,8 +232,6 @@ vrn boi create my-app --mode=http
 
 # If you are in a Monorepo, you can pass in the second parameter [base_directory]
 vrn boi create my-app ./packages --mode=http
-# You can pass `--api-url` to specify the baseURL, default https://vrndeco.cn/boilerplate
-vrn boi create my-app --mode=http --api-url=https://yoursite.com/boilerplate
 ```
 
 By default all optional `packed-boi` are provided through `https://vrndeco.cn/boilerplate`, if you want to use your own interface to provide `packed-boi`, you can use `--api-url` ` option specifies the BaseURL of the request
