@@ -1,12 +1,15 @@
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { execaSync } from 'execa'
 import { logger } from '@ombro/logger'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 function unitTest() {
   try {
     execaSync('jest', process.argv.slice(2), {
       stdio: 'inherit',
-      cwd: path.resolve(__dirname, '../'),
+      cwd: path.join(__dirname, '..'),
       env: { ...process.env, NODE_OPTIONS: '--experimental-vm-modules', NODE_NO_WARNINGS: '1' },
     })
     logger.done('Passed test!')
@@ -16,6 +19,6 @@ function unitTest() {
   }
 }
 
-if (require.main === module) {
+if (fileURLToPath(import.meta.url) === process.argv[1]) {
   unitTest()
 }
