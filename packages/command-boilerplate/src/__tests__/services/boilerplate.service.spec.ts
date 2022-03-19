@@ -1,7 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
-import { jest } from '@jest/globals'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { logger } from '@vrn-deco/cli-log'
 import { NPMRegistry, PackageManager, testShared } from '@vrn-deco/cli-shared'
@@ -15,36 +15,35 @@ const __dirname = path.dirname(__filename)
 const MOCK_MANIFEST_MAIN_SCRIPT = path.join(__dirname, '..', '__mocks__', 'mock-manifest.cjs')
 
 // mock readConfig
-const readConfig = jest.fn(() => ({ npmRegistry: NPMRegistry.NPM, packageManager: PackageManager.NPM }))
-
-const cliConfigHelper = await import('@vrn-deco/cli-config-helper')
-jest.unstable_mockModule('@vrn-deco/cli-config-helper', () => ({
-  ...cliConfigHelper,
-  readConfig,
-}))
+const readConfig = vi.fn(() => ({ npmRegistry: NPMRegistry.NPM, packageManager: PackageManager.NPM }))
+vi.mock('@vrn-deco/cli-config-helper', async () => {
+  const cliConfigHelper = await vi.importActual<typeof import('@vrn-deco/cli-config-helper')>(
+    '@vrn-deco/cli-config-helper',
+  )
+  return {
+    ...cliConfigHelper,
+    readConfig,
+  }
+})
 
 // mock NPMPackage
-const NPMPackageLoadSpy = jest
-  .spyOn(NPMPackage.prototype, 'load')
-  .mockImplementation(async function (this: NPMPackage) {
-    return this
-  })
-const getMainScriptSpy = jest
-  .spyOn(NPMPackage.prototype, 'mainScript', 'get')
-  .mockReturnValue(MOCK_MANIFEST_MAIN_SCRIPT)
+const NPMPackageLoadSpy = vi.spyOn(NPMPackage.prototype, 'load').mockImplementation(async function (this: NPMPackage) {
+  return this
+})
+const getMainScriptSpy = vi.spyOn(NPMPackage.prototype, 'mainScript', 'get').mockReturnValue(MOCK_MANIFEST_MAIN_SCRIPT)
 
 // mock node-fetch
-const json = jest.fn(() => ({}))
+const json = vi.fn(() => ({}))
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const fetch = jest.fn((_url: string) => Promise.resolve({ json, ok: true, body: {}, statusText: 'ok' }))
-jest.unstable_mockModule('node-fetch', () => ({ default: fetch }))
+const fetch = vi.fn((_url: string) => Promise.resolve({ json, ok: true, body: {}, statusText: 'ok' }))
+vi.mock('node-fetch', () => ({ default: fetch }))
 
 // mock fs.createWriteStream and pipeline
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore-next-line
-const createWriteStreamSpy = jest.spyOn(fs, 'createWriteStream').mockImplementation(() => void 0)
-const pipeline = jest.fn<void, [string, string, () => void]>().mockImplementation((_a, _b, c) => c())
-jest.unstable_mockModule('node:stream', () => ({
+const createWriteStreamSpy = vi.spyOn(fs, 'createWriteStream').mockImplementation(() => void 0)
+const pipeline = vi.fn().mockImplementation((_a, _b, c) => c())
+vi.mock('node:stream', () => ({
   pipeline,
 }))
 
@@ -67,7 +66,7 @@ describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.t
     getMainScriptSpy.mockRestore()
   })
 
-  test('Can correct load and cache manifest', async () => {
+  it('Can correct load and cache manifest', async () => {
     const service = new PackageBoilerplateService()
     expect(readConfig).toBeCalled()
     const manifest = await service.loadManifest()
@@ -81,7 +80,7 @@ describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.t
     expect(manifest2).toBe(manifest) // ===
   })
 
-  test('Can correct load boilerplate', async () => {
+  it('Can correct load boilerplate', async () => {
     const service = new PackageBoilerplateService()
     const boiPackage = await service.loadBoilerplate('@vrn-deco/boilerplate-typescript-xxx')
     expect(boiPackage).toBeTruthy()
@@ -102,7 +101,8 @@ describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.t
     createWriteStreamSpy.mockRestore()
     pipeline.mockRestore()
   })
-  test('Can correct fetch and cache manifest', async () => {
+
+  it('Can correct fetch and cache manifest', async () => {
     const { getAPIManifest } = await import(MOCK_MANIFEST_MAIN_SCRIPT)
     json.mockReturnValueOnce(getAPIManifest())
     const service = new HTTPBoilerplateService()
@@ -116,7 +116,7 @@ describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.t
     expect(manifest2).toBe(manifest) // ===
   })
 
-  test('When fetch manifest failed, will throw a error', async () => {
+  it('When fetch manifest failed, will throw a error', async () => {
     expect.assertions(3)
     try {
       fetch.mockRejectedValueOnce(new Error('BOOM'))
@@ -129,7 +129,7 @@ describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.t
     }
   })
 
-  test('Can correct download packed boilerplate', async () => {
+  it('Can correct download packed boilerplate', async () => {
     const service = new HTTPBoilerplateService()
     const file = await service.downloadBoilerplate('typescript-xxx.tgz', '/home')
     expect(file).toBe('typescript-xxx.tgz')
@@ -143,7 +143,7 @@ describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.t
     expect(fetch.mock.calls[1][0]).toBe('https://aaa.bb.com/typescript-xxx.tgz')
   })
 
-  test('When fetch boilerplate failed, will throw a error', async () => {
+  it('When fetch boilerplate failed, will throw a error', async () => {
     expect.assertions(2)
     try {
       fetch.mockResolvedValueOnce({ json, ok: false, body: {}, statusText: 'Not found' })

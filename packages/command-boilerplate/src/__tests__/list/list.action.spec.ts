@@ -2,7 +2,7 @@ import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
 import YAML from 'yaml'
-import { jest } from '@jest/globals'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { Command, runAction } from '@vrn-deco/cli-command'
 import { testShared } from '@vrn-deco/cli-shared'
@@ -14,24 +14,28 @@ const MOCK_MANIFEST_MAIN_SCRIPT = path.join(__dirname, '..', '__mocks__', 'mock-
 const MOCK_PACKAGE_MANIFEST = (await import(MOCK_MANIFEST_MAIN_SCRIPT)).getManifest()
 
 // mock loadManifest
-const boilerplateServiceModule = await import('../../services/boilerplate.service.js')
-const loadPackageManifest = jest.fn(async () => MOCK_PACKAGE_MANIFEST)
-jest.unstable_mockModule('../../services/boilerplate.service.js', () => ({
-  ...boilerplateServiceModule,
-  // mock class
-  PackageBoilerplateService: function () {
-    return {
-      loadManifest: loadPackageManifest,
-    }
-  },
-}))
+const loadPackageManifest = vi.fn(async () => MOCK_PACKAGE_MANIFEST)
+vi.mock('../../services/boilerplate.service.js', async () => {
+  const boilerplateServiceModule = await vi.importActual<typeof import('../../services/boilerplate.service.js')>(
+    '../../services/boilerplate.service.js',
+  )
+  return {
+    ...boilerplateServiceModule,
+    // mock class
+    PackageBoilerplateService: function () {
+      return {
+        loadManifest: loadPackageManifest,
+      }
+    },
+  }
+})
 
 // mock process.stdout.write
-const stdoutWriteSpy = jest.spyOn(process.stdout, 'write').mockImplementation(() => true)
+const stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true)
 
 // mock fs.mkdirpSync and fs.writeFileSync
-const fsMkdirpSyncSpy = jest.spyOn(fs, 'mkdirpSync').mockImplementation(() => void 0)
-const fsWriteFileSyncSpy = jest.spyOn(fs, 'writeFileSync').mockImplementation(() => void 0)
+const fsMkdirpSyncSpy = vi.spyOn(fs, 'mkdirpSync').mockImplementation(() => void 0)
+const fsWriteFileSyncSpy = vi.spyOn(fs, 'writeFileSync').mockImplementation(() => void 0)
 
 const { ListAction } = await import('../../list/list.action.js')
 const OUTFILE = 'outfile.txt'
@@ -55,7 +59,7 @@ afterAll(() => {
 })
 
 describe('@vrn-deco/cli-command-boilerplate -> list -> list.action.ts', () => {
-  test('Can print simple manifest', async () => {
+  it('Can print simple manifest', async () => {
     await runAction(ListAction)({}, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(stdoutWriteSpy).toBeCalled()
@@ -65,7 +69,7 @@ describe('@vrn-deco/cli-command-boilerplate -> list -> list.action.ts', () => {
     expect(fsWriteFileSyncSpy).not.toBeCalled()
   })
 
-  test('Can print simple manifest and write file', async () => {
+  it('Can print simple manifest and write file', async () => {
     await runAction(ListAction)({ outFile: OUTFILE }, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(stdoutWriteSpy).toBeCalled()
@@ -76,7 +80,7 @@ describe('@vrn-deco/cli-command-boilerplate -> list -> list.action.ts', () => {
     expect(fsWriteFileSyncSpy.mock.calls[0][0]).toContain(OUTFILE)
   })
 
-  test('Can print json manifest', async () => {
+  it('Can print json manifest', async () => {
     await runAction(ListAction)({ json: true }, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(stdoutWriteSpy).toBeCalled()
@@ -86,7 +90,7 @@ describe('@vrn-deco/cli-command-boilerplate -> list -> list.action.ts', () => {
     expect(fsWriteFileSyncSpy).not.toBeCalled()
   })
 
-  test('Can print json manifest and write file', async () => {
+  it('Can print json manifest and write file', async () => {
     await runAction(ListAction)({ json: true, outFile: OUTFILE }, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(stdoutWriteSpy).toBeCalled()
@@ -97,7 +101,7 @@ describe('@vrn-deco/cli-command-boilerplate -> list -> list.action.ts', () => {
     expect(fsWriteFileSyncSpy.mock.calls[0][0]).toContain(OUTFILE)
   })
 
-  test('Can print yaml manifest', async () => {
+  it('Can print yaml manifest', async () => {
     await runAction(ListAction)({ yaml: true }, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(stdoutWriteSpy).toBeCalled()
@@ -107,7 +111,7 @@ describe('@vrn-deco/cli-command-boilerplate -> list -> list.action.ts', () => {
     expect(fsWriteFileSyncSpy).not.toBeCalled()
   })
 
-  test('Can print yaml manifest and write file', async () => {
+  it('Can print yaml manifest and write file', async () => {
     await runAction(ListAction)({ yaml: true, outFile: OUTFILE }, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(stdoutWriteSpy).toBeCalled()

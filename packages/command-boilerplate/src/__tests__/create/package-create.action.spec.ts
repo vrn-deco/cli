@@ -1,10 +1,8 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { jest } from '@jest/globals'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { Command, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
-import { testShared } from '@vrn-deco/cli-shared'
 
 logger.setLevel('silent')
 
@@ -17,41 +15,55 @@ const MOCK_BOI_PACKAGE_RUNNER_SCRIPT = path.join(__dirname, '..', '__mocks__', '
 const MOCK_PACKAGE_MANIFEST = (await import(MOCK_MANIFEST_MAIN_SCRIPT)).getManifest()
 
 // mock parent class CreateAction
-
-const { CreateActionMock } = await import(MOCK_CREATE_ACTION_SCRIPT)
-jest.unstable_mockModule('../../create/create.action.js', () => ({
-  CreateAction: CreateActionMock,
-}))
+vi.mock('../../create/create.action.js', async () => {
+  const { CreateActionMock } = await vi.importActual(MOCK_CREATE_ACTION_SCRIPT)
+  return {
+    CreateAction: CreateActionMock,
+  }
+})
 
 // mock loadManifest
-const boilerplateServiceModule = await import('../../services/boilerplate.service.js')
-const loadPackageManifest = jest.fn(async () => MOCK_PACKAGE_MANIFEST)
-const loadPackageBoilerplate = jest.fn(() => ({
+const loadPackageManifest = vi.fn(async () => MOCK_PACKAGE_MANIFEST)
+const loadPackageBoilerplate = vi.fn(() => ({
   mainScript: MOCK_BOI_PACKAGE_RUNNER_SCRIPT, // mock runner
 }))
-const PackageBoilerplateService = jest.fn(function () {
+const PackageBoilerplateService = vi.fn(function () {
   return { loadManifest: loadPackageManifest, loadBoilerplate: loadPackageBoilerplate }
 })
-jest.unstable_mockModule('../../services/boilerplate.service.js', () => ({
-  ...boilerplateServiceModule,
-  // mock class
-  PackageBoilerplateService,
-}))
+vi.mock('../../services/boilerplate.service.js', async () => {
+  const boilerplateServiceModule = await vi.importActual<typeof import('../../services/boilerplate.service.js')>(
+    '../../services/boilerplate.service.js',
+  )
+  return {
+    ...boilerplateServiceModule,
+    // mock class
+    PackageBoilerplateService,
+  }
+})
 
 // mock runner
-const runner = jest.fn().mockImplementation(() => Promise.resolve())
-jest.unstable_mockModule(MOCK_BOI_PACKAGE_RUNNER_SCRIPT, () => ({
+const runner = vi.fn().mockImplementation(() => Promise.resolve())
+const runnerModule = {
   default: runner,
-}))
+}
+const dynamicImport = vi.fn().mockImplementation(() => Promise.resolve(runnerModule))
+vi.mock('@vrn-deco/cli-shared', async () => {
+  const sharedModule = await vi.importActual<typeof import('@vrn-deco/cli-shared')>('@vrn-deco/cli-shared')
+  return { ...sharedModule, dynamicImport }
+})
 
 // mock prompt
-const prompt = jest.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
-const cliCommandModule = await import('@vrn-deco/cli-command')
-jest.unstable_mockModule('@vrn-deco/cli-command', () => ({
-  ...cliCommandModule,
-  prompt,
-}))
+const prompt = vi.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
+vi.mock('@vrn-deco/cli-command', async () => {
+  const cliCommandModule = await vi.importActual<typeof import('@vrn-deco/cli-command')>('@vrn-deco/cli-command')
+  return {
+    ...cliCommandModule,
+    prompt,
+  }
+})
 
+const { testShared } = await import('@vrn-deco/cli-shared')
+const { Command, runAction } = await import('@vrn-deco/cli-command')
 const { PackageCreateAction } = await import('../../create/package-create.action.js')
 
 beforeAll(() => {
@@ -60,11 +72,13 @@ beforeAll(() => {
 beforeEach(() => {
   loadPackageManifest.mockClear()
   loadPackageBoilerplate.mockClear()
+  dynamicImport.mockClear()
   runner.mockClear()
 })
 afterAll(() => {
   loadPackageManifest.mockRestore()
   loadPackageBoilerplate.mockRestore()
+  dynamicImport.mockRestore()
   runner.mockRestore()
 })
 
@@ -72,7 +86,7 @@ afterAll(() => {
 // the test case for CreateAction at . /create.action.spec.ts
 describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.ts', () => {
   // non-interactive
-  test('When the --yes options is passed, will check --target-boilerplate option, it is required', async () => {
+  it('When the --yes options is passed, will check --target-boilerplate option, it is required', async () => {
     expect.assertions(1)
     try {
       await runAction(PackageCreateAction)('my-project', undefined, { yes: true }, new Command())
@@ -81,7 +95,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     }
   })
 
-  test('When the --yes options is passed and all option are valid, will exec creation', async () => {
+  it('When the --yes options is passed and all option are valid, will exec creation', async () => {
     await runAction(PackageCreateAction)(
       'my-project',
       undefined,
@@ -91,21 +105,25 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     // non-interactive, so not call loadManifest
     expect(loadPackageManifest).not.toBeCalled()
     expect(loadPackageBoilerplate).toBeCalled()
+    expect(dynamicImport).toBeCalled()
+    expect(dynamicImport).toBeCalledWith(MOCK_BOI_PACKAGE_RUNNER_SCRIPT)
     expect(runner).toBeCalled()
   })
 
   // interactive
-  test('When user has selected the boilerplate by manifest, will exec creation', async () => {
+  it('When user has selected the boilerplate by manifest, will exec creation', async () => {
     prompt.mockReturnValueOnce(
       Promise.resolve({ boilerplate: { package: '@vrn-deco/boilerplate-typescript-xxx', version: '1.0.0' } }),
     )
     await runAction(PackageCreateAction)('my-project', undefined, {}, new Command())
     expect(loadPackageManifest).toBeCalled()
     expect(loadPackageBoilerplate).toBeCalled()
+    expect(dynamicImport).toBeCalled()
+    expect(dynamicImport).toBeCalledWith(MOCK_BOI_PACKAGE_RUNNER_SCRIPT)
     expect(runner).toBeCalled()
   })
 
-  test('When manifest is a empty array, will throw a error', async () => {
+  it('When manifest is a empty array, will throw a error', async () => {
     expect.assertions(2)
     try {
       loadPackageManifest.mockReturnValueOnce(Promise.resolve([]))
@@ -116,8 +134,8 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     }
   })
 
-  test('When runner exec failed, will throw a error', async () => {
-    expect.assertions(4)
+  it('When runner exec failed, will throw a error', async () => {
+    expect.assertions(6)
     try {
       prompt.mockReturnValueOnce(
         Promise.resolve({ boilerplate: { package: '@vrn-deco/boilerplate-typescript-xxx', version: '1.0.0' } }),
@@ -127,6 +145,8 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     } catch (error) {
       expect(loadPackageManifest).toBeCalled()
       expect(loadPackageBoilerplate).toBeCalled()
+      expect(dynamicImport).toBeCalled()
+      expect(dynamicImport).toBeCalledWith(MOCK_BOI_PACKAGE_RUNNER_SCRIPT)
       expect(runner).toBeCalled()
       expect(error.message).toContain('Boilerplate runner execution failed')
     }

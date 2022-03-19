@@ -1,38 +1,38 @@
-import { jest } from '@jest/globals'
-import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
-
+import { vi, describe, it, expect } from 'vitest'
 import { DistTag } from '../common.js'
 
-const execaMock = jest.fn().mockImplementation(async () => void 0)
-const cmdExistsMock = jest.fn().mockImplementation(() => true)
+const execaMock = vi.fn().mockImplementation(async () => void 0)
+const cmdExistsMock = vi.fn().mockImplementation(() => true)
 
-jest
-  .unstable_mockModule('execa', () => ({
-    execa: execaMock,
-  }))
-  .unstable_mockModule('@vrn-deco/cli-shared', () => ({
+vi.mock('execa', () => ({
+  execa: execaMock,
+}))
+vi.mock('@vrn-deco/cli-shared', async () => {
+  const m = await vi.importActual<typeof import('@vrn-deco/cli-shared')>('@vrn-deco/cli-shared')
+  return {
+    ...m,
     cmdExists: cmdExistsMock,
-    NPMRegistry,
-    PackageManager,
-  }))
+  }
+})
 
+const { NPMRegistry, PackageManager } = await import('@vrn-deco/cli-shared')
 const { installPackage } = await import('../install.js')
 
 const TEST_PACKAGE_NAME = '@ombro/logger'
 
 describe('@vrn-deco/cli-npm-helper -> install.ts', () => {
-  test('Arg name is required', async () => {
+  it('Arg name is required', async () => {
     expect.assertions(1)
     await expect(installPackage({ name: '' })).rejects.toThrow()
   })
 
-  test('Specified packageManager must be installed', async () => {
+  it('Specified packageManager must be installed', async () => {
     expect.assertions(1)
     cmdExistsMock.mockReturnValueOnce(false)
     await expect(installPackage({ name: TEST_PACKAGE_NAME, packageManager: PackageManager.Yarn })).rejects.toThrow()
   })
 
-  test('Can install package', async () => {
+  it('Can install package', async () => {
     await installPackage({ name: TEST_PACKAGE_NAME, packageManager: PackageManager.PNPM, registry: NPMRegistry.NPM })
     expect(execaMock).toBeCalled()
     expect(execaMock.mock.calls[0][0]).toBe(PackageManager.PNPM)
@@ -48,7 +48,7 @@ describe('@vrn-deco/cli-npm-helper -> install.ts', () => {
     ])
   })
 
-  test('Installation failure will throw an error', async () => {
+  it('Installation failure will throw an error', async () => {
     execaMock.mockImplementationOnce(async () => Promise.reject())
     expect.assertions(2)
     process.env.VRN_CLI_DEBUG_ENABLED = 'off'

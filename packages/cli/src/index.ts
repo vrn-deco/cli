@@ -9,13 +9,16 @@ import commands from './commands.js'
 import { prepare } from './prepare.js'
 import { createCLI } from './cli.js'
 
-try {
-  await prepare()
-  await createCLI(commands).parseAsync(process.argv)
-} catch (error) {
-  if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') {
-    logger.error(error)
-  } else {
-    logger.error(error.message)
+// To test the branch, wrapper functions are used instead of top-level await
+export async function main() {
+  try {
+    await prepare()
+    await createCLI(commands).parseAsync(process.argv)
+  } catch (error) {
+    if (process.env.VRN_CLI_DEBUG_ENABLED === 'on') {
+      logger.error(error)
+    } else {
+      logger.error(error.message)
+    }
   }
 }

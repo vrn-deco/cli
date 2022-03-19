@@ -4,6 +4,7 @@
  * @Description: mock a boilerplate package runner for testing
  */
 
+// suppose this is an entry script for the boi-package, which has no real effect
 module.exports = function runner() {
   //
 }

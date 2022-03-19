@@ -1,3 +1,4 @@
+import { expect, test } from 'vitest'
 import { queryPackageInfo, installPackage, NPMPackage } from '../index.js'
 
 test('Export right', () => {

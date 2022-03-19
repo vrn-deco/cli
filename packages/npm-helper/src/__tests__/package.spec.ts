@@ -1,40 +1,46 @@
 import path from 'node:path'
 import os from 'node:os'
 import fs from 'fs-extra'
-import { jest } from '@jest/globals'
+import { vi, describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
 
 import { logger } from '@vrn-deco/cli-log'
 import { DistTag } from '../common.js'
 
-const execaMock = jest.fn()
-const isPackageMock = jest.fn()
-const installPackageMock = jest.fn()
-const queryPackageVersionMock = jest.fn()
+const execaMock = vi.fn()
+const isPackageMock = vi.fn()
+const installPackageMock = vi.fn()
+const queryPackageVersionMock = vi.fn()
 
 const fns = [execaMock, isPackageMock, installPackageMock, queryPackageVersionMock]
 
-const execa = await import('execa')
-const utils = await import('../utils.js')
-const install = await import('../install.js')
-const querier = await import('../querier.js')
-
-jest
-  .unstable_mockModule('execa', () => ({
+vi.mock('execa', async () => {
+  const execa = await vi.importActual<typeof import('execa')>('execa')
+  return {
     ...execa,
     execa: execaMock,
-  }))
-  .unstable_mockModule('../utils.js', () => ({
+  }
+})
+vi.mock('../utils.js', async () => {
+  const utils = await vi.importActual<typeof import('../utils.js')>('../utils.js')
+  return {
     ...utils,
     isPackage: isPackageMock,
-  }))
-  .unstable_mockModule('../install.js', () => ({
+  }
+})
+vi.mock('../install.js', async () => {
+  const install = await vi.importActual<typeof import('../install.js')>('../install.js')
+  return {
     ...install,
     installPackage: installPackageMock,
-  }))
-  .unstable_mockModule('../querier.js', () => ({
+  }
+})
+vi.mock('../querier.js', async () => {
+  const querier = await vi.importActual<typeof import('../querier.js')>('../querier.js')
+  return {
     ...querier,
     queryPackageVersion: queryPackageVersionMock,
-  }))
+  }
+})
 
 // disabled logger
 logger.setLevel('silent')
@@ -62,65 +68,66 @@ describe('@vrn-deco/cli-npm-helper -> package.ts local mode', () => {
   })
   afterAll(() => {
     process.env.VRN_CLI_MODULE_MAP = ''
+    vi.restoreAllMocks()
   })
 
-  test('Can create a NPMPackage object with local mode', async () => {
+  it('Can create a NPMPackage object with local mode', async () => {
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME })
     expect(pkg).toBeDefined()
   })
 
-  test('ModuleMap can be successfully loaded if it is correct', async () => {
+  it('ModuleMap can be successfully loaded if it is correct', async () => {
     expect.assertions(1)
     isPackageMock.mockImplementationOnce(() => true)
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME })
-    expect(pkg.load()).resolves.not.toThrow()
+    await expect(pkg.load()).resolves.toBeInstanceOf(NPMPackage)
   })
 
-  test('Error thrown if moduleMap does not exist', async () => {
+  it('Error thrown if moduleMap does not exist', async () => {
     expect.assertions(1)
     isPackageMock.mockImplementationOnce(() => false)
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME })
-    expect(pkg.load()).rejects.toThrow()
+    await expect(pkg.load()).rejects.toThrow('is not a package')
   })
 
-  test('Calling a method or getting properties without Loaded will throw an error', async () => {
+  it('Calling a method or getting properties without Loaded will throw an error', async () => {
     expect.assertions(1)
     isPackageMock.mockImplementationOnce(() => true)
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME })
     expect(() => pkg.packageDir).toThrow('please call and await the `load` is complete')
   })
 
-  test('Load succeeds, can get the packageDir, packageJSON, mainScript', async () => {
+  it('Load succeeds, can get the packageDir, packageJSON, mainScript', async () => {
     isPackageMock.mockImplementationOnce(() => true)
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME })
-    await expect(pkg.load()).resolves.not.toThrow()
+    await expect(pkg.load()).resolves.toBeInstanceOf(NPMPackage)
     expect(pkg.packageDir).toBe(moduleMap[TEST_PACKAGE_NAME])
 
-    jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
+    vi.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
     expect(pkg.packageJSON).toEqual(TEST_PACKAGE_JSON)
 
     // No mainScript field
-    jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
+    vi.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
     expect(() => pkg.mainScript).toThrow('not exists')
 
-    jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => ({ ...TEST_PACKAGE_JSON, main: 'index.js' }))
+    vi.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => ({ ...TEST_PACKAGE_JSON, main: 'index.js' }))
     expect(pkg.mainScript).toBe(path.join(moduleMap[TEST_PACKAGE_NAME], 'index.js'))
   })
 })
 
 describe('@vrn-deco/cli-npm-helper -> package.ts default mode', () => {
-  test('Can create a NPMPackage object with default mode', async () => {
+  it('Can create a NPMPackage object with default mode', async () => {
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME, versionOrDistTag: '1.0.0', baseDir: TEST_CLI_HOME_PATH })
     expect(pkg).toBeDefined()
   })
 
-  test('Calling a method or getting properties without Loaded will throw an error', async () => {
+  it('Calling a method or getting properties without Loaded will throw an error', async () => {
     isPackageMock.mockImplementationOnce(() => true)
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME, versionOrDistTag: '1.0.0', baseDir: TEST_CLI_HOME_PATH })
     expect(() => pkg.packageDir).toThrow('please call and await the `load` is complete')
   })
 
-  test('If the dist-tag passed in does not find the corresponding version, an error will be thrown', async () => {
+  it('If the dist-tag passed in does not find the corresponding version, an error will be thrown', async () => {
     const pkg = new NPMPackage({ name: TEST_PACKAGE_NAME, versionOrDistTag: DistTag.Next, baseDir: TEST_CLI_HOME_PATH })
     queryPackageVersionMock.mockImplementationOnce(() => Promise.resolve(undefined))
     await expect(pkg.load()).rejects.toThrow('not found at')
@@ -128,7 +135,7 @@ describe('@vrn-deco/cli-npm-helper -> package.ts default mode', () => {
     expect(queryPackageVersionMock.mock.calls[0][1]).toBe(DistTag.Next)
   })
 
-  test('If the incoming version has already been installed, it will not be installed again', async () => {
+  it('If the incoming version has already been installed, it will not be installed again', async () => {
     const pkg = new NPMPackage({
       name: TEST_PACKAGE_NAME,
       versionOrDistTag: DistTag.Next,
@@ -141,14 +148,14 @@ describe('@vrn-deco/cli-npm-helper -> package.ts default mode', () => {
       },
     }
     execaMock.mockImplementationOnce(() => Promise.resolve({ stdout: JSON.stringify(npmListResult) }))
-    await expect(pkg.load()).resolves.not.toThrow()
+    await expect(pkg.load()).resolves.toBeInstanceOf(NPMPackage)
     expect(queryPackageVersionMock.mock.calls[0][0]).toBe(TEST_PACKAGE_NAME)
     expect(queryPackageVersionMock.mock.calls[0][1]).toBe(DistTag.Next)
     // installed, no need to install
     expect(installPackageMock).not.toBeCalled()
   })
 
-  test('If the incoming version is not installed, the installation will take place', async () => {
+  it('If the incoming version is not installed, the installation will take place', async () => {
     const pkg = new NPMPackage({
       name: TEST_PACKAGE_NAME,
       versionOrDistTag: DistTag.Next,
@@ -159,11 +166,11 @@ describe('@vrn-deco/cli-npm-helper -> package.ts default mode', () => {
       dependencies: {},
     }
     execaMock.mockImplementationOnce(() => Promise.resolve({ stdout: JSON.stringify(npmListResult) }))
-    await expect(pkg.load()).resolves.not.toThrow()
+    await expect(pkg.load()).resolves.toBeInstanceOf(NPMPackage)
     expect(installPackageMock).toBeCalled()
   })
 
-  test('Load succeeds, can get the packageDir, packageJSON, mainScript', async () => {
+  it('Load succeeds, can get the packageDir, packageJSON, mainScript', async () => {
     const pkg = new NPMPackage({
       name: TEST_PACKAGE_NAME,
       versionOrDistTag: '1.0.0',
@@ -175,17 +182,17 @@ describe('@vrn-deco/cli-npm-helper -> package.ts default mode', () => {
       },
     }
     execaMock.mockImplementationOnce(() => Promise.resolve({ stdout: JSON.stringify(npmListResult) }))
-    await expect(pkg.load()).resolves.not.toThrow()
+    await expect(pkg.load()).resolves.toBeInstanceOf(NPMPackage)
     expect(pkg.packageDir).toBe(path.join(TEST_CLI_HOME_PATH, 'node_modules', TEST_PACKAGE_NAME))
 
-    jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
+    vi.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
     expect(pkg.packageJSON).toEqual(TEST_PACKAGE_JSON)
 
     // No mainScript field
-    jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
+    vi.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => TEST_PACKAGE_JSON)
     expect(() => pkg.mainScript).toThrow('not exists')
 
-    jest.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => ({ ...TEST_PACKAGE_JSON, main: 'index.js' }))
+    vi.spyOn(fs, 'readJsonSync').mockImplementationOnce(() => ({ ...TEST_PACKAGE_JSON, main: 'index.js' }))
     expect(pkg.mainScript).toBe(path.join(TEST_CLI_HOME_PATH, 'node_modules', TEST_PACKAGE_NAME, 'index.js'))
   })
 })
