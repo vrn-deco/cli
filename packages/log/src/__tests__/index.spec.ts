@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest'
 import { logger, figlet, boxen, colors, dedent } from '../index.js'
 
 describe('@vrn-deco/log -> index.ts', () => {

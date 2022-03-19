@@ -1,30 +1,36 @@
-import { jest } from '@jest/globals'
+import { afterAll, afterEach, beforeAll, describe, expect, it, vi } from 'vitest'
 import { logger } from '@vrn-deco/cli-log'
 import { testShared } from '@vrn-deco/cli-shared'
 
 // disabled logger
 logger.setLevel('silent')
 
-const readConfig = jest.fn()
-const updateConfig = jest.fn()
-const queryPackageLatestVersion = jest.fn(async () => '1.0.0')
+const readConfig = vi.fn()
+const updateConfig = vi.fn()
+const queryPackageLatestVersion = vi.fn(async () => '1.0.0')
 
-const configHelper = await import('@vrn-deco/cli-config-helper')
-const npmHelper = await import('@vrn-deco/cli-npm-helper')
-jest
-  .unstable_mockModule('@vrn-deco/cli-config-helper', () => ({
+vi.mock('@vrn-deco/cli-config-helper', async () => {
+  const configHelper = await vi.importActual<typeof import('@vrn-deco/cli-config-helper')>(
+    '@vrn-deco/cli-config-helper',
+  )
+  return {
     ...configHelper,
     readConfig,
     updateConfig,
-  }))
-  .unstable_mockModule('@vrn-deco/cli-npm-helper', () => ({
+  }
+})
+
+vi.mock('@vrn-deco/cli-npm-helper', async () => {
+  const npmHelper = await vi.importActual<typeof import('@vrn-deco/cli-npm-helper')>('@vrn-deco/cli-npm-helper')
+  return {
     ...npmHelper,
     queryPackageLatestVersion,
-  }))
+  }
+})
 
 const { checkUpdate } = await import('../index.js')
 
-const logSpy = jest.spyOn(console, 'log')
+const logSpy = vi.spyOn(console, 'log')
 
 beforeAll(() => {
   testShared.injectTestEnv()
@@ -42,26 +48,26 @@ afterAll(() => {
 })
 
 describe('@vrn-deco/cli-check-update', () => {
-  test('When config.checkUpdateEnabled is disabled, not check upate', async () => {
+  it('When config.checkUpdateEnabled is disabled, not check upate', async () => {
     readConfig.mockReturnValueOnce({ checkUpdateEnabled: false })
     await expect(checkUpdate()).resolves.toBeUndefined()
     expect(updateConfig).not.toBeCalled()
   })
 
-  test('When config.checkUpdateLastTime is not expired, not check upate', async () => {
+  it('When config.checkUpdateLastTime is not expired, not check upate', async () => {
     readConfig.mockReturnValueOnce({ checkUpdateEnabled: true, checkUpdateLastTime: Date.now() })
     await expect(checkUpdate()).resolves.toBeUndefined()
     expect(updateConfig).not.toBeCalled()
   })
 
-  test('When current version is latest version, update only config.checkUpdateLastTime', async () => {
+  it('When current version is latest version, update only config.checkUpdateLastTime', async () => {
     readConfig.mockReturnValueOnce({ checkUpdateEnabled: true })
     await expect(checkUpdate()).resolves.toBeUndefined()
     expect(logSpy).not.toBeCalled()
     expect(updateConfig).toBeCalled()
   })
 
-  test('When current version is less than latest version, print log and update config.checkUpdateLastTime', async () => {
+  it('When current version is less than latest version, print log and update config.checkUpdateLastTime', async () => {
     readConfig.mockReturnValueOnce({ checkUpdateEnabled: true })
     queryPackageLatestVersion.mockReturnValueOnce(Promise.resolve('1.0.1'))
     await expect(checkUpdate()).resolves.toBeUndefined()
@@ -69,7 +75,7 @@ describe('@vrn-deco/cli-check-update', () => {
     expect(updateConfig).toBeCalled()
   })
 
-  test('Failure to check updates does not throw an error', async () => {
+  it('Failure to check updates does not throw an error', async () => {
     readConfig.mockReturnValueOnce({ checkUpdateEnabled: true })
     queryPackageLatestVersion.mockReturnValueOnce(Promise.reject(new Error('BOOM')))
     // still resolved

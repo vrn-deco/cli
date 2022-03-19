@@ -1,5 +1,6 @@
-import { SwitchStatus } from '..'
-import { injectTestEnv } from '../test-shared'
+import { test, expect } from 'vitest'
+import { SwitchStatus } from '../enum.js'
+import { injectTestEnv } from '../test-shared.js'
 
 test('Environment variables for testing should be injected', () => {
   injectTestEnv()

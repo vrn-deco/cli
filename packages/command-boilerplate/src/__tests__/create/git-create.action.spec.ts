@@ -1,11 +1,9 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
-import { jest } from '@jest/globals'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { Command, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
-import { testShared } from '@vrn-deco/cli-shared'
 import { PostGit } from '../../common.js'
 
 logger.setLevel('silent')
@@ -16,30 +14,38 @@ const __dirname = path.dirname(__filename)
 const MOCK_CREATE_ACTION_SCRIPT = path.join(__dirname, '..', '__mocks__', 'mock-create.action.mjs')
 
 // mock parent class CreateAction
-const { CreateActionMock } = await import(MOCK_CREATE_ACTION_SCRIPT)
-jest.unstable_mockModule('../../create/create.action.js', () => ({
-  CreateAction: CreateActionMock,
-}))
+vi.mock('../../create/create.action.js', async () => {
+  const { CreateActionMock } = await vi.importActual(MOCK_CREATE_ACTION_SCRIPT)
+  return {
+    CreateAction: CreateActionMock,
+  }
+})
 
 // mock '@vrn-deco/cli-shared'
-const cmdExists = jest.fn(() => true)
-const cliSharedModule = await import('@vrn-deco/cli-shared')
-jest.unstable_mockModule('@vrn-deco/cli-shared', () => ({
-  ...cliSharedModule,
-  cmdExists,
-}))
+const cmdExists = vi.fn(() => true)
+vi.mock('@vrn-deco/cli-shared', async () => {
+  const cliSharedModule = await vi.importActual<typeof import('@vrn-deco/cli-shared')>('@vrn-deco/cli-shared')
+  return {
+    ...cliSharedModule,
+    cmdExists,
+  }
+})
 
 // mock execa
-const execa = jest.fn().mockImplementation(async () => void 0)
-const execaModule = await import('execa')
-jest.unstable_mockModule('execa', () => ({
-  ...execaModule,
-  execa,
-}))
+const execa = vi.fn().mockImplementation(async () => void 0)
+vi.mock('execa', async () => {
+  const execaModule = await vi.importActual<typeof import('execa')>('execa')
+  return {
+    ...execaModule,
+    execa,
+  }
+})
 
 // mock removeSync
-const removeSyncSpy = jest.spyOn(fs, 'removeSync').mockImplementation(() => void 0)
+const removeSyncSpy = vi.spyOn(fs, 'removeSync').mockImplementation(() => void 0)
 
+const { testShared } = await import('@vrn-deco/cli-shared')
+const { Command, runAction } = await import('@vrn-deco/cli-command')
 const { GitCreateAction } = await import('../../create/git-create.action.js')
 
 beforeAll(() => {
@@ -59,7 +65,7 @@ afterAll(() => {
 // here we only test of GitCreateAction, the parent CreateAction is the mock
 // the test case for CreateAction at . /create.action.spec.ts
 describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', () => {
-  test('When git is not installed, will throw a error', async () => {
+  it('When git is not installed, will throw a error', async () => {
     expect.assertions(1)
     try {
       cmdExists.mockReturnValueOnce(false)
@@ -69,7 +75,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     }
   })
 
-  test('When --target-boilerplate options is not passed, will throw a error', async () => {
+  it('When --target-boilerplate options is not passed, will throw a error', async () => {
     expect.assertions(1)
     try {
       await runAction(GitCreateAction)('my-project', undefined, { postGit: PostGit.Retain }, new Command())
@@ -78,7 +84,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     }
   })
 
-  test('When --target-boilerplate options is not a valid git repository address, will throw a error', async () => {
+  it('When --target-boilerplate options is not a valid git repository address, will throw a error', async () => {
     expect.assertions(1)
     try {
       await runAction(GitCreateAction)(
@@ -92,7 +98,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     }
   })
 
-  test('Can exec git clone', async () => {
+  it('Can exec git clone', async () => {
     await runAction(GitCreateAction)(
       'my-project',
       undefined,
@@ -104,7 +110,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     expect(execa.mock.calls[0][1]).toEqual(['clone', 'git@github.com/vrn-deco/test-boilerplate', 'my-project'])
   })
 
-  test('When exec git clone faild, will throw a error', async () => {
+  it('When exec git clone faild, will throw a error', async () => {
     expect.assertions(2)
     execa.mockRejectedValueOnce(new Error('Git clone faild'))
     try {
@@ -120,7 +126,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     }
   })
 
-  test('Can exec post-git: remove after git clone', async () => {
+  it('Can exec post-git: remove after git clone', async () => {
     await runAction(GitCreateAction)(
       'my-project',
       undefined,
@@ -131,7 +137,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     expect(removeSyncSpy).toBeCalled()
   })
 
-  test('Can exec post-git: rebuild after git clone', async () => {
+  it('Can exec post-git: rebuild after git clone', async () => {
     await runAction(GitCreateAction)(
       'my-project',
       undefined,

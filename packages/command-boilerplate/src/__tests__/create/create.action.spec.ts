@@ -1,23 +1,25 @@
 import fs from 'fs-extra'
-import { jest } from '@jest/globals'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { Boilerplate } from '@vrn-deco/boilerplate-protocol'
 
-import { Command, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
 import { testShared } from '@vrn-deco/cli-shared'
 
 logger.setLevel('silent')
 
-const prompt = jest.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
+const prompt = vi.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
+vi.mock('@vrn-deco/cli-command', async () => {
+  const cliCommandModule = await vi.importActual<typeof import('@vrn-deco/cli-command')>('@vrn-deco/cli-command')
+  return {
+    ...cliCommandModule,
+    prompt,
+  }
+})
 
-const cliCommandModule = await import('@vrn-deco/cli-command')
-jest.unstable_mockModule('@vrn-deco/cli-command', () => ({
-  ...cliCommandModule,
-  prompt,
-}))
+const mkdirpSyncSpy = vi.spyOn(fs, 'mkdirpSync').mockImplementation(() => void 0)
+const pathExistsSyncSpy = vi.spyOn(fs, 'pathExistsSync').mockImplementation(() => true)
 
-const mkdirpSyncSpy = jest.spyOn(fs, 'mkdirpSync').mockImplementation(() => void 0)
-const pathExistsSyncSpy = jest.spyOn(fs, 'pathExistsSync').mockImplementation(() => true)
+const { Command, runAction } = await import('@vrn-deco/cli-command')
 const { CreateAction } = await import('../../create/create.action.js')
 
 beforeAll(() => {
@@ -33,7 +35,7 @@ afterAll(() => {
 })
 
 describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () => {
-  test('When folderName is invalid, will throw a error', async () => {
+  it('When folderName is invalid, will throw a error', async () => {
     expect.assertions(1)
     try {
       await runAction(CreateAction)('一个亿的项目', undefined, {}, new Command())
@@ -42,7 +44,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     }
   })
 
-  test('When the target directory already exists, will throw a error', async () => {
+  it('When the target directory already exists, will throw a error', async () => {
     expect.assertions(3)
     try {
       // call pathExistsSync twice
@@ -58,7 +60,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     }
   })
 
-  test('When the base directory already exists, will create it', async () => {
+  it('When the base directory already exists, will create it', async () => {
     expect.assertions(3)
     try {
       // call pathExistsSync twice
@@ -78,7 +80,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
   })
 
   // non-interactive
-  test('When the --yes options is passed, will check --name option, it is required and valid', async () => {
+  it('When the --yes options is passed, will check --name option, it is required and valid', async () => {
     expect.assertions(2)
     try {
       // call pathExistsSync twice
@@ -93,7 +95,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     }
   })
 
-  test('When the --yes options is passed, will check --version option, it is required and valid', async () => {
+  it('When the --yes options is passed, will check --version option, it is required and valid', async () => {
     expect.assertions(2)
     try {
       // call pathExistsSync twice
@@ -113,7 +115,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     }
   })
 
-  test('When the --yes options is passed, will check --author option, it is required', async () => {
+  it('When the --yes options is passed, will check --author option, it is required', async () => {
     expect.assertions(2)
     try {
       // call pathExistsSync twice
@@ -133,7 +135,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     }
   })
 
-  test('When the --yes options is passed and all option are valid, will get baseInfo', async () => {
+  it('When the --yes options is passed and all option are valid, will get baseInfo', async () => {
     // call pathExistsSync twice
     // the first time to check baseDirectory
     // the second time to check targetDirectory
@@ -150,7 +152,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
   })
 
   // interactive
-  test('When user has answered the projectName, version, and author, will get baseInfo', async () => {
+  it('When user has answered the projectName, version, and author, will get baseInfo', async () => {
     // call pathExistsSync twice
     // the first time to check baseDirectory
     // the second time to check targetDirectory
@@ -163,7 +165,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
   })
 
   // getBoilerplateChoiceName
-  test('Can get correct boilerplate choice name', () => {
+  it('Can get correct boilerplate choice name', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const createAction = new CreateAction('my-project', '.', {} as any, new Command())
     const boilerplate: Boilerplate = {

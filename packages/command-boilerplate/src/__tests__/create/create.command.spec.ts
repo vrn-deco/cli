@@ -1,25 +1,35 @@
-import { jest } from '@jest/globals'
+import { describe, expect, it, vi } from 'vitest'
+
 import { Mode } from '../../common.js'
-import { PackageCreateAction } from '../../create/package-create.action.js'
 
-const runAction = jest.fn(() => async () => void 0)
+const runAction = vi.fn(() => async () => void 0)
+vi.mock('@vrn-deco/cli-command', async () => {
+  const cliCommandModule = await vi.importActual<typeof import('@vrn-deco/cli-command')>('@vrn-deco/cli-command')
+  return {
+    ...cliCommandModule,
+    runAction,
+  }
+})
 
-const cliCommandModule = await import('@vrn-deco/cli-command')
-jest.unstable_mockModule('@vrn-deco/cli-command', () => ({
-  ...cliCommandModule,
-  runAction,
-}))
-
-const { Command } = cliCommandModule
+const { Command } = await import('@vrn-deco/cli-command')
 const { default: createCommand, runActionByMode } = await import('../../create/create.command.js')
+const { PackageCreateAction } = await import('../../create/package-create.action.js')
+const { HTTPCreateAction } = await import('../../create/http-create.action.js')
+const { GitCreateAction } = await import('../../create/git-create.action.js')
 
 describe('@vrn-deco/cli-command-boilerplate -> create -> create.command.ts', () => {
-  test('Correct exported', () => {
+  it('Correct exported', () => {
     expect(createCommand).toBeInstanceOf(Command)
   })
 
-  test('Can run different actions according to mode', async () => {
+  it('Can run different actions according to mode', async () => {
     await runActionByMode('myapp', './packages', { mode: Mode.Package }, new Command())
     expect(runAction).toHaveBeenLastCalledWith(PackageCreateAction)
+
+    await runActionByMode('myapp', './packages', { mode: Mode.Http }, new Command())
+    expect(runAction).toHaveBeenLastCalledWith(HTTPCreateAction)
+
+    await runActionByMode('myapp', './packages', { mode: Mode.Git }, new Command())
+    expect(runAction).toHaveBeenLastCalledWith(GitCreateAction)
   })
 })

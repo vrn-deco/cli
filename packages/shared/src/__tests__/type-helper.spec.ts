@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
+import { describe, it, expect } from 'vitest'
 import {
   isNumber,
   isInt,
@@ -19,7 +20,7 @@ import {
   isAsyncFunction,
 } from '../type-helper.js'
 
-describe('@vrn-deco/cli-shared -> type-helper.ts', () => {
+describe.concurrent('@vrn-deco/cli-shared -> type-helper.ts', () => {
   it('check a number', () => {
     expect(isNumber(1)).toBe(true)
     expect(isNumber(1.1)).toBe(true)

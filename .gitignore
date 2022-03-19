@@ -3,7 +3,6 @@
 *.tsbuildinfo
 *.code-workspace
 
-.vscode/
 node_modules/
 dist/
 tmp/

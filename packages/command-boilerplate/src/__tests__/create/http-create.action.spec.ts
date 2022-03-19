@@ -1,11 +1,9 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import fs from 'fs-extra'
-import { jest } from '@jest/globals'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { Command, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
-import { testShared } from '@vrn-deco/cli-shared'
 
 logger.setLevel('silent')
 
@@ -17,36 +15,43 @@ const MOCK_MANIFEST_MAIN_SCRIPT = path.join(__dirname, '..', '__mocks__', 'mock-
 const MOCK_API_MANIFEST = (await import(MOCK_MANIFEST_MAIN_SCRIPT)).getAPIManifest()
 
 // mock parent class CreateAction
-
-const { CreateActionMock } = await import(MOCK_CREATE_ACTION_SCRIPT)
-jest.unstable_mockModule('../../create/create.action.js', () => ({
-  CreateAction: CreateActionMock,
-}))
+vi.mock('../../create/create.action.js', async () => {
+  const { CreateActionMock } = await vi.importActual(MOCK_CREATE_ACTION_SCRIPT)
+  return {
+    CreateAction: CreateActionMock,
+  }
+})
 
 // mock loadManifest
-const boilerplateServiceModule = await import('../../services/boilerplate.service.js')
-const loadAPIManifest = jest.fn(async () => MOCK_API_MANIFEST)
-const downloadBoilerplate = jest.fn((file: string) => path.basename(file))
-const HTTPBoilerplateService = jest.fn(function () {
+const loadAPIManifest = vi.fn(async () => MOCK_API_MANIFEST)
+const downloadBoilerplate = vi.fn((file: string) => path.basename(file))
+const HTTPBoilerplateService = vi.fn(function () {
   return { loadManifest: loadAPIManifest, downloadBoilerplate }
 })
-jest.unstable_mockModule('../../services/boilerplate.service.js', () => ({
-  ...boilerplateServiceModule,
-  // mock class
-  HTTPBoilerplateService,
-}))
+vi.mock('../../services/boilerplate.service.js', async () => {
+  const boilerplateServiceModule = await vi.importActual<typeof import('../../services/boilerplate.service.js')>(
+    '../../services/boilerplate.service.js',
+  )
+  return {
+    ...boilerplateServiceModule,
+    // mock class
+    HTTPBoilerplateService,
+  }
+})
 
 // mock prompt
-const prompt = jest.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
-const cliCommandModule = await import('@vrn-deco/cli-command')
-jest.unstable_mockModule('@vrn-deco/cli-command', () => ({
-  ...cliCommandModule,
-  prompt,
-}))
+const prompt = vi.fn().mockRejectedValue(new Error('Deliberate Mistakes'))
+vi.mock('@vrn-deco/cli-command', async () => {
+  const cliCommandModule = await vi.importActual<typeof import('@vrn-deco/cli-command')>('@vrn-deco/cli-command')
+  return {
+    ...cliCommandModule,
+    prompt,
+  }
+})
 
 // mock compressing
-const uncompress = jest.fn(() => void 0)
-jest.unstable_mockModule('compressing', () => ({
+const uncompress = vi.fn(() => void 0)
+vi.mock('compressing', () => ({
   default: {
     tgz: { uncompress },
     tar: { uncompress },
@@ -55,11 +60,13 @@ jest.unstable_mockModule('compressing', () => ({
 }))
 
 // mock fs-extra
-jest.spyOn(fs, 'moveSync').mockImplementation(() => void 0)
-jest.spyOn(fs, 'removeSync').mockImplementation(() => void 0)
+vi.spyOn(fs, 'moveSync').mockImplementation(() => void 0)
+vi.spyOn(fs, 'removeSync').mockImplementation(() => void 0)
 
-const warnSpy = jest.spyOn(logger, 'warn')
+const warnSpy = vi.spyOn(logger, 'warn')
 
+const { testShared } = await import('@vrn-deco/cli-shared')
+const { Command, runAction } = await import('@vrn-deco/cli-command')
 const { HTTPCreateAction } = await import('../../create/http-create.action.js')
 
 beforeAll(() => {
@@ -82,7 +89,7 @@ afterAll(() => {
 // the test case for CreateAction at . /create.action.spec.ts
 describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.ts', () => {
   // non-interactive
-  test('When the --yes options is passed, will check --target-boilerplate option, it is required', async () => {
+  it('When the --yes options is passed, will check --target-boilerplate option, it is required', async () => {
     expect.assertions(1)
     try {
       await runAction(HTTPCreateAction)('my-project', undefined, { yes: true }, new Command())
@@ -91,7 +98,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     }
   })
 
-  test('When the --yes options is passed and all option are valid, will exec creation', async () => {
+  it('When the --yes options is passed and all option are valid, will exec creation', async () => {
     await runAction(HTTPCreateAction)(
       'my-project',
       undefined,
@@ -105,7 +112,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
   })
 
   // interactive
-  test('When user has selected the boilerplate by manifest, will download packed', async () => {
+  it('When user has selected the boilerplate by manifest, will download packed', async () => {
     prompt.mockReturnValueOnce(Promise.resolve({ boilerplate: { file: 'mock-boilerplate.tgz' } }))
     await runAction(HTTPCreateAction)('my-project', undefined, {}, new Command())
     expect(loadAPIManifest).toBeCalled()
@@ -113,7 +120,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     expect(downloadBoilerplate.mock.calls[0][0]).toBe('mock-boilerplate.tgz')
   })
 
-  test('When manifest is a empty array, will throw a error', async () => {
+  it('When manifest is a empty array, will throw a error', async () => {
     expect.assertions(2)
     try {
       loadAPIManifest.mockReturnValueOnce(Promise.resolve([]))
@@ -124,7 +131,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     }
   })
 
-  test('When user has selected the boilerplate by manifest, will download packed', async () => {
+  it('When user has selected the boilerplate by manifest, will download packed', async () => {
     prompt.mockReturnValueOnce(Promise.resolve({ boilerplate: { file: 'mock-boilerplate.tgz' } }))
     await runAction(HTTPCreateAction)('my-project', undefined, {}, new Command())
     expect(loadAPIManifest).toBeCalled()
@@ -132,7 +139,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     expect(downloadBoilerplate.mock.calls[0][0]).toBe('mock-boilerplate.tgz')
   })
 
-  test('Can unpack supported file extension: .tgz`, `.tar` and `.zip`', async () => {
+  it('Can unpack supported file extension: .tgz`, `.tar` and `.zip`', async () => {
     await runAction(HTTPCreateAction)(
       'my-project',
       undefined,
@@ -155,7 +162,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> package-create.action.t
     expect(warnSpy).not.toBeCalled()
   })
 
-  test('When unpack unsupported file extension, will print warnning', async () => {
+  it('When unpack unsupported file extension, will print warnning', async () => {
     await runAction(HTTPCreateAction)(
       'my-project',
       undefined,
