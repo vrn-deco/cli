@@ -36,7 +36,6 @@ export class PackageCreateAction extends CreateAction {
     await super.execute()
     const pkg = await this.pullBoiPackage()
     await this.installBoilerplate(pkg)
-    logger.done(`Project created successfully, located at ${this.targetDirectory}\nHappy coding!`)
   }
 
   override async clear(): Promise<void> {
