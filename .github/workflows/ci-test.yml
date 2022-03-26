@@ -6,6 +6,7 @@ on:
       - '**'
     paths:
       - '.github/workflows/**'
+      - 'vitest.config.ts'
       - 'packages/**'
 
   pull_request:
