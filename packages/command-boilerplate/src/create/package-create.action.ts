@@ -11,6 +11,8 @@ import { dynamicImport } from '@vrn-deco/cli-shared'
 
 import { CreateAction } from './create.action.js'
 import { PackageBoilerplateService } from '../services/boilerplate.service.js'
+import { PostGit } from '../common.js'
+import { readConfig } from '@vrn-deco/cli-config-helper'
 
 /**
  * Selected interactively from the `manifest-package`
@@ -89,11 +91,21 @@ export class PackageCreateAction extends CreateAction {
   async installBoilerplate(boiPackage: NPMPackage) {
     logger.info('Start creating a project with boilerplate package...')
 
+    const config = readConfig()
     const { name, version, author } = this.baseInfo
 
     try {
       const runner: PresetRunner = (await dynamicImport(boiPackage.mainScript)).default
-      await runner({ targetDir: this.targetDirectory, boiPackageDir: boiPackage.packageDir, name, version, author })
+      await runner({
+        targetDir: this.targetDirectory,
+        boiPackageDir: boiPackage.packageDir,
+        name,
+        version,
+        author,
+        packageManager: config.packageManager,
+        autoInstallDeps: this.options.autoInstallDeps,
+        gitInit: this.options.postGit !== PostGit.Remove, // default always init git
+      })
     } catch (error) {
       logger.verbose(`PresetRunner Error: ${error.message}`)
       throw new Error('Boilerplate runner execution failed')

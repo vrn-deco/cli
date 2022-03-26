@@ -121,7 +121,7 @@ importers:
 
   packages/command-boilerplate:
     specifiers:
-      '@vrn-deco/boilerplate-protocol': ^1.2.0
+      '@vrn-deco/boilerplate-protocol': ^1.3.0
       '@vrn-deco/cli-command': workspace:*
       '@vrn-deco/cli-config-helper': workspace:*
       '@vrn-deco/cli-log': workspace:*
@@ -133,7 +133,7 @@ importers:
       node-fetch: ^3.2.0
       yaml: ^1.10.2
     dependencies:
-      '@vrn-deco/boilerplate-protocol': 1.2.0
+      '@vrn-deco/boilerplate-protocol': 1.3.0
       '@vrn-deco/cli-command': link:../command
       '@vrn-deco/cli-config-helper': link:../config-helper
       '@vrn-deco/cli-log': link:../log
@@ -948,8 +948,8 @@ packages:
       sirv: 2.0.2
     dev: true
 
-  /@vrn-deco/boilerplate-protocol/1.2.0:
-    resolution: {integrity: sha512-q6sVAzpnHRYVOB2KVLlCIyBn5cK7Tx7IqDznNGfdXdRL0EahRUD3PykJ66tO6WFs44XjZYqcTFM99Em7aPvucQ==}
+  /@vrn-deco/boilerplate-protocol/1.3.0:
+    resolution: {integrity: sha512-tV+sXQwfzbA2Tu0xpWTmR/drCd7LzseS17t0wh4Cc3fsF9yyanzgJLd+y+hCbdFmwj/5dktzEQDr+kr/ALuJCg==}
     dependencies:
       ajv: 6.12.6
       fs-extra: 10.0.0

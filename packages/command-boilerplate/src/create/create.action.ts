@@ -27,6 +27,7 @@ export type CreateOptions = ModeOptions & {
   manifestPackage: string
   apiUrl: string
   postGit: PostGit
+  autoInstallDeps: boolean
 }
 export type CreateActionArgs = ActionArgs<CreateArguments, CreateOptions>
 
