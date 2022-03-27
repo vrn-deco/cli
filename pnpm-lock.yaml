@@ -26,7 +26,7 @@ importers:
       prettier: ^2.6.0
       rimraf: ^3.0.2
       typescript: ^4.6.2
-      vitest: ^0.7.6
+      vitest: ^0.7.12
     devDependencies:
       '@changesets/cli': 2.21.1
       '@commitlint/cli': 12.1.4
@@ -50,7 +50,7 @@ importers:
       prettier: 2.6.0
       rimraf: 3.0.2
       typescript: 4.6.2
-      vitest: 0.7.6_@vitest+ui@0.7.6+c8@7.11.0
+      vitest: 0.7.12_@vitest+ui@0.7.6+c8@7.11.0
 
   packages/check-update:
     specifiers:
@@ -4180,9 +4180,9 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitest/0.7.6_@vitest+ui@0.7.6+c8@7.11.0:
-    resolution: {integrity: sha512-fqk0cn0I2BUpzwLfeZ725JeXJ7WGwDtVcVBksQ6SdyjrBi6aex8t3w70TWgyLOXgylS7FJ8C9DRap4MMgpkqYw==}
-    engines: {node: '>=14.14.0'}
+  /vitest/0.7.12_@vitest+ui@0.7.6+c8@7.11.0:
+    resolution: {integrity: sha512-Q/UrBAhStPUeic++s+jnH6M0vsBhemTixAsAKvp6z8zN6K47tfZqob4XgpbViebDmYcmhlyREumVmrpUlyuXdA==}
+    engines: {node: '>=v14.16.0'}
     hasBin: true
     peerDependencies:
       '@vitest/ui': '*'
