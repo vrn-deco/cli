@@ -23,8 +23,7 @@ export class GitCreateAction extends CreateAction {
   override async execute(): Promise<void> {
     await super.execute()
     await this.execGitClone()
-    await this.postHandle()
-    logger.done(`Project created successfully, located at ${this.targetDirectory}\nHappy coding!`)
+    await this.postGit()
   }
 
   override async clear(): Promise<void> {
@@ -61,7 +60,7 @@ export class GitCreateAction extends CreateAction {
     }
   }
 
-  async postHandle(): Promise<void> {
+  async postGit(): Promise<void> {
     logger.verbose('Start post-handle...')
     logger.verbose(`PostGit -> ` + this.options.postGit)
     const handleMap: Record<PostGit, () => void | Promise<void>> = {

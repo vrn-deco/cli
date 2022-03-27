@@ -54,6 +54,7 @@ createCommand
       .choices([PostGit.Retain, PostGit.Remove, PostGit.Rebuild])
       .default(PostGit.Retain),
   )
+  .option('-A, --no-auto-install-deps', 'not install, only in `package` mode will install dependencies', false)
   .action(runActionByMode)
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -27,6 +27,7 @@ export type CreateOptions = ModeOptions & {
   manifestPackage: string
   apiUrl: string
   postGit: PostGit
+  autoInstallDeps: boolean
 }
 export type CreateActionArgs = ActionArgs<CreateArguments, CreateOptions>
 
@@ -82,7 +83,7 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
   }
 
   override async clear(): Promise<void> {
-    //
+    logger.done(`Project created successfully, located at ${this.targetDirectory}\nHappy coding!`)
   }
 
   async verifyDirectory(): Promise<void> {
