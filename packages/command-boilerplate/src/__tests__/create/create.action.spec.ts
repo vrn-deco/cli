@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Boilerplate } from '@vrn-deco/boilerplate-protocol'
+import { Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
 
 import { logger } from '@vrn-deco/cli-log'
 import { testShared } from '@vrn-deco/cli-shared'
@@ -174,10 +174,35 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
       package: '@vrn-deco/my-boilerplate',
       version: '1.0.0',
       tags: ['web', 'mobile'],
+      recommended: true,
+      deprecated: false,
     }
     const boilerplateChoiceName = createAction.getBoilerplateChoiceName(boilerplate)
     expect(boilerplateChoiceName).toContain(boilerplate.name)
-    expect(boilerplateChoiceName).toContain(boilerplate.desc)
-    expect(boilerplateChoiceName).toContain(boilerplate.tags?.join(','))
+    expect(boilerplateChoiceName).toContain(boilerplate.tags?.join(', '))
+    expect(boilerplateChoiceName).toContain('<recommended>')
+
+    boilerplate.recommended = false
+    boilerplate.deprecated = true
+    expect(createAction.getBoilerplateChoiceName(boilerplate)).toContain('<deprecated>')
+  })
+
+  // getLangChoiceName
+  it('Can get correct lang choice name', () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const createAction = new CreateAction('my-project', '.', {} as any, new Command())
+    const lang: Lang = {
+      name: 'TypeScript',
+      boilerplate: [],
+      recommended: true,
+      deprecated: false,
+    }
+    const langChoiceName = createAction.getLanguageChoiceName(lang)
+    expect(langChoiceName).toContain(lang.name)
+    expect(langChoiceName).toContain('<recommended>')
+
+    lang.recommended = false
+    lang.deprecated = true
+    expect(createAction.getLanguageChoiceName(lang)).toContain('<deprecated>')
   })
 })

@@ -1,5 +1,17 @@
 # @vrn-deco/cli
 
+## 1.2.0
+
+### Features:
+
+- Implement the conventions of protocol v1.3.0 ([vrn-deco/boileerplate#109](https://github.com/vrn-deco/boilerplate/pull/109))
+- Passing additional parameters when calling the `runner` ([#12](https://github.com/vrn-deco/cli/issues/12))
+  - In `package` mode will automatically install dependencies, disable with `-A` or `--no-auto-install-deps` option
+  - In `package` mode will automatically initialize git, disable by specifying `--post-git remove`
+- Implemented Lang and Boilerplate support for new protocols in interactive mode selection ([#16](https://github.com/vrn-deco/cli/issues/12))
+  - Highlight `recommended` and `deprecated`
+  - Optimized `tags` display
+
 ## 1.1.3
 
 ### Bug Fixes:

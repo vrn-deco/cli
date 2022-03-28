@@ -42,4 +42,9 @@ export class CreateActionMock extends Action {
     let name = boilerplate.name
     return name
   }
+
+  getLanguageChoiceName(lang) {
+    let name = lang.name
+    return name
+  }
 }

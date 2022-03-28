@@ -73,7 +73,11 @@ export class HTTPCreateAction extends CreateAction {
         name: 'lang',
         message: 'Select a programming language: ',
         type: 'list',
-        choices: manifest.map((lang: Lang<APIBoilerplate>) => ({ short: lang.name, name: lang.name, value: lang })),
+        choices: manifest.map((lang: Lang<APIBoilerplate>) => ({
+          short: lang.name,
+          name: this.getLanguageChoiceName(lang),
+          value: lang,
+        })),
       },
       {
         name: 'boilerplate',
