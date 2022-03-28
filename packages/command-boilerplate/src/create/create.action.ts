@@ -6,7 +6,7 @@
 import path from 'node:path'
 import os from 'node:os'
 import fs from 'fs-extra'
-import { APIBoilerplate, Boilerplate } from '@vrn-deco/boilerplate-protocol'
+import { APIBoilerplate, Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
 
 import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { colors, logger } from '@vrn-deco/cli-log'
@@ -134,13 +134,24 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
   }
 
   getBoilerplateChoiceName(boilerplate: Boilerplate | APIBoilerplate): string {
-    let name = boilerplate.name
-    if (boilerplate.desc) {
-      name += ' ' + colors.gray(boilerplate.desc)
-    }
+    let parts: string[] = [boilerplate.name]
+    // tags
     if (boilerplate.tags && boilerplate.tags.length) {
-      name += ' ' + colors.gray(boilerplate.tags.join(','))
+      parts.push(colors.yellow(`(${boilerplate.tags.join(', ')})`))
     }
-    return name
+    // version
+    parts.push(colors.gray(`v${boilerplate.version}`))
+    // recommended and deprecated
+    boilerplate.recommended && parts.push(colors.green('<recommended>'))
+    boilerplate.deprecated && parts.push(colors.red('<deprecated>'))
+    return parts.join(' ')
+  }
+
+  getLanguageChoiceName(lang: Lang | Lang<APIBoilerplate>): string {
+    let parts: string[] = [lang.name]
+    // recommended and deprecated
+    lang.recommended && parts.push(colors.green('<recommended>'))
+    lang.deprecated && parts.push(colors.red('<deprecated>'))
+    return parts.join(' ')
   }
 }
