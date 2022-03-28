@@ -8,7 +8,7 @@
 - Passing additional parameters when calling the `runner` ([#12](https://github.com/vrn-deco/cli/issues/12))
   - In `package` mode will automatically install dependencies, disable with `-A` or `--no-auto-install-deps` option
   - In `package` mode will automatically initialize git, disable by specifying `--post-git remove`
-- Implemented Lang and Boilerplate support for new protocols in interactive mode selection
+- Implemented Lang and Boilerplate support for new protocols in interactive mode selection ([#16](https://github.com/vrn-deco/cli/issues/12))
   - Highlight `recommended` and `deprecated`
   - Optimized `tags` display
 
