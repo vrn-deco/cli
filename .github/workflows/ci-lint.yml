@@ -16,7 +16,7 @@ on:
       - 'packages/**'
 
 jobs:
-  eslint:
+  ESLint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
