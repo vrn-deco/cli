@@ -11,9 +11,11 @@ import dotenv from 'dotenv'
 import semver from 'semver'
 import rootCheck from 'root-check'
 
-import { figlet, colors, logger } from '@vrn-deco/cli-log'
+import { figlet, logger } from '@vrn-deco/cli-log'
 import { checkUpdate } from '@vrn-deco/cli-check-update'
 import { SwitchStatus } from '@vrn-deco/cli-shared'
+
+import { gradient } from './utils.js'
 
 // ESM doesn't have __filename and __dirname
 const __filename = fileURLToPath(import.meta.url)
@@ -62,7 +64,7 @@ function injectDefaultEnv() {
 export function printLOGO() {
   logger.clearConsole()
   const logo = figlet.textSync(process.env.VRN_CLI_NAME.toUpperCase(), 'Isometric1')
-  console.log(colors.green(logo))
+  console.log(gradient(logo), '\n')
 }
 
 export function setLogLevel() {

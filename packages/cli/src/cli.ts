@@ -10,6 +10,7 @@ import fs from 'fs-extra'
 import { logger } from '@vrn-deco/cli-log'
 import { Command, registerCommands } from '@vrn-deco/cli-command'
 import { isObject } from '@vrn-deco/cli-shared'
+import { gradient } from './utils.js'
 
 type CLIOptions = {
   // debug: boolean
@@ -25,7 +26,7 @@ export function createCLI(commands?: Command[]): Command {
     // .option('--debug', 'enable debug', false)
     .option('--module-map <json>', 'local module mapping')
     .option('--module-map-file <json-file>', 'local module mapping file')
-    .version(`${VRN_CLI_PACKAGE_NAME} version: ${VRN_CLI_VERSION}`, '-v, --version', 'display version')
+    .version(gradient(`${VRN_CLI_PACKAGE_NAME} version: ${VRN_CLI_VERSION}`), '-v, --version', 'display version')
 
   cli.on('option:module-map', () => {
     logger.verbose('received --module-map option', 'MODULE_MAP')
