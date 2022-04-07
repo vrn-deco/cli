@@ -45,11 +45,13 @@
     "@vrn-deco/cli-shared": "workspace:*",
     "dotenv": "^10.0.0",
     "fs-extra": "^10.0.0",
+    "gradient-string": "^2.0.0",
     "import-local": "^3.0.2",
     "root-check": "^2.0.0",
     "semver": "^7.3.5"
   },
   "devDependencies": {
+    "@types/gradient-string": "^1.1.2",
     "@types/root-check": "^1.0.0",
     "@types/semver": "^7.3.6"
   }
