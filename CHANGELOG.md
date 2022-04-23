@@ -1,5 +1,20 @@
 # @vrn-deco/cli
 
+## 1.2.2
+
+### Refactor:
+
+- Supports calling without arguments for `create`
+
+```sh
+vrn create app
+
+# Will ask for `folderName`
+vrn create
+```
+
+Note that if you call with no arguments and pass the --yes option, you will get an error
+
 ## 1.2.1
 
 ### Refactor:

@@ -60,12 +60,18 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
   override async initialize(requiredBaseInfo = true): Promise<void> {
     let [folderName, baseDirectory] = this.arguments
 
-    this.folderName = folderName
+    if (folderName) {
+      this.folderName = folderName
+    } else {
+      // - called via vrn create with no arguments
+      // - called via create-vrn package
+      this.folderName = await this.inquireFolderName()
+    }
+
     this.baseDirectory = path.resolve(process.cwd(), baseDirectory ?? this.DEFAULT_BASE_DIRECTORY)
 
-    if (!isValidProjectName(this.folderName)) {
+    if (!isValidProjectName(this.folderName))
       throw new Error(`the 'folderName' must conform to the npm package name specification: ${this.folderName}`)
-    }
 
     await this.verifyDirectory()
     this.targetDirectory = path.join(this.baseDirectory, this.folderName)
@@ -97,6 +103,19 @@ export class CreateAction extends Action<CreateArguments, CreateOptions> {
     if (fs.pathExistsSync(dir)) {
       throw new Error(`the directory '${dir}' already exists`)
     }
+  }
+
+  async inquireFolderName(): Promise<string> {
+    // non-interactive should be passed via arguments
+    if (this.options.yes) throw new Error('missing arguments: folderName')
+
+    const { folderName } = await prompt<{ folderName: string }>([
+      {
+        name: 'folderName',
+        message: 'Folder name: ',
+      },
+    ])
+    return folderName
   }
 
   async inquireBaseInfo(): Promise<ProjectBaseInfo> {
