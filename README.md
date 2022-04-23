@@ -17,37 +17,47 @@
 
 `@vrn-deco/cli` is an automated command line tool whose core feature is to help you quickly build an engineered project via `boilerplate`. It supports multiple creation modes, you can get `boilerplate` from the sources we provide, or you can specify a third party or your own source.
 
-> Notice:
->
-> Full transition to Pure ESM as of **v1.0.1**, please make sure your **Node.js version** is not lower than **v14.13.1**
+> ⚠️ Please make sure your **Node.js version >=14.13.1**
 
 ## Quick Start
 
-First you need to install `@vrn-deco/cli` globally
+If you are using it for the first time, we recommend `npm create` to quickly create it without installing the CLI globally
+
+![create-demo-gif](https://cdn.jsdelivr.net/gh/cphayim/oss@main/images/2022/04/23/233707mdKhKf.gif)
 
 ```sh
+# npm
+npm create vrn@latest
+# yarn
+yarn create vrn
+# pnpm
+pnpm create vrn
+```
+
+Then follow the prompts, you can create a project with the preset `boilerplate-package`!
+
+## Install CLI
+
+If you need to use it frequently, or plan to learn the follow-up advanced guide, then please install `@vrn-deco/cli` globally
+
+```sh
+# npm
 npm install -g @vrn-deco/cli
-# or with yarn
+# yarn
 yarn add --global @vrn-deco/cli
-# or with pnpm
+# pnpm
 pnpm install -g @vrn-deco/cli
 ```
 
-Next, use the `create` command, followed by the name of the directory you prefer
+Let's create another project, this time by executing `vrn create` command
 
 ```sh
 vrn create my-app
 ```
 
-Create a project with the pre-defined `boilerplate-package` in a few simple command line interactions!
+Follow the prompts to complete the project creation
 
 > Since the dependencies of services other than the ontology are dynamically managed, checks and incremental installations are performed during use
-
-Of course, it is possible to use `npx` to execute commands directly without installation
-
-```sh
-npx @vrn-deco/cli create my-app
-```
 
 ## Advanced Guide
 
