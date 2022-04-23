@@ -71,7 +71,7 @@ Here is the advanced content, you will know the following:
   - Package Mode creation
     - Interactive and non-interactive
     - Custom `manifest-package`
-  - HTTP creation
+  - HTTP Mode creation
     - Interactive and non-interactive
     - Custom `api-url`
   - Git Mode creation
