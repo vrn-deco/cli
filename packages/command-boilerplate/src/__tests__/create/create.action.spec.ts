@@ -151,6 +151,22 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     expect(createAction.baseInfo).toEqual({ name: 'my-project', version: '1.0.0', author: 'Cphayim' })
   })
 
+  // v1.2.2
+  // Calls without arguments do not support non-interactive
+  it('When the --yes options is passed and called without arguments, will throw a error', async () => {
+    expect.assertions(1)
+    try {
+      await runAction(CreateAction)(
+        undefined,
+        undefined,
+        { yes: true, name: 'my-project', version: '1.0.0', author: 'Cphayim' },
+        new Command(),
+      )
+    } catch (error) {
+      expect(error.message).toBe('missing arguments: folderName')
+    }
+  })
+
   // interactive
   it('When user has answered the projectName, version, and author, will get baseInfo', async () => {
     // call pathExistsSync twice
@@ -160,6 +176,22 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> create.action.ts', () =
     pathExistsSyncSpy.mockImplementationOnce(() => false) // targetDirectory not exist, good!
     prompt.mockReturnValueOnce(Promise.resolve({ name: 'my-project', version: '1.0.0', author: 'Cphayim' }))
     const createAction = await runAction(CreateAction)('my-project', undefined, {}, new Command())
+    expect(pathExistsSyncSpy).toBeCalledTimes(2)
+    expect(createAction.baseInfo).toEqual({ name: 'my-project', version: '1.0.0', author: 'Cphayim' })
+  })
+
+  // v1.2.2
+  // Calling with no arguments will ask the user for the folder name
+  it('Calling with no arguments will ask the user for the folder name', async () => {
+    // call pathExistsSync twice
+    // the first time to check baseDirectory
+    // the second time to check targetDirectory
+    prompt.mockReturnValueOnce(Promise.resolve({ folderName: 'my-project' }))
+    pathExistsSyncSpy.mockImplementationOnce(() => false) // baseDirectory exist, not mkdir
+    pathExistsSyncSpy.mockImplementationOnce(() => false) // targetDirectory not exist, good!
+    prompt.mockReturnValueOnce(Promise.resolve({ name: 'my-project', version: '1.0.0', author: 'Cphayim' }))
+    const createAction = await runAction(CreateAction)(undefined, undefined, {}, new Command())
+    expect(createAction.folderName).toBe('my-project')
     expect(pathExistsSyncSpy).toBeCalledTimes(2)
     expect(createAction.baseInfo).toEqual({ name: 'my-project', version: '1.0.0', author: 'Cphayim' })
   })

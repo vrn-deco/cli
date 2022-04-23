@@ -34,7 +34,7 @@ export default createCommand
 createCommand
   .name('create')
   .description('create a new project with boilerplate service')
-  .arguments('<folder_name> [base_directory]')
+  .arguments('[folder_name] [base_directory]')
   .addOption(
     new Option('--mode <name>', 'mode of creation').choices([Mode.Package, Mode.Http, Mode.Git]).default(Mode.Package),
   )
