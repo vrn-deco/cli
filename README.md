@@ -36,7 +36,7 @@ pnpm create vrn
 
 Then follow the prompts, you can create a project with the preset `boilerplate-package`!
 
-## Install CLI
+### Install CLI
 
 If you need to use it frequently, or plan to learn the follow-up advanced guide, then please install `@vrn-deco/cli` globally
 
