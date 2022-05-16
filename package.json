@@ -19,7 +19,7 @@
     "test:unit": "esmo scripts/test.ts",
     "test:unit:changed": "esmo scripts/test.ts --changed main",
     "test:coverage": "esmo scripts/test.ts --coverage",
-    "lint": "eslint packages/*/src/**.ts",
+    "lint": "eslint packages/ --ext .ts --fix --ignore-path .gitignore",
     "format": "prettier --write --parser typescript \"packages/**/*.ts\"",
     "commit": "git add . && cz",
     "ch:add": "esmo scripts/changeset.ts --add",

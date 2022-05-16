@@ -7,6 +7,7 @@ import { Command } from '@vrn-deco/cli-command'
 
 import createCommand from './create/create.command.js'
 import listCommand from './list/list.command.js'
+import clearCommand from './clear/clear.command.js'
 
 const boilerplateCommand = new Command('boilerplate')
 
@@ -15,6 +16,7 @@ boilerplateCommand
   .description('boilerplate services')
   .addCommand(createCommand) //
   .addCommand(listCommand) //
+  .addCommand(clearCommand)
 
 export default boilerplateCommand
 
