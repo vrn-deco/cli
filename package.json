@@ -5,10 +5,10 @@
   "repository": "git@github.com:vrn-deco/cli.git",
   "license": "MIT",
   "engines": {
-    "node": "^12.20.0 || ^14.13.1 || >=16.0.0",
-    "pnpm": ">=6.28.0"
+    "node": "^14.13.1 || >=16.0.0",
+    "pnpm": ">=7.0.0"
   },
-  "packageManager": "pnpm@6.28.0",
+  "packageManager": "pnpm@7.0.0",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
