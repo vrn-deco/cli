@@ -1,5 +1,15 @@
 # @vrn-deco/cli
 
+## 1.2.3
+
+### Features:
+
+Some unforeseen circumstances can lead to corrupted dependency files, now you can use `clean` to clean it
+
+```
+vrn boi clear
+```
+
 ## 1.2.2
 
 ### Refactor:
