@@ -12,18 +12,18 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
-    "clean": "esmo scripts/clean.ts --build --deps",
-    "clean:build": "esmo scripts/clean.ts --build",
-    "clean:deps": "esmo scripts/clean.ts --deps",
-    "build": "esmo scripts/build.ts --no-cache",
-    "test:unit": "esmo scripts/test.ts",
-    "test:unit:changed": "esmo scripts/test.ts --changed main",
-    "test:coverage": "esmo scripts/test.ts --coverage",
+    "clean": "tsx scripts/clean.ts --build --deps",
+    "clean:build": "tsx scripts/clean.ts --build",
+    "clean:deps": "tsx scripts/clean.ts --deps",
+    "build": "tsx scripts/build.ts --no-cache",
+    "test:unit": "tsx scripts/test.ts",
+    "test:unit:changed": "tsx scripts/test.ts --changed main",
+    "test:coverage": "tsx scripts/test.ts --coverage",
     "lint": "eslint packages/ --ext .ts --fix --ignore-path .gitignore",
     "format": "prettier --write --parser typescript \"packages/**/*.ts\"",
     "commit": "git add . && cz",
-    "ch:add": "esmo scripts/changeset.ts --add",
-    "ch:version": "esmo scripts/changeset.ts --version"
+    "ch:add": "tsx scripts/changeset.ts --add",
+    "ch:version": "tsx scripts/changeset.ts --version"
   },
   "config": {
     "commitizen": {
@@ -61,6 +61,7 @@
     "lint-staged": "^11.2.6",
     "prettier": "^2.6.2",
     "rimraf": "^3.0.2",
+    "tsx": "^3.8.2",
     "typescript": "^4.6.4",
     "vitest": "^0.12.6"
   }
