@@ -4,7 +4,7 @@
 <img src="../../docs/images/cli-logo.png" width="600" alt="vrn-cli" />
 </a>
 
-![GitHub Actions Status](https://github.com/vrn-deco/cli/actions/workflows/ci-test.yml/badge.svg)
+![GitHub Actions Status](https://github.com/vrn-deco/cli/actions/workflows/ci.yml/badge.svg)
 [![codecov](https://codecov.io/gh/vrn-deco/cli/branch/main/graph/badge.svg?token=9PA5BCTSFB)](https://codecov.io/gh/vrn-deco/cli)
 [![npm package](https://badgen.net/npm/v/@vrn-deco/cli)](https://www.npmjs.com/package/@vrn-deco/cli)
 ![GitHub language](https://img.shields.io/github/languages/top/vrn-deco/cli.svg)
