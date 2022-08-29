@@ -60,26 +60,26 @@ importers:
 
   packages/check-update:
     specifiers:
-      '@types/semver': ^7.3.6
+      '@types/semver': ^7.3.12
       '@vrn-deco/cli-config-helper': workspace:*
       '@vrn-deco/cli-log': workspace:*
       '@vrn-deco/cli-npm-helper': workspace:*
       '@vrn-deco/cli-shared': workspace:*
-      semver: ^7.3.5
+      semver: ^7.3.7
     dependencies:
       '@vrn-deco/cli-config-helper': link:../config-helper
       '@vrn-deco/cli-log': link:../log
       '@vrn-deco/cli-npm-helper': link:../npm-helper
       '@vrn-deco/cli-shared': link:../shared
-      semver: 7.3.5
+      semver: 7.3.7
     devDependencies:
-      '@types/semver': 7.3.9
+      '@types/semver': 7.3.12
 
   packages/cli:
     specifiers:
       '@types/gradient-string': ^1.1.2
       '@types/root-check': ^1.0.0
-      '@types/semver': ^7.3.6
+      '@types/semver': ^7.3.12
       '@vrn-deco/cli-check-update': workspace:*
       '@vrn-deco/cli-command': workspace:*
       '@vrn-deco/cli-command-boilerplate': workspace:*
@@ -93,7 +93,7 @@ importers:
       gradient-string: ^2.0.1
       import-local: ^3.0.2
       root-check: ^2.0.0
-      semver: ^7.3.5
+      semver: ^7.3.7
     dependencies:
       '@vrn-deco/cli-check-update': link:../check-update
       '@vrn-deco/cli-command': link:../command
@@ -108,11 +108,11 @@ importers:
       gradient-string: 2.0.1
       import-local: 3.1.0
       root-check: 2.0.0
-      semver: 7.3.5
+      semver: 7.3.7
     devDependencies:
       '@types/gradient-string': 1.1.2
       '@types/root-check': 1.0.0
-      '@types/semver': 7.3.9
+      '@types/semver': 7.3.12
 
   packages/command:
     specifiers:
@@ -852,8 +852,8 @@ packages:
     resolution: {integrity: sha512-KQf+QAMWKMrtBMsB8/24w53tEsxllMj6TuA80TT/5igJalLI/zm0L3oXRbIAl4Ohfc85gyHX/jhMwsVkmhLU4A==}
     dev: true
 
-  /@types/semver/7.3.9:
-    resolution: {integrity: sha512-L/TMpyURfBkf+o/526Zb6kd/tchUP3iBDEPjqjb+U2MAJhVRxxrmr2fwpe08E7QsV7YLcpq0tUaQ9O9x97ZIxQ==}
+  /@types/semver/7.3.12:
+    resolution: {integrity: sha512-WwA1MW0++RfXmCr12xeYOOC5baSC9mSb0ZqCquFzKhcoF4TvHu5MKOuXsncgZcpVFhB1pXd5hZmM0ryAoCp12A==}
     dev: true
 
   /@types/through/0.0.30:
@@ -4016,6 +4016,7 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
+    dev: true
 
   /semver/7.3.7:
     resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==}
@@ -4023,7 +4024,6 @@ packages:
     hasBin: true
     dependencies:
       lru-cache: 6.0.0
-    dev: true
 
   /set-blocking/2.0.0:
     resolution: {integrity: sha512-KiKBS8AnWGEyLzofFfmvKwpdPzqiy16LvQfK3yv/fVH7Bj13/wl3JSR1J+rfgRE9q7xUJK4qvgS8raSOeLUehw==}
