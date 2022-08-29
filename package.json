@@ -42,6 +42,7 @@
     "@changesets/cli": "^2.24.3",
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.1.4",
+    "@ombro/eslint-config-typescript": "^0.1.1",
     "@ombro/logger": "^1.5.5",
     "@ombro/ts-config": "^1.4.0",
     "@types/fs-extra": "^9.0.13",
