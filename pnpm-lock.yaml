@@ -142,7 +142,7 @@ importers:
       compressing: ^1.5.1
       execa: ^6.1.0
       fs-extra: ^10.0.0
-      node-fetch: ^3.2.0
+      node-fetch: ^3.2.10
       yaml: ^1.10.2
     dependencies:
       '@vrn-deco/boilerplate-protocol': 1.3.0
@@ -154,7 +154,7 @@ importers:
       compressing: 1.5.1
       execa: 6.1.0
       fs-extra: 10.0.0
-      node-fetch: 3.2.0
+      node-fetch: 3.2.10
       yaml: 1.10.2
 
   packages/command-config:
@@ -191,13 +191,13 @@ importers:
       '@vrn-deco/cli-shared': workspace:*
       execa: ^6.1.0
       fs-extra: ^10.0.0
-      node-fetch: ^3.2.0
+      node-fetch: ^3.2.10
     dependencies:
       '@vrn-deco/cli-log': link:../log
       '@vrn-deco/cli-shared': link:../shared
       execa: 6.1.0
       fs-extra: 10.0.0
-      node-fetch: 3.2.0
+      node-fetch: 3.2.10
 
   packages/shared:
     specifiers: {}
@@ -3558,8 +3558,8 @@ packages:
     engines: {node: '>=10.5.0'}
     dev: false
 
-  /node-fetch/3.2.0:
-    resolution: {integrity: sha512-8xeimMwMItMw8hRrOl3C9/xzU49HV/yE6ORew/l+dxWimO5A4Ra8ld2rerlJvc/O7et5Z1zrWsPX43v1QBjCxw==}
+  /node-fetch/3.2.10:
+    resolution: {integrity: sha512-MhuzNwdURnZ1Cp4XTazr69K0BTizsBroX7Zx3UgDSVcZYKF/6p0CBe4EUb/hLqmzVhl0UpYfgRljQ4yxE+iCxA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       data-uri-to-buffer: 4.0.0
