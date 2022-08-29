@@ -1,0 +1,11 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: ['config:base'],
+  assignees: ['Cphayim', 'Hoyoe'], // PR 中的 assignees 包含这些人
+  labels: ['dependencies'], // PR 中的 labels 包含这些标签
+  rangeStrategy: 'bump', // 当前版本号的范围策略, bump: "v1.0.0 -> v1.1.0"
+  // commitBodyTable: true, // 在 PR 正文中附加一个描述更新内容的表格
+  ignorePaths: ['**/__tests__/**'],
+  ignoreDeps: ['typescript'],
+  timezone: 'Asia/Shanghai',
+}
