@@ -9,7 +9,7 @@ import { pipeline as _pipeline } from 'node:stream'
 import { promisify } from 'node:util'
 import fs from 'fs-extra'
 
-import { Manifest, APIManifest } from '@vrn-deco/boilerplate-protocol'
+import type { Manifest, APIManifest } from '@vrn-deco/boilerplate-protocol'
 import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { readConfig } from '@vrn-deco/cli-config-helper'
 import { logger } from '@vrn-deco/cli-log'
@@ -78,14 +78,14 @@ export class HTTPBoilerplateService implements IBoilerplateProvider {
   }
 
   async downloadBoilerplate(file: string, dir: string): Promise<string> {
-    const savename = path.basename(file)
+    const saveName = path.basename(file)
     try {
-      logger.startLoading(`downloading boilerplate ${savename}...`)
+      logger.startLoading(`downloading boilerplate ${saveName}...`)
       const stream = await this.fetchBoilerplate(file)
       if (!stream) throw new Error('Failed to fetch boilerplate stream')
       // write stream
-      await pipeline(stream, fs.createWriteStream(path.join(dir, savename)))
-      return savename
+      await pipeline(stream, fs.createWriteStream(path.join(dir, saveName)))
+      return saveName
     } catch (error) {
       logger.verbose(error)
       throw new Error(`Failed to download boilerplate: ${file}`)

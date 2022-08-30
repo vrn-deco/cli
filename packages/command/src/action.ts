@@ -4,7 +4,7 @@
  * @Description: Action abstract class, relevant types
  */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Command } from 'commander'
+import type { Command } from 'commander'
 import { logger } from '@vrn-deco/cli-log'
 
 export type Arguments = readonly unknown[]

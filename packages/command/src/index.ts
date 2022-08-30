@@ -3,7 +3,7 @@
  * @Date: 2021-06-22 00:27:10
  * @Description: command tools
  */
-import { Command } from 'commander'
+import type { Command } from 'commander'
 import inquirer from 'inquirer'
 
 // Commonjs to ESM named export
