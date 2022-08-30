@@ -110,9 +110,9 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
     expect(execa.mock.calls[0][1]).toEqual(['clone', 'git@github.com/vrn-deco/test-boilerplate', 'my-project'])
   })
 
-  it('When exec git clone faild, will throw a error', async () => {
+  it('When exec git clone failed, will throw a error', async () => {
     expect.assertions(2)
-    execa.mockRejectedValueOnce(new Error('Git clone faild'))
+    execa.mockRejectedValueOnce(new Error('Git clone failed'))
     try {
       await runAction(GitCreateAction)(
         'my-project',
@@ -122,7 +122,7 @@ describe('@vrn-deco/cli-command-boilerplate -> create -> git-create.action.ts', 
       )
     } catch (error) {
       expect(execa).toBeCalled()
-      expect(error.message).toContain('Git clone faild')
+      expect(error.message).toContain('Git clone failed')
     }
   })
 

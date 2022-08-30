@@ -7,7 +7,7 @@ import { Command, Option, runAction } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
 
 import { DEFAULT_API_BASE_URL, DEFAULT_MANIFEST_PACKAGE, Mode, PostGit } from '../common.js'
-import { CreateAction, CreateOptions } from './create.action.js'
+import type { CreateAction, CreateOptions } from './create.action.js'
 import { GitCreateAction } from './git-create.action.js'
 import { HTTPCreateAction } from './http-create.action.js'
 import { PackageCreateAction } from './package-create.action.js'

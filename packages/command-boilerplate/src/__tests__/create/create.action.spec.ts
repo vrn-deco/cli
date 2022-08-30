@@ -1,6 +1,6 @@
 import fs from 'fs-extra'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
-import { Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
+import type { Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
 
 import { logger } from '@vrn-deco/cli-log'
 import { testShared } from '@vrn-deco/cli-shared'

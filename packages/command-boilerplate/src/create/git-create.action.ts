@@ -55,8 +55,8 @@ export class GitCreateAction extends CreateAction {
       logger.verbose(`exec: git clone ${gitURL} ${this.folderName}`)
       await execa('git', ['clone', gitURL, this.folderName], { cwd: this.baseDirectory, stdio: 'inherit' })
     } catch (error) {
-      logger.verbose(`Git clone faild: ${error.message}`)
-      throw new Error('Git clone faild')
+      logger.verbose(`Git clone failed: ${error.message}`)
+      throw new Error('Git clone failed')
     }
   }
 

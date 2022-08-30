@@ -3,10 +3,10 @@
  * @Date: 2022-02-28 21:49:05
  * @Description: create action for package mode
  */
-import { Boilerplate, Lang, PresetRunner } from '@vrn-deco/boilerplate-protocol'
+import type { Boilerplate, Lang, PresetRunner } from '@vrn-deco/boilerplate-protocol'
 import { logger } from '@vrn-deco/cli-log'
 import { prompt } from '@vrn-deco/cli-command'
-import { NPMPackage } from '@vrn-deco/cli-npm-helper'
+import type { NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { dynamicImport } from '@vrn-deco/cli-shared'
 
 import { CreateAction } from './create.action.js'
@@ -20,11 +20,11 @@ import { readConfig } from '@vrn-deco/cli-config-helper'
  *
  * Focus only on the `package`, `version` fields
  */
-type SimplifiedBoilerpate = Pick<Boilerplate, 'package' | 'version'>
+type SimplifiedBoilerplate = Pick<Boilerplate, 'package' | 'version'>
 
 export class PackageCreateAction extends CreateAction {
   boiService!: PackageBoilerplateService
-  boilerplate!: SimplifiedBoilerpate
+  boilerplate!: SimplifiedBoilerplate
 
   override async initialize(): Promise<void> {
     await super.initialize()
@@ -44,7 +44,7 @@ export class PackageCreateAction extends CreateAction {
     await super.clear()
   }
 
-  async inquireBoilerplate(): Promise<SimplifiedBoilerpate> {
+  async inquireBoilerplate(): Promise<SimplifiedBoilerplate> {
     // non-interactive
     if (this.options.yes) {
       if (!this.options.targetBoilerplate) throw new Error('missing option --target-boilerplate')
