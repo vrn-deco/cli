@@ -52,7 +52,7 @@
     "@vitest/ui": "^0.22.1",
     "commitizen": "^4.2.5",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.15.0",
+    "eslint": "^8.23.0",
     "eslint-config-prettier": "^8.5.0",
     "execa": "^6.1.0",
     "husky": "^6.0.0",
