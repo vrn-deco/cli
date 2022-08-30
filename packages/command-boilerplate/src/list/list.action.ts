@@ -9,7 +9,7 @@ import YAML from 'yaml'
 
 import { colors } from '@vrn-deco/cli-log'
 import { Action, ActionArgs } from '@vrn-deco/cli-command'
-import { Manifest } from '@vrn-deco/boilerplate-protocol'
+import type { Manifest } from '@vrn-deco/boilerplate-protocol'
 import { IBoilerplateProvider, PackageBoilerplateService } from '../services/boilerplate.service.js'
 
 type ListArguments = []

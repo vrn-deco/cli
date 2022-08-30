@@ -7,7 +7,7 @@ import path from 'node:path'
 import fs from 'fs-extra'
 import compressing from 'compressing'
 
-import { APIBoilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
+import type { APIBoilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
 import { logger } from '@vrn-deco/cli-log'
 import { prompt } from '@vrn-deco/cli-command'
 
@@ -20,11 +20,11 @@ import { HTTPBoilerplateService } from '../services/boilerplate.service.js'
  *
  * Focus only on the `file` fields
  */
-type SimplifiedBoilerpate = Pick<APIBoilerplate, 'file'>
+type SimplifiedBoilerplate = Pick<APIBoilerplate, 'file'>
 
 export class HTTPCreateAction extends CreateAction {
   boiService!: HTTPBoilerplateService
-  boilerplate!: SimplifiedBoilerpate
+  boilerplate!: SimplifiedBoilerplate
 
   override async initialize(): Promise<void> {
     await super.initialize()
@@ -44,7 +44,7 @@ export class HTTPCreateAction extends CreateAction {
     await super.clear()
   }
 
-  async inquireBoilerplate(): Promise<SimplifiedBoilerpate> {
+  async inquireBoilerplate(): Promise<SimplifiedBoilerplate> {
     // non-interactive
     if (this.options.yes) {
       if (!this.options.targetBoilerplate) throw new Error('missing option --target-boilerplate')
