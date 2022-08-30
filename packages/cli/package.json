@@ -44,7 +44,7 @@
     "@vrn-deco/cli-npm-helper": "workspace:*",
     "@vrn-deco/cli-shared": "workspace:*",
     "dotenv": "^10.0.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "gradient-string": "^2.0.1",
     "import-local": "^3.0.2",
     "root-check": "^2.0.0",

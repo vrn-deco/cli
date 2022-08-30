@@ -30,7 +30,7 @@
     "@vrn-deco/cli-log": "workspace:*",
     "@vrn-deco/cli-shared": "workspace:*",
     "execa": "^6.1.0",
-    "fs-extra": "^10.0.0",
+    "fs-extra": "^10.1.0",
     "node-fetch": "^3.2.10"
   }
 }
