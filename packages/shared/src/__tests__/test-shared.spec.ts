@@ -1,4 +1,5 @@
-import { test, expect } from 'vitest'
+import { expect, test } from 'vitest'
+
 import { SwitchStatus } from '../enum.js'
 import { injectTestEnv } from '../test-shared.js'
 

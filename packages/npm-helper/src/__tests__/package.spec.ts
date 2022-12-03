@@ -1,9 +1,11 @@
-import path from 'node:path'
 import os from 'node:os'
+import path from 'node:path'
+
 import fs from 'fs-extra'
-import { vi, describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { logger } from '@vrn-deco/cli-log'
+
 import { DistTag } from '../common.js'
 
 const execaMock = vi.fn()

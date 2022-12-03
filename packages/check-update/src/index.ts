@@ -5,9 +5,9 @@
  */
 import semver from 'semver'
 
-import { logger, colors, dedent, boxen } from '@vrn-deco/cli-log'
+import { BaseConfig, readConfig, updateConfig } from '@vrn-deco/cli-config-helper'
+import { boxen, colors, dedent, logger } from '@vrn-deco/cli-log'
 import { queryPackageLatestVersion } from '@vrn-deco/cli-npm-helper'
-import { readConfig, updateConfig, BaseConfig } from '@vrn-deco/cli-config-helper'
 
 type CheckUpdateConfig = BaseConfig & {
   // timestamp of last check for updates

@@ -4,6 +4,7 @@
  * @Description: config command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
+
 import { ConfigAction } from './action.js'
 
 const configCommand = new Command('config')

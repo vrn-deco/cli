@@ -1,6 +1,7 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 
 import { Command } from '@vrn-deco/cli-command'
+
 import commands from '../commands.js'
 import { initialEnv } from '../prepare.js'
 

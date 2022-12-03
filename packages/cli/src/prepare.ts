@@ -3,16 +3,17 @@
  * @Date: 2021-06-18 01:28:41
  * @Description: prepare
  */
-import path from 'node:path'
 import os from 'node:os'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import fs from 'fs-extra'
-import dotenv from 'dotenv'
-import semver from 'semver'
-import rootCheck from 'root-check'
 
-import { figlet, logger } from '@vrn-deco/cli-log'
+import dotenv from 'dotenv'
+import fs from 'fs-extra'
+import rootCheck from 'root-check'
+import semver from 'semver'
+
 import { checkUpdate } from '@vrn-deco/cli-check-update'
+import { figlet, logger } from '@vrn-deco/cli-log'
 import { SwitchStatus } from '@vrn-deco/cli-shared'
 
 import { gradient } from './utils.js'

@@ -4,16 +4,17 @@
  * @Description: package manager
  */
 import path from 'node:path'
-import fs from 'fs-extra'
+
 import { execa } from 'execa'
+import fs from 'fs-extra'
 
 import { logger } from '@vrn-deco/cli-log'
 import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
 
 import { DistTag } from './common.js'
-import { parseModuleMap, isPackage, isDistTagVersion } from './utils.js'
+import { InstallOptions, installPackage } from './install.js'
 import { queryPackageVersion } from './querier.js'
-import { installPackage, InstallOptions } from './install.js'
+import { isDistTagVersion, isPackage, parseModuleMap } from './utils.js'
 
 type PackageOptions = InstallOptions & {
   //

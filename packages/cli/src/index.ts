@@ -5,9 +5,9 @@
  */
 import { logger } from '@vrn-deco/cli-log'
 
+import { createCLI } from './cli.js'
 import commands from './commands.js'
 import { prepare } from './prepare.js'
-import { createCLI } from './cli.js'
 
 // To test the branch, wrapper functions are used instead of top-level await
 export async function main() {

@@ -4,7 +4,8 @@
  * @Description: package install
  */
 import { execa } from 'execa'
-import { cmdExists, NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
+
+import { NPMRegistry, PackageManager, cmdExists } from '@vrn-deco/cli-shared'
 
 export type InstallOptions = {
   name: string

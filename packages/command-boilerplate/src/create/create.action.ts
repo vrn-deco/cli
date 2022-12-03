@@ -3,16 +3,17 @@
  * @Date: 2021-07-26 12:35:27
  * @Description: create action
  */
-import path from 'node:path'
 import os from 'node:os'
-import fs from 'fs-extra'
-import type { APIBoilerplate, Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
+import path from 'node:path'
 
+import fs from 'fs-extra'
+
+import type { APIBoilerplate, Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
 import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { colors, logger } from '@vrn-deco/cli-log'
 
-import { isValidProjectName, isValidVersion } from '../utils.js'
 import type { ModeOptions, PostGit } from '../common.js'
+import { isValidProjectName, isValidVersion } from '../utils.js'
 
 type FolderName = string
 type BaseDirectory = string

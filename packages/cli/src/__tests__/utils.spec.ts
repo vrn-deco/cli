@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest'
+
 import { gradient } from '../utils.js'
 
 describe('@vrn-deco/cli -> utils.ts', () => {

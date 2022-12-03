@@ -1,8 +1,9 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+
 import fs from 'fs-extra'
-import YAML from 'yaml'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import YAML from 'yaml'
 
 import { Command, runAction } from '@vrn-deco/cli-command'
 import { testShared } from '@vrn-deco/cli-shared'

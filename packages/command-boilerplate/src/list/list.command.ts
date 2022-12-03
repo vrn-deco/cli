@@ -4,6 +4,7 @@
  * @Description: boilerplate list command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
+
 import { DEFAULT_MANIFEST_PACKAGE } from '../common.js'
 import { ListAction } from './list.action.js'
 

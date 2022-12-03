@@ -2,6 +2,7 @@ import { Command } from 'commander'
 import { describe, expect, it, vi } from 'vitest'
 
 import { testShared } from '@vrn-deco/cli-shared'
+
 import { Action, runAction } from '../action.js'
 
 type Name = string

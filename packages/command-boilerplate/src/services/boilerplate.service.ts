@@ -4,19 +4,20 @@
  * @Description:
  */
 import path from 'node:path'
-import fetch from 'node-fetch'
 import { pipeline as _pipeline } from 'node:stream'
 import { promisify } from 'node:util'
-import fs from 'fs-extra'
 
-import type { Manifest, APIManifest } from '@vrn-deco/boilerplate-protocol'
-import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
+import fs from 'fs-extra'
+import fetch from 'node-fetch'
+
+import type { APIManifest, Manifest } from '@vrn-deco/boilerplate-protocol'
 import { readConfig } from '@vrn-deco/cli-config-helper'
 import { logger } from '@vrn-deco/cli-log'
+import { DistTag, NPMPackage } from '@vrn-deco/cli-npm-helper'
 import { dynamicImport } from '@vrn-deco/cli-shared'
 
-import { getCacheDirectory } from '../utils.js'
 import { DEFAULT_API_BASE_URL, DEFAULT_MANIFEST_PACKAGE } from '../common.js'
+import { getCacheDirectory } from '../utils.js'
 
 const pipeline = promisify(_pipeline)
 

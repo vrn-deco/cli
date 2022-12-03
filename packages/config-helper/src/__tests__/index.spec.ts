@@ -1,9 +1,11 @@
 import os from 'node:os'
 import path from 'node:path'
+
 import fs from 'fs-extra'
 import { afterAll, afterEach, describe, expect, it, vi } from 'vitest'
 
 import { PackageManager, testShared } from '@vrn-deco/cli-shared'
+
 import { readConfig, updateConfig, writeConfig } from '../index.js'
 
 const TEST_HOME_PATH = path.join(os.homedir(), '.vrn-deco.test')

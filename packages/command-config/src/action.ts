@@ -3,11 +3,10 @@
  * @Date: 2021-07-23 15:33:13
  * @Description: config command action
  */
-
-import { colors, logger } from '@vrn-deco/cli-log'
 import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { BaseConfig, readConfig, updateConfig } from '@vrn-deco/cli-config-helper'
-import { noop, NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
+import { colors, logger } from '@vrn-deco/cli-log'
+import { NPMRegistry, PackageManager, noop } from '@vrn-deco/cli-shared'
 
 export type ConfigArguments = []
 export type ConfigOptions = Record<string, never>

@@ -45,6 +45,7 @@
     "@ombro/eslint-config-typescript": "^0.1.2",
     "@ombro/logger": "^1.5.5",
     "@ombro/tsconfig": "^1.4.2",
+    "@trivago/prettier-plugin-sort-imports": "^4.0.0",
     "@types/fs-extra": "^9.0.13",
     "@types/node": "^18.11.10",
     "@vitest/coverage-c8": "^0.25.3",

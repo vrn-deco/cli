@@ -3,8 +3,8 @@
  * @Date: 2021-06-26 01:20:21
  * @Description: shared utils
  */
-import os from 'node:os'
 import { execSync } from 'node:child_process'
+import os from 'node:os'
 import { pathToFileURL } from 'node:url'
 
 export * as testShared from './test-shared.js'
