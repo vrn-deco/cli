@@ -1,6 +1,6 @@
 {
   "name": "create-vrn",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "⚙️ Project scaffolding with command line tools. 🛠",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
@@ -15,7 +15,8 @@
     "index.mjs"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",

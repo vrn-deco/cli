@@ -1,6 +1,6 @@
 {
   "name": "@vrn-deco/cli-command-config",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "vrn create project boilerplate command",
   "author": "Cphayim <i@cphayim.me>",
   "homepage": "https://github.com/vrn-deco/cli#readme",
@@ -13,7 +13,8 @@
     "dist"
   ],
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   },
   "repository": {
     "type": "git",
