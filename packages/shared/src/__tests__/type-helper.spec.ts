@@ -1,23 +1,24 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { describe, it, expect } from 'vitest'
+import { describe, expect, it } from 'vitest'
+
 import {
-  isNumber,
-  isInt,
-  isString,
-  isEmptyString,
-  isBoolean,
-  isUndefined,
-  isNull,
-  isUndefinedOrNull,
-  isSymbol,
-  isBigInt,
-  isRegExp,
-  isObject,
   isArray,
-  isSet,
-  isMap,
-  isFunction,
   isAsyncFunction,
+  isBigInt,
+  isBoolean,
+  isEmptyString,
+  isFunction,
+  isInt,
+  isMap,
+  isNull,
+  isNumber,
+  isObject,
+  isRegExp,
+  isSet,
+  isString,
+  isSymbol,
+  isUndefined,
+  isUndefinedOrNull,
 } from '../type-helper.js'
 
 describe.concurrent('@vrn-deco/cli-shared -> type-helper.ts', () => {

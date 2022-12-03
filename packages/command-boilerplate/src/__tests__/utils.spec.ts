@@ -1,7 +1,9 @@
 import path from 'node:path'
+
 import { beforeAll, describe, expect, it } from 'vitest'
 
 import { testShared } from '@vrn-deco/cli-shared'
+
 import { CACHE_DIR_NAME } from '../common'
 import { getCacheDirectory, isValidProjectName, isValidVersion } from '../utils.js'
 

@@ -4,6 +4,7 @@
  * @Description: boilerplate clear command
  */
 import { Command, runAction } from '@vrn-deco/cli-command'
+
 import { ClearAction } from './clear.action.js'
 
 const listCommand = new Command()

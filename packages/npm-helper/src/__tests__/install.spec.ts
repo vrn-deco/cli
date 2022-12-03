@@ -1,4 +1,5 @@
-import { vi, describe, it, expect } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
+
 import { DistTag } from '../common.js'
 
 const execaMock = vi.fn().mockImplementation(async () => void 0)

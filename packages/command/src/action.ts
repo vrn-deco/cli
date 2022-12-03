@@ -3,8 +3,10 @@
  * @Date: 2021-07-23 16:36:28
  * @Description: Action abstract class, relevant types
  */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import type { Command } from 'commander'
+
 import { logger } from '@vrn-deco/cli-log'
 
 export type Arguments = readonly unknown[]

@@ -1,4 +1,5 @@
 import { afterAll, beforeEach, expect, test, vi } from 'vitest'
+
 import { logger } from '@vrn-deco/cli-log'
 
 logger.setLevel('silent')

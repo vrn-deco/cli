@@ -1,8 +1,8 @@
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 
+import type { BaseConfig } from '@vrn-deco/cli-config-helper'
 import { logger } from '@vrn-deco/cli-log'
 import { NPMRegistry, PackageManager, testShared } from '@vrn-deco/cli-shared'
-import type { BaseConfig } from '@vrn-deco/cli-config-helper'
 
 logger.setLevel('silent')
 

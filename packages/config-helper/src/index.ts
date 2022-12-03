@@ -16,10 +16,11 @@
  * 配置包含：全局通用配置、服务配置（如 boilerplate 服务）
  * 仅包含需要写入磁盘的配置项，否则请使用环境变量
  */
-
-import path from 'node:path'
 import crypto from 'node:crypto'
+import path from 'node:path'
+
 import fs from 'fs-extra'
+
 import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
 
 type ConfigWrapper<T extends BaseConfig> = {

@@ -5,8 +5,9 @@
  */
 import fs from 'fs-extra'
 
-import { logger } from '@vrn-deco/cli-log'
 import { Action, ActionArgs } from '@vrn-deco/cli-command'
+import { logger } from '@vrn-deco/cli-log'
+
 import { getCacheDirectory } from '../utils.js'
 
 type ClearArguments = []

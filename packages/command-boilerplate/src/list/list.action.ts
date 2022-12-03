@@ -4,12 +4,14 @@
  * @Description: boilerplate list command action
  */
 import path from 'node:path'
+
 import fs from 'fs-extra'
 import YAML from 'yaml'
 
-import { colors } from '@vrn-deco/cli-log'
-import { Action, ActionArgs } from '@vrn-deco/cli-command'
 import type { Manifest } from '@vrn-deco/boilerplate-protocol'
+import { Action, ActionArgs } from '@vrn-deco/cli-command'
+import { colors } from '@vrn-deco/cli-log'
+
 import { IBoilerplateProvider, PackageBoilerplateService } from '../services/boilerplate.service.js'
 
 type ListArguments = []

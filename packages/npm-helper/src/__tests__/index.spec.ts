@@ -1,5 +1,6 @@
 import { expect, test } from 'vitest'
-import { queryPackageInfo, installPackage, NPMPackage } from '../index.js'
+
+import { NPMPackage, installPackage, queryPackageInfo } from '../index.js'
 
 test('Export right', () => {
   expect(queryPackageInfo).toBeDefined()

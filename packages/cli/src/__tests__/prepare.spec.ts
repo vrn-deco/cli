@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import { describe, expect, it, vi } from 'vitest'
+
 import { logger } from '@vrn-deco/cli-log'
 import { SwitchStatus } from '@vrn-deco/cli-shared'
 

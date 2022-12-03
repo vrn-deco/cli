@@ -1,6 +1,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { vi, describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
+
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { logger } from '@vrn-deco/cli-log'
 

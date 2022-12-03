@@ -4,15 +4,16 @@
  * @Description: create action for http mode
  */
 import path from 'node:path'
-import fs from 'fs-extra'
+
 import compressing from 'compressing'
+import fs from 'fs-extra'
 
 import type { APIBoilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
-import { logger } from '@vrn-deco/cli-log'
 import { prompt } from '@vrn-deco/cli-command'
+import { logger } from '@vrn-deco/cli-log'
 
-import { CreateAction } from './create.action.js'
 import { HTTPBoilerplateService } from '../services/boilerplate.service.js'
+import { CreateAction } from './create.action.js'
 
 /**
  * Selected interactively from the `manifest-http-api`

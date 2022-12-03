@@ -1,9 +1,10 @@
-import path from 'node:path'
 import os from 'node:os'
+import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { describe, it, expect, vi } from 'vitest'
 
-import { isFunction, noop, cmdExists, dynamicImport, testShared } from '../index.js'
+import { describe, expect, it, vi } from 'vitest'
+
+import { cmdExists, dynamicImport, isFunction, noop, testShared } from '../index.js'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)

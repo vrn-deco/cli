@@ -4,7 +4,9 @@
  * @Description: package query
  */
 import fetch from 'node-fetch'
+
 import { NPMRegistry } from '@vrn-deco/cli-shared'
+
 import { DistTag } from './common.js'
 
 type PackageQueryInfo = {

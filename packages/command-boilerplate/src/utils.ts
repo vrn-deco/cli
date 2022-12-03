@@ -4,7 +4,9 @@
  * @Description:
  */
 import path from 'node:path'
+
 import { isString } from '@vrn-deco/cli-shared'
+
 import { CACHE_DIR_NAME } from './common.js'
 
 export function getCacheDirectory(): string {
