@@ -2,7 +2,7 @@
 
 ## 1.2.4
 
-Update some dependencies ([#61](https://github.com/vrn-deco/cli/issues/61)
+Update some dependencies ([#61](https://github.com/vrn-deco/cli/issues/61))
 
 ## 1.2.3
 
@@ -18,7 +18,7 @@ vrn boi clear
 
 ### Refactor:
 
-- Supports calling without arguments for `create` ([#23](https://github.com/vrn-deco/cli/issues/23)
+- Supports calling without arguments for `create` ([#23](https://github.com/vrn-deco/cli/issues/23))
 
 ```sh
 vrn create app
