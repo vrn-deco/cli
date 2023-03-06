@@ -34,7 +34,7 @@
     "@vrn-deco/cli-log": "workspace:*",
     "@vrn-deco/cli-npm-helper": "workspace:*",
     "@vrn-deco/cli-shared": "workspace:*",
-    "compressing": "^1.7.0",
+    "compressing": "^1.8.0",
     "execa": "^6.1.0",
     "fs-extra": "^10.1.0",
     "node-fetch": "^3.3.0",
