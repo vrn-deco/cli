@@ -49,11 +49,11 @@
     "gradient-string": "^2.0.2",
     "import-local": "^3.1.0",
     "root-check": "^2.0.0",
-    "semver": "^7.3.8"
+    "semver": "^7.5.1"
   },
   "devDependencies": {
     "@types/gradient-string": "^1.1.2",
     "@types/root-check": "^1.0.0",
-    "@types/semver": "^7.3.13"
+    "@types/semver": "^7.5.0"
   }
 }

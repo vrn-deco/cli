@@ -32,9 +32,9 @@
     "@vrn-deco/cli-log": "workspace:*",
     "@vrn-deco/cli-npm-helper": "workspace:*",
     "@vrn-deco/cli-shared": "workspace:*",
-    "semver": "^7.3.8"
+    "semver": "^7.5.1"
   },
   "devDependencies": {
-    "@types/semver": "^7.3.13"
+    "@types/semver": "^7.5.0"
   }
 }
