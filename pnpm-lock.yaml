@@ -117,12 +117,12 @@ importers:
       '@types/inquirer': ^8.2.6
       '@vrn-deco/cli-log': workspace:*
       '@vrn-deco/cli-shared': workspace:*
-      commander: ^8.3.0
+      commander: ^10.0.1
       inquirer: ^8.2.5
     dependencies:
       '@vrn-deco/cli-log': link:../log
       '@vrn-deco/cli-shared': link:../shared
-      commander: 8.3.0
+      commander: 10.0.1
       inquirer: 8.2.5
     devDependencies:
       '@types/inquirer': 8.2.6
@@ -1696,12 +1696,6 @@ packages:
   /commander/10.0.1:
     resolution: {integrity: sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==}
     engines: {node: '>=14'}
-    dev: true
-
-  /commander/8.3.0:
-    resolution: {integrity: sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww==}
-    engines: {node: '>= 12'}
-    dev: false
 
   /commitizen/4.3.0:
     resolution: {integrity: sha512-H0iNtClNEhT0fotHvGV3E9tDejDeS04sN1veIebsKYGMuGscFaswRoYJKmT3eW85eIJAs0F28bG2+a/9wCOfPw==}
