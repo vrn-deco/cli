@@ -86,7 +86,7 @@ importers:
       '@vrn-deco/cli-log': workspace:*
       '@vrn-deco/cli-npm-helper': workspace:*
       '@vrn-deco/cli-shared': workspace:*
-      dotenv: ^10.0.0
+      dotenv: ^16.3.1
       fs-extra: ^10.1.0
       gradient-string: ^2.0.2
       import-local: ^3.1.0
@@ -101,7 +101,7 @@ importers:
       '@vrn-deco/cli-log': link:../log
       '@vrn-deco/cli-npm-helper': link:../npm-helper
       '@vrn-deco/cli-shared': link:../shared
-      dotenv: 10.0.0
+      dotenv: 16.3.1
       fs-extra: 10.1.0
       gradient-string: 2.0.2
       import-local: 3.1.0
@@ -1993,9 +1993,9 @@ packages:
       is-obj: 2.0.0
     dev: true
 
-  /dotenv/10.0.0:
-    resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
-    engines: {node: '>=10'}
+  /dotenv/16.3.1:
+    resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
+    engines: {node: '>=12'}
     dev: false
 
   /downgrade-root/2.0.0:
