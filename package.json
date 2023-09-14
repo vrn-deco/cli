@@ -46,7 +46,7 @@
     "@ombro/logger": "^1.5.5",
     "@ombro/tsconfig": "^1.4.3",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
-    "@types/fs-extra": "^9.0.13",
+    "@types/fs-extra": "^11.0.2",
     "@types/node": "^18.16.16",
     "@vitest/coverage-c8": "^0.31.1",
     "@vitest/ui": "^0.31.1",
