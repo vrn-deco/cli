@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm
         uses: pnpm/action-setup@v2
       - name: Install Node.js
@@ -35,7 +35,7 @@ jobs:
         node-version: [14, 16, 18]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm
         uses: pnpm/action-setup@v2
       - name: Use Node.js ${{ matrix.node-version }}
@@ -61,7 +61,7 @@ jobs:
         node-version: [16]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm
         uses: pnpm/action-setup@v2
       - name: Use Node.js ${{ matrix.node-version }}
