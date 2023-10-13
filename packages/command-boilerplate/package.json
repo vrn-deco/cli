@@ -36,7 +36,7 @@
     "@vrn-deco/cli-shared": "workspace:*",
     "compressing": "^1.9.0",
     "execa": "^6.1.0",
-    "fs-extra": "^10.1.0",
+    "fs-extra": "^11.1.1",
     "node-fetch": "^3.3.1",
     "yaml": "^2.3.1"
   }
