@@ -20,9 +20,10 @@
     "test:coverage": "tsx scripts/test.ts --coverage",
     "lint": "eslint packages/ --ext .ts --fix --ignore-path .gitignore",
     "format": "prettier --write --parser typescript \"packages/**/*.ts\"",
+    "cs:add": "tsx scripts/changeset.ts --add",
+    "cs:version": "tsx scripts/changeset.ts --version",
     "commit": "git add . && cz",
-    "ch:add": "tsx scripts/changeset.ts --add",
-    "ch:version": "tsx scripts/changeset.ts --version"
+    "release": "pnpm build && pnpm -r publish"
   },
   "config": {
     "commitizen": {
