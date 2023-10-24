@@ -30,7 +30,7 @@
   "dependencies": {
     "@vrn-deco/cli-log": "workspace:*",
     "@vrn-deco/cli-shared": "workspace:*",
-    "commander": "^8.3.0",
+    "commander": "^11.1.0",
     "inquirer": "^9.2.10"
   },
   "devDependencies": {
