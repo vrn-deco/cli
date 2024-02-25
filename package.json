@@ -45,7 +45,7 @@
     "@commitlint/config-conventional": "^18.6.2",
     "@ombro/eslint-config-typescript": "^0.1.3",
     "@ombro/logger": "^1.5.5",
-    "@ombro/tsconfig": "^1.4.3",
+    "@ombro/tsconfig": "^2.0.0",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/fs-extra": "^11.0.2",
     "@types/node": "^18.16.16",
