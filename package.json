@@ -7,7 +7,7 @@
   "engines": {
     "node": "^14.13.1 || >=16.0.0"
   },
-  "packageManager": "pnpm@7.32.5",
+  "packageManager": "pnpm@8.15.4",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
