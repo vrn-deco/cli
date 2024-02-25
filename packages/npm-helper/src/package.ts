@@ -12,7 +12,7 @@ import { logger } from '@vrn-deco/cli-log'
 import { NPMRegistry, PackageManager } from '@vrn-deco/cli-shared'
 
 import { DistTag } from './common.js'
-import { InstallOptions, installPackage } from './install.js'
+import { type InstallOptions, installPackage } from './install.js'
 import { queryPackageVersion } from './querier.js'
 import { isDistTagVersion, isPackage, parseModuleMap } from './utils.js'
 

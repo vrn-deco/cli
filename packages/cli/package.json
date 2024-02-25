@@ -6,7 +6,7 @@
   "homepage": "https://github.com/vrn-deco/cli#readme",
   "license": "MIT",
   "engines": {
-    "node": "^14.13.1 || >=16.0.0"
+    "node": ">=16.14.0"
   },
   "bin": {
     "vrn": "bin/vrn-cli.js",

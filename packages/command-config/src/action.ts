@@ -3,8 +3,8 @@
  * @Date: 2021-07-23 15:33:13
  * @Description: config command action
  */
-import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
-import { BaseConfig, readConfig, updateConfig } from '@vrn-deco/cli-config-helper'
+import { Action, type ActionArgs, prompt } from '@vrn-deco/cli-command'
+import { type BaseConfig, readConfig, updateConfig } from '@vrn-deco/cli-config-helper'
 import { colors, logger } from '@vrn-deco/cli-log'
 import { NPMRegistry, PackageManager, noop } from '@vrn-deco/cli-shared'
 

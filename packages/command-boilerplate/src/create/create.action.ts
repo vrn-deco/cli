@@ -9,7 +9,7 @@ import path from 'node:path'
 import fs from 'fs-extra'
 
 import type { APIBoilerplate, Boilerplate, Lang } from '@vrn-deco/boilerplate-protocol'
-import { Action, ActionArgs, prompt } from '@vrn-deco/cli-command'
+import { Action, type ActionArgs, prompt } from '@vrn-deco/cli-command'
 import { colors, logger } from '@vrn-deco/cli-log'
 
 import type { ModeOptions, PostGit } from '../common.js'
