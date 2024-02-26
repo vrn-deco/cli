@@ -16,15 +16,28 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const MOCK_MANIFEST_MAIN_SCRIPT = path.join(__dirname, '..', '__mocks__', 'mock-manifest.cjs')
 
+// hoist to mock variables
+// @see https://vitest.dev/api/vi.html#vi-mock
+const { mockReadConfig, json, fetch } = vi.hoisted(() => {
+  // mock node-fetch
+  const json = vi.fn(() => ({}))
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const fetch = vi.fn((_url: string) => Promise.resolve({ json, ok: true, body: {}, statusText: 'ok' }))
+  return {
+    mockReadConfig: vi.fn(() => ({ npmRegistry: NPMRegistry.NPM, packageManager: PackageManager.NPM })),
+    json,
+    fetch,
+  }
+})
+
 // mock readConfig
-const readConfig = vi.fn(() => ({ npmRegistry: NPMRegistry.NPM, packageManager: PackageManager.NPM }))
 vi.mock('@vrn-deco/cli-config-helper', async () => {
   const cliConfigHelper = await vi.importActual<typeof import('@vrn-deco/cli-config-helper')>(
     '@vrn-deco/cli-config-helper',
   )
   return {
     ...cliConfigHelper,
-    readConfig,
+    readConfig: mockReadConfig,
   }
 })
 
@@ -35,9 +48,6 @@ const NPMPackageLoadSpy = vi.spyOn(NPMPackage.prototype, 'load').mockImplementat
 const getMainScriptSpy = vi.spyOn(NPMPackage.prototype, 'mainScript', 'get').mockReturnValue(MOCK_MANIFEST_MAIN_SCRIPT)
 
 // mock node-fetch
-const json = vi.fn(() => ({}))
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const fetch = vi.fn((_url: string) => Promise.resolve({ json, ok: true, body: {}, statusText: 'ok' }))
 vi.mock('node-fetch', () => ({ default: fetch }))
 
 // mock fs.createWriteStream and pipeline
@@ -57,20 +67,20 @@ beforeAll(() => {
 
 describe('@vrn-deco/cli-command-boilerplate -> services -> boilerplate.service.ts -> PackageBoilerplateService', () => {
   beforeEach(() => {
-    readConfig.mockClear()
+    mockReadConfig.mockClear()
     NPMPackageLoadSpy.mockClear()
     getMainScriptSpy.mockClear()
   })
 
   afterAll(() => {
-    readConfig.mockRestore()
+    mockReadConfig.mockRestore()
     NPMPackageLoadSpy.mockRestore()
     getMainScriptSpy.mockRestore()
   })
 
   it('Can correct load and cache manifest', async () => {
     const service = new PackageBoilerplateService()
-    expect(readConfig).toBeCalled()
+    expect(mockReadConfig).toBeCalled()
     const manifest = await service.loadManifest()
     expect(NPMPackageLoadSpy).toBeCalled()
     expect(getMainScriptSpy).toBeCalled()

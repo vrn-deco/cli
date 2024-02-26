@@ -5,7 +5,7 @@
  */
 import fs from 'fs-extra'
 
-import { Action, ActionArgs } from '@vrn-deco/cli-command'
+import { Action, type ActionArgs } from '@vrn-deco/cli-command'
 import { logger } from '@vrn-deco/cli-log'
 
 import { getCacheDirectory } from '../utils.js'
