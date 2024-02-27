@@ -1,5 +1,9 @@
 # @vrn-deco/cli
 
+## 1.2.5
+
+Update some dependencies ([#71](https://github.com/vrn-deco/cli/issues/71), [#72](https://github.com/vrn-deco/cli/issues/72), [#74](https://github.com/vrn-deco/cli/issues/74))
+
 ## 1.2.4
 
 Update some dependencies ([#61](https://github.com/vrn-deco/cli/issues/61))
