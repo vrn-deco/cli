@@ -30,7 +30,7 @@
   "dependencies": {
     "@vrn-deco/cli-log": "workspace:*",
     "@vrn-deco/cli-shared": "workspace:*",
-    "execa": "^6.1.0",
+    "execa": "^8.0.1",
     "fs-extra": "^11.2.0",
     "node-fetch": "^3.3.2"
   }
