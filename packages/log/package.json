@@ -28,6 +28,6 @@
     "url": "https://github.com/vrn-deco/cli/issues"
   },
   "dependencies": {
-    "@ombro/logger": "^1.5.5"
+    "@ombro/logger": "^2.0.2"
   }
 }
