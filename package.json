@@ -10,7 +10,7 @@
   "packageManager": "pnpm@8.15.4",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
+    "prepare": "husky",
     "clean": "tsx scripts/clean.ts --build --deps",
     "clean:build": "tsx scripts/clean.ts --build",
     "clean:deps": "tsx scripts/clean.ts --deps",
