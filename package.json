@@ -5,7 +5,7 @@
   "repository": "git@github.com:vrn-deco/cli.git",
   "license": "MIT",
   "engines": {
-    "node": ">=16.20.2"
+    "node": "^18.0.0 || >=20.0.0"
   },
   "packageManager": "pnpm@8.15.4",
   "scripts": {
