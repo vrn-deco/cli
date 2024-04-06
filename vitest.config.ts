@@ -12,7 +12,9 @@ export default defineConfig({
     coverage: {
       include: ['packages/**/src/**/*.ts'],
       reporter: ['text', 'lcov'],
-      statements: 90,
+      thresholds: {
+        statements: 90,
+      },
     },
   },
 })
