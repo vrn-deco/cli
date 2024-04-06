@@ -15,7 +15,7 @@
 
 `@vrn-deco/cli` is an automated command line tool whose core feature is to help you quickly build an engineered project via `boilerplate`. It supports multiple creation modes, you can get `boilerplate` from the sources we provide, or you can specify a third party or your own source.
 
-> Full transition to Pure ESM as of **v1.0.1**, please make sure your **Node.js version** is not lower than **v14.13.1**
+> ⚠️ Please make sure your **Node.js version >=18.0.0**
 
 ## Quick Start
 
