@@ -167,8 +167,8 @@ importers:
         specifier: workspace:*
         version: link:../shared
       commander:
-        specifier: ^11.1.0
-        version: 11.1.0
+        specifier: ^12.1.0
+        version: 12.1.0
       inquirer:
         specifier: ^9.2.15
         version: 9.2.15
@@ -2065,9 +2065,9 @@ packages:
     engines: {node: '>=16'}
     dev: true
 
-  /commander@11.1.0:
-    resolution: {integrity: sha512-yPVavfyCcRhmorC7rWlkHn15b4wDVgVmBA7kV4QVBsF7kv/9TKJAbAXVTxvTnwP8HHKjRCJDClKbciiYS7p0DQ==}
-    engines: {node: '>=16'}
+  /commander@12.1.0:
+    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
+    engines: {node: '>=18'}
     dev: false
 
   /commitizen@4.3.0(@types/node@18.19.22)(typescript@5.3.3):
